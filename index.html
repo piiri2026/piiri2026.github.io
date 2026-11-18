@@ -1,79 +1,111 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Piiri – Valokuvia Seinäjoelta</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #ffffff;
-      background-color: #11161d;
-      background-image: linear-gradient(rgba(10, 14, 20, 0.45), rgba(10, 14, 20, 0.72)), url('taustakuva1.jpg');
-      background-size: cover; background-position: center; background-attachment: fixed;
-      min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;
-    }
-    .saa-laatikko, .paiva-palkki {
-      position: fixed; top: 18px; background: rgba(15, 20, 28, 0.6); backdrop-filter: blur(8px);
-      padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; color: #f1f5f9; border: 1px solid rgba(255, 255, 255, 0.15); z-index: 10;
-    }
-    .saa-laatikko { left: 24px; display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .paiva-palkki { right: 24px; }
-    .etusivu-sisalto { max-width: 760px; text-align: center; padding: 20px; }
-    h1 { font-size: 4rem; font-weight: 700; letter-spacing: 4px; margin-bottom: 20px; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85); }
-    .esittely { font-size: 1.15rem; line-height: 1.75; margin-bottom: 36px; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9); }
-    .nappi { background: linear-gradient(135deg, #d97706, #b45309); color: #fff; border: none; padding: 13px 30px; font-size: 1rem; font-weight: 600; border-radius: 30px; cursor: pointer; }
-    .modal-tausta { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); z-index: 100; align-items: center; justify-content: center; }
-    .modal-tausta.avoin { display: flex; }
-    .modal-ikkuna { background: #1e2530; border-radius: 18px; max-width: 480px; width: 100%; padding: 30px; position: relative; }
-    input, textarea { width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 10px; background: rgba(15,20,28,0.8); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piiri – Valokuvia Seinäjoelta</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;color:#fff;background:#11161d url('taustakuva1.jpg') center/cover fixed;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;position:relative}
+body::before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(10,14,20,0.45),rgba(10,14,20,0.72));z-index:0}
+.saa,.paiva{position:fixed;top:18px;background:rgba(15,20,28,0.65);backdrop-filter:blur(8px);padding:8px 16px;border-radius:20px;font-size:0.9rem;color:#f1f5f9;border:1px solid rgba(255,255,255,0.15);z-index:10;text-decoration:none}
+.saa{left:24px;display:flex;align-items:center;gap:10px}
+.paiva{right:24px}
+.sisalto{position:relative;z-index:2;max-width:760px;text-align:center}
+h1{font-size:4rem;letter-spacing:4px;margin-bottom:20px;text-shadow:0 4px 20px rgba(0,0,0,0.9)}
+.esittely{font-size:1.15rem;line-height:1.75;margin-bottom:36px;text-shadow:0 2px 12px rgba(0,0,0,0.95)}
+.nappi{background:linear-gradient(135deg,#d97706,#b45309);color:#fff;border:none;padding:12px 26px;font-size:1rem;font-weight:600;border-radius:30px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.5)}
+.nappi:hover{background:linear-gradient(135deg,#f59e0b,#d97706)}
+.yhteys-nappi{position:fixed;bottom:22px;left:24px;z-index:10}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;padding:20px}
+.modal.avoin{display:flex}
+.ikkuna{background:#1e2530;border:1px solid rgba(255,255,255,0.2);border-radius:18px;max-width:460px;width:100%;padding:28px;position:relative}
+.sulje{position:absolute;top:14px;right:18px;background:none;border:none;color:#94a3b8;font-size:1.6rem;cursor:pointer}
+.rivi{display:flex;gap:10px}
+input,textarea{width:100%;padding:10px;margin:6px 0 14px;border-radius:10px;background:rgba(15,20,28,0.8);color:#fff;border:1px solid rgba(255,255,255,0.2);font-family:inherit}
+textarea{min-height:95px;resize:vertical}
+@media(max-width:700px){.saa,.paiva,.yhteys-nappi{position:static;margin:8px 0}.rivi{flex-direction:column;gap:0}h1{font-size:2.8rem}}
+</style>
 </head>
 <body>
-  <a href="https://foreca.fi" target="_blank" class="saa-laatikko">
-    <span id="saaIkoni">🌦️</span>
-    <div><div id="saaLampo">Seinäjoki</div><div id="saaTeksti" style="font-size:0.8rem;color:#cbd5e1;">Ladataan...</div></div>
-  </a>
-  <div class="paiva-palkki" id="paivaNaytto"></div>
-  <main class="etusivu-sisalto">
-    <h1>Piiri</h1>
-    <p class="esittely">Tältä sivustolta löytyy enimmäkseen valokuvia uudenkarhealla järjestelmäkameralla Canon EOS 1100D (2011) otettuja ja ihan kännykälläkin räpsimisiä...</p>
-    <button class="nappi" onclick="document.getElementById('yhteysModal').classList.add('avoin')">Ota yhteyttä</button>
-  </main>
-  <div class="modal-tausta" id="yhteysModal">
-    <div class="modal-ikkuna">
-      <button style="position:absolute;top:15px;right:18px;background:none;border:none;color:#fff;font-size:1.5rem;" onclick="document.getElementById('yhteysModal').classList.remove('avoin')">&times;</button>
-      <h2>Ota yhteyttä</h2>
-      <form id="yhteysLomake">
-        <input type="text" placeholder="Etunimi" required>
-        <input type="email" placeholder="Sähköposti" required>
-        <textarea placeholder="Viestisi" required></textarea>
-        <button type="submit" class="nappi" style="width:100%;">Lähetä</button>
-      </form>
-    </div>
-  </div>
-  <script>
-    // Päivämäärä ja nimipäivät
-    const nyt = new Date();
-    const pvm = `${nyt.getDate()}.${nyt.getMonth() + 1}.${nyt.getFullYear()}`;
-    const viikonpaivat = ['sunnuntai', 'maanantai', 'tiistai', 'keskiviikko', 'torstai', 'perjantai', 'lauantai'];
-    const nimipaivat = { "18.11.": "Jousia, Max, Tenho", "19.11.": "Liisa, Eliisa", "20.11.": "Jalmari, Jari" };
-    document.getElementById('paivaNaytto').textContent = `${viikonpaivat[nyt.getDay()]} ${pvm} ${nimipaivat[`${nyt.getDate()}.${nyt.getMonth()+1}.`] || ''}`;
 
-    // Säädata Open-Meteo-rajapinnasta
-    async function haeSaa() {
-      try {
-        const res = await fetch('https://open-meteo.com');
-        const data = await res.json();
-        const lampo = Math.round(data.current.temperature_2m);
-        document.getElementById('saaLampo').textContent = `Seinäjoki ${lampo > 0 ? '+' : ''}${lampo}°C`;
-        document.getElementById('saaTeksti').textContent = 'Sääohjeiden mukainen';
-      } catch (e) {
-        document.getElementById('saaTeksti').textContent = 'Ei saatavilla';
-      }
+<a href="https://foreca.fi" target="_blank" rel="noopener" class="saa">
+  <span id="saaIkoni" style="font-size:1.4rem">🌦️</span>
+  <div>
+    <div id="saaLampo" style="font-weight:600">Seinäjoki</div>
+    <div id="saaTeksti" style="font-size:0.8rem;color:#cbd5e1">Haetaan...</div>
+  </div>
+</a>
+
+<div class="paiva" id="paivaNaytto"></div>
+
+<main class="sisalto">
+  <h1>Piiri</h1>
+  <p class="esittely">Tältä sivustolta löytyy enimmäkseen valokuvia uudenkarhealla järjestelmäkameralla Canon EOS 1100D (2011) otettuja ja ihan kännykälläkin räpsimisiä. Kuvat keskittyvät enimmäkseen uudehkoon Seinäjoen Piirin alueeseen ja kuvaajan sielunelämään. Lisäilen uusia kuvia aina kun aikaa löytyy.</p>
+  <div id="galleriaNapit"></div>
+</main>
+
+<button class="nappi yhteys-nappi" onclick="document.getElementById('yhteysModal').classList.add('avoin')">Ota yhteyttä</button>
+
+<div class="modal" id="yhteysModal" onclick="if(event.target===this)this.classList.remove('avoin')">
+  <div class="ikkuna">
+    <button class="sulje" onclick="document.getElementById('yhteysModal').classList.remove('avoin')">&times;</button>
+    <h2 style="margin-bottom:6px">Ota yhteyttä</h2>
+    <p style="font-size:0.9rem;color:#cbd5e1;margin-bottom:16px">Lähetä viesti ja palaamme asiaan niin pian kuin mahdollista!</p>
+    <form id="lomake" action="https://formspree.io" method="POST">
+      <div class="rivi">
+        <input type="text" name="Etunimi" placeholder="Etunimi" required>
+        <input type="text" name="Sukunimi" placeholder="Sukunimi" required>
+      </div>
+      <input type="email" name="Sähköposti" placeholder="Sähköpostiosoite" required>
+      <textarea name="Viesti" placeholder="Viestisi" required></textarea>
+      <button type="submit" class="nappi" style="width:100%">Lähetä viesti</button>
+      <p id="tila" style="margin-top:10px;text-align:center;font-size:0.9rem;display:none"></p>
+    </form>
+  </div>
+</div>
+
+<script>
+const nyt = new Date();
+const vp = ['sunnuntai','maanantai','tiistai','keskiviikko','torstai','perjantai','lauantai'][nyt.getDay()];
+const pvm = `${nyt.getDate()}.${nyt.getMonth()+1}.${nyt.getFullYear()}`;
+const nimipaivat = {"18.11.":"Jousia, Max, Tenho","19.11.":"Liisa, Eliisa, Elisa","20.11.":"Jalmari, Jari","21.11.":"Hilma","22.11.":"Selja, Silja","23.11.":"Ismo","24.11.":"Lempi, Lemmikki, Sivi","25.11.":"Katri, Kaisa, Kaija, Katja, Kaarina","26.11.":"Sisko","27.11.":"Hilkka","28.11.":"Heini, Kaisla","29.11.":"Aimo","30.11.":"Antti, Antero, Atte"};
+document.getElementById('paivaNaytto').textContent = `${vp} ${pvm} ${nimipaivat[nyt.getDate()+'.'+(nyt.getMonth()+1)+'.'] || ''}`;
+
+async function haeSaa() {
+  try {
+    const r = await fetch('https://open-meteo.com');
+    const d = await r.json();
+    const t = Math.round(d.current.temperature_2m);
+    const c = d.current.weather_code;
+    const kuvaukset = {0:['☀️','Selkeää'],1:['🌤️','Melko selkeää'],2:['⛅','Puolipilvistä'],3:['☁️','Pilvistä'],45:['🌫️','Sumua'],51:['🌦️','Tihkusadetta'],61:['🌧️','Vesisadetta'],71:['❄️','Lumisadetta'],80:['🌦️','Pilvistä ja sadekuuroja'],85:['🌨️','Lumikuuroja'],95:['⛈️','Ukkosta']};
+    const avain = Object.keys(kuvaukset).reverse().find(k => c >= k) || 3;
+    document.getElementById('saaIkoni').textContent = kuvaukset[avain][0];
+    document.getElementById('saaLampo').textContent = `Seinäjoki ${t > 0 ? '+' : ''}${t}°C`;
+    document.getElementById('saaTeksti').textContent = kuvaukset[avain][1];
+  } catch (e) {
+    try {
+      const r2 = await fetch('https://wttr.in');
+      const d2 = await r2.json();
+      const cur = d2.current_condition[0];
+      const t2 = cur.temp_C;
+      document.getElementById('saaLampo').textContent = `Seinäjoki ${t2 > 0 ? '+' : ''}${t2}°C`;
+      document.getElementById('saaTeksti').textContent = 'Katso tarkemmin Forecasta';
+    } catch (e2) {
+      document.getElementById('saaTeksti').textContent = 'Avaa Foreca';
     }
-    haeSaa();
-  </script>
+  }
+}
+haeSaa();
+
+document.getElementById('lomake').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const tila = document.getElementById('tila');
+  const res = await fetch(this.action, {method:'POST', body:new FormData(this), headers:{'Accept':'application/json'}});
+  tila.style.display = 'block';
+  if (res.ok) { this.reset(); tila.style.color = '#4ade80'; tila.textContent = 'Kiitos! Viestisi on lähetetty.'; }
+  else { tila.style.color = '#f87171'; tila.textContent = 'Lähetys epäonnistui. Tarkista Formspree-koodi.'; }
+});
+</script>
 </body>
 </html>
