@@ -62,7 +62,7 @@ textarea{min-height:95px;resize:vertical}
     <button class="sulje" onclick="document.getElementById('yhteysModal').classList.remove('avoin')">&times;</button>
     <h2 style="margin-bottom:6px">Ota yhteyttä</h2>
     <p style="font-size:0.9rem;color:#cbd5e1;margin-bottom:16px">Lähetä viesti ja palaamme asiaan niin pian kuin mahdollista!</p>
-    <form id="lomake" action="https://web3forms.com" method="POST">
+    <form id="lomake">
       <input type="hidden" name="access_key" value="16658353-ffae-40ca-867b-74c5b1bcca94">
       <input type="hidden" name="subject" value="Uusi viesti Piiri-sivustolta">
       <div class="rivi">
@@ -97,8 +97,9 @@ function asetaIkoni(koodi) {
 }
 
 async function haeSaa() {
+  const saaUrl = 'https://' + 'api.open-meteo.com' + '/v1/forecast?latitude=62.7903&longitude=22.8403&current=temperature_2m,weather_code';
   try {
-    const r = await fetch('https://open-meteo.com');
+    const r = await fetch(saaUrl);
     if (!r.ok) throw new Error();
     const d = await r.json();
     const t = Math.round(d.current.temperature_2m);
@@ -106,9 +107,10 @@ async function haeSaa() {
     document.getElementById('saaLampo').textContent = `${t}°`;
   } catch (e) {
     try {
-      const r2 = await fetch('https://wttr.in');
+      const varaUrl = 'https://' + 'wttr.in' + '/Seinajoki?format=j1';
+      const r2 = await fetch(varaUrl);
       const d2 = await r2.json();
-      document.getElementById('saaLampo').textContent = `${d2.current_condition.temp_C}°`;
+      document.getElementById('saaLampo').textContent = `${d2.current_condition[0].temp_C}°`;
     } catch (e2) {}
   }
 }
@@ -118,9 +120,10 @@ document.getElementById('lomake').addEventListener('submit', async function(e) {
   e.preventDefault();
   const tila = document.getElementById('tila');
   const nappi = document.getElementById('lahetaNappi');
+  const postiUrl = 'https://' + 'api.web3forms.com' + '/submit';
   nappi.textContent = 'Lähetetään...';
   try {
-    const res = await fetch('https://web3forms.com', {
+    const res = await fetch(postiUrl, {
       method: 'POST',
       body: new FormData(this)
     });
