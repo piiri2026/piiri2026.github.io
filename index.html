@@ -1,1 +1,355 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piiri – Valokuvia Seinäjoelta</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #ffffff;
+      background-color: #11161d;
+      /* Taustakuva ja kevyt tummennus, jotta teksti erottuu */
+      background-image: linear-gradient(rgba(15, 20, 28, 0.55), rgba(15, 20, 28, 0.78)), url('tausta.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Päivämäärä ja nimipäivät yläreunassa */
+    .paiva-palkki {
+      position: fixed;
+      top: 18px;
+      right: 24px;
+      background: rgba(15, 20, 28, 0.65);
+      backdrop-filter: blur(8px);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      z-index: 10;
+    }
+
+    /* Etusivun päälaatikko */
+    .etusivu-sisalto {
+      max-width: 720px;
+      text-align: center;
+      background: rgba(15, 20, 28, 0.55);
+      backdrop-filter: blur(10px);
+      padding: 45px 35px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      margin-bottom: 18px;
+      color: #f8fafc;
+      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    }
+
+    .esittely {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #e2e8f0;
+      margin-bottom: 32px;
+    }
+
+    /* Nappien alue */
+    .nappi-rivi {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .nappi {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      color: #ffffff;
+      border: none;
+      padding: 13px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      box-shadow: 0 6px 20px rgba(217, 119, 6, 0.35);
+    }
+
+    .nappi:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(217, 119, 6, 0.5);
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    /* Ponnahdusikkuna (Ota yhteyttä) */
+    .modal-tausta {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-tausta.avoin {
+      display: flex;
+    }
+
+    .modal-ikkuna {
+      background: #1e2530;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 18px;
+      max-width: 480px;
+      width: 100%;
+      padding: 30px;
+      position: relative;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+      text-align: left;
+    }
+
+    .sulje-nappi {
+      position: absolute;
+      top: 15px;
+      right: 18px;
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+
+    .sulje-nappi:hover {
+      color: #ffffff;
+    }
+
+    .modal-ikkuna h2 {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+      color: #f8fafc;
+    }
+
+    .modal-kuvaus {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+    }
+
+    .nimi-rivi {
+      display: flex;
+      gap: 12px;
+    }
+
+    .lomake-ryhma {
+      margin-bottom: 15px;
+      width: 100%;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-bottom: 5px;
+      color: #cbd5e1;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(15, 20, 28, 0.8);
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #f59e0b;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .laheta-nappi {
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    .lomake-tila {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      text-align: center;
+      color: #4ade80;
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      .paiva-palkki {
+        position: static;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      .nimi-rivi {
+        flex-direction: column;
+        gap: 0;
+      }
+      h1 {
+        font-size: 2.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Päivämäärä ja nimipäivät -->
+  <div class="paiva-palkki" id="paivaNaytto"></div>
+
+  <!-- Pääsivun sisältö -->
+  <main class="etusivu-sisalto">
+    <h1>Piiri</h1>
+    <p class="esittely">
+      Tältä sivustolta löytyy enimmäkseen valokuvia uudenkarhealla järjestelmäkameralla Canon EOS 1100D (2011) otettuja ja ihan kännykälläkin räpsimisiä. Kuvat keskittyvät enimmäkseen uudehkoon Seinäjoen Piirin alueeseen ja kuvaajan sielunelämään. Lisäilen uusia kuvia aina kun aikaa löytyy.
+    </p>
+
+    <div class="nappi-rivi">
+      <!-- Tähän kohtaan lisätään myöhemmin gallerianapit (esim. Vili) -->
+      <button class="nappi" onclick="avaaYhteydenotto()">Ota yhteyttä</button>
+    </div>
+  </main>
+
+  <!-- Ponnahdusikkuna: Ota yhteyttä -->
+  <div class="modal-tausta" id="yhteysModal" onclick="suljeJosTausta(event)">
+    <div class="modal-ikkuna">
+      <button class="sulje-nappi" onclick="suljeYhteydenotto()" title="Sulje">&times;</button>
+      <h2>Ota yhteyttä</h2>
+      <p class="modal-kuvaus">Lähetä viesti ja palaamme asiaan niin pian kuin mahdollista!</p>
+
+      <!-- VAIHDA TÄHÄN OMA FORMSPREE-OSOITTEESI (esim. https://formspree.io) -->
+      <form id="yhteysLomake" action="https://formspree.io" method="POST">
+        <div class="nimi-rivi">
+          <div class="lomake-ryhma">
+            <label for="etunimi">Etunimi</label>
+            <input type="text" id="etunimi" name="Etunimi" required>
+          </div>
+          <div class="lomake-ryhma">
+            <label for="sukunimi">Sukunimi</label>
+            <input type="text" id="sukunimi" name="Sukunimi" required>
+          </div>
+        </div>
+
+        <div class="lomake-ryhma">
+          <label for="sahkoposti">Sähköpostiosoite</label>
+          <input type="email" id="sahkoposti" name="Sähköposti" required>
+        </div>
+
+        <div class="lomake-ryhma">
+          <label for="viesti">Viestisi</label>
+          <textarea id="viesti" name="Viesti" required></textarea>
+        </div>
+
+        <button type="submit" class="nappi laheta-nappi">Lähetä viesti</button>
+        <p class="lomake-tila" id="lomakeTila">Kiitos! Viestisi on lähetetty.</p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // 1. Päivämäärän ja suomalaisten nimipäivien näyttö
+    function paivitaPaiva() {
+      const nyt = new Date();
+      const viikonpaivat = ['sunnuntai', 'maanantai', 'tiistai', 'keskiviikko', 'torstai', 'perjantai', 'lauantai'];
+      const viikonpaiva = viikonpaivat[nyt.getDay()];
+      const pvm = `${nyt.getDate()}.${nyt.getMonth() + 1}.${nyt.getFullYear()}`;
+      const avain = `${nyt.getDate()}.${nyt.getMonth() + 1}.`;
+
+      const nimipaivat = {
+        "18.11.": "Jousia, Max, Tenho",
+        "19.11.": "Liisa, Eliisa, Elisa, Elisabet, Elise, Liisi",
+        "20.11.": "Jalmari, Jari",
+        "21.11.": "Hilma",
+        "22.11.": "Selja, Silja",
+        "23.11.": "Ismo",
+        "24.11.": "Lempi, Lemmikki, Sivi",
+        "25.11.": "Katri, Kaisa, Kaija, Katja, Kaarina, Katariina, Katriina, Riina",
+        "26.11.": "Sisko",
+        "27.11.": "Hilkka",
+        "28.11.": "Heini, Kaisla",
+        "29.11.": "Aimo",
+        "30.11.": "Antti, Antero, Atte"
+      };
+
+      const nimet = nimipaivat[avain] || "";
+      document.getElementById('paivaNaytto').textContent = `${viikonpaiva} ${pvm} ${nimet}`;
+    }
+
+    paivitaPaiva();
+
+    // 2. Yhteydenottoikkunan avaus ja sulkeminen
+    function avaaYhteydenotto() {
+      document.getElementById('yhteysModal').classList.add('avoin');
+    }
+
+    function suljeYhteydenotto() {
+      document.getElementById('yhteysModal').classList.remove('avoin');
+    }
+
+    function suljeJosTausta(event) {
+      if (event.target.id === 'yhteysModal') {
+        suljeYhteydenotto();
+      }
+    }
+
+    // 3. Lomakkeen lähetys ilman sivun uudelleenlatausta
+    const lomake = document.getElementById('yhteysLomake');
+    lomake.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const tila = document.getElementById('lomakeTila');
+      const data = new FormData(lomake);
+
+      try {
+        const vastaus = await fetch(lomake.action, {
+          method: lomake.method,
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (vastaus.ok) {
+          lomake.reset();
+          tila.style.display = 'block';
+          tila.style.color = '#4ade80';
+          tila.textContent = 'Kiitos! Viestisi on lähetetty.';
+        } else {
+          tila.style.display = 'block';
+          tila.style.color = '#f87171';
+          tila.textContent = 'Viestin lähetys epäonnistui. Tarkista Formspree-asetus.';
+        }
+      } catch (err) {
+        tila.style.display = 'block';
+        tila.style.color = '#f87171';
+        tila.textContent = 'Verkkovirhe. Yritä uudelleen.';
+      }
+    });
+  </script>
+</body>
+</html>
