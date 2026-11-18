@@ -43,7 +43,7 @@ h1{font-size:4rem;letter-spacing:4px;margin-bottom:20px;text-shadow:0 4px 20px r
 .yhteys-nappi{position:fixed;bottom:22px;left:24px;z-index:10}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal.avoin{display:flex}
-.ikkuna{background:#1e2530;border:1px solid rgba(255,255,255,.2);border-radius:18px;max-width:460px;width:100%;padding:28px;position:relative}
+.ikkuna{background:#1e2530;border:1px solid rgba(255,255,255,.2);border-radius:18px;max-width:460px;width:100%;padding:28px;position:relative;text-align:left}
 .sulje{position:absolute;top:14px;right:18px;background:none;border:none;color:#cbd5e1;font-size:2rem;cursor:pointer;z-index:110}
 .lb-sisalto{position:relative;max-width:92vw;max-height:90vh;text-align:center}
 .lb-sisalto img{max-width:90vw;max-height:78vh;border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,.8);object-fit:contain}
@@ -64,7 +64,6 @@ textarea{min-height:95px;resize:vertical}
   </a>
   <div class="paiva" id="paivaNaytto"></div>
 </div>
-
 <main class="sisalto">
   <div id="etusivuNakyma">
     <h1>Piiri</h1>
@@ -106,110 +105,7 @@ textarea{min-height:95px;resize:vertical}
 <button class="nappi yhteys-nappi" onclick="document.getElementById('yhteysModal').classList.add('avoin')">Ota yhteyttä</button>
 
 <div class="modal" id="yhteysModal" onclick="if(event.target===this)this.classList.remove('avoin')">
-  <div class="ikkuna">     <button class="sulje" onclick="document.getElementById('yhteysModal').classList.remove('avoin')">&times;</button>
-    <h2 style="margin-bottom:6px">Ota yhteyttä</h2>
-    <p style="font-size:.9rem;color:#cbd5e1;margin-bottom:16px">Lähetä viesti ja palaamme asiaan niin pian kuin mahdollista!</p>
-    <form id="lomake">
-      <input type="hidden" name="access_key" value="16658353-ffae-40ca-867b-74c5b1bcca94">
-      <input type="hidden" name="subject" value="Uusi viesti Piiri-sivustolta">
-      <div class="rivi"><input type="text" name="Etunimi" placeholder="Etunimi" required><input type="text" name="Sukunimi" placeholder="Sukunimi" required></div>
-      <input type="email" name="email" placeholder="Sähköpostiosoite" required>
-      <textarea name="message" placeholder="Viestisi" required></textarea>
-      <button type="submit" class="nappi" id="lahetaNappi" style="width:100%">Lähetä viesti</button>
-      <p id="tila" style="margin-top:10px;text-align:center;font-size:.9rem;display:none"></p>
-    </form>
-  </div>
-</div>
-
-<script>
-const p = 'https' + '://';
-document.getElementById('forecaLinkki').href = p + 'www' + '.' + 'foreca' + '.' + 'fi/finland/seinajoki';
-document.getElementById('karttaLinkki').href = p + 'www' + '.' + 'google' + '.' + 'com/maps/@62.7664993,22.821372,15z';
-
-const galleriat = {
-  piirintie11: [],
-  vili: [
-    { tiedosto: 'vili1.jpg', teksti: 'Vili 1' },
-    { tiedosto: 'vili2.jpg', teksti: 'Vili 2' },
-    { tiedosto: 'vili3.jpg', teksti: 'Vili 3' },
-    { tiedosto: 'vili4.jpg', teksti: 'Vili 4' },
-    { tiedosto: 'vili5.jpg', teksti: 'Vili 5' },
-    { tiedosto: 'vili6.jpg', teksti: 'Vili 6' },
-    { tiedosto: 'vili7.jpg', teksti: 'Vili 7' },
-    { tiedosto: 'vili8.jpg', teksti: 'Vili 8' },
-    { tiedosto: 'vili9.jpg', teksti: 'Vili 9' }
-  ]
-};
-
-let nykyinenGalleria = 'vili', nykyinenIndeksi = 0;
-
-function avaaLightbox(gal, idx) {
-  nykyinenGalleria = gal; nykyinenIndeksi = idx;
-  const k = galleriat[gal][idx];
-  document.getElementById('lbKuva').src = k.tiedosto;
-  document.getElementById('lbTeksti').textContent = k.teksti || '';
-  document.getElementById('lightboxModal').classList.add('avoin');
-}
-
-function vaihdaKuva(suunta) {
-  const lista = galleriat[nykyinenGalleria];
-  nykyinenIndeksi = (nykyinenIndeksi + suunta + lista.length) % lista.length;
-  avaaLightbox(nykyinenGalleria, nykyinenIndeksi);
-}
-
-document.addEventListener('keydown', e => {
-  if (!document.getElementById('lightboxModal').classList.contains('avoin')) return;
-  if (e.key === 'Escape') document.getElementById('lightboxModal').classList.remove('avoin');
-  if (e.key === 'ArrowRight') vaihdaKuva(1);
-  if (e.key === 'ArrowLeft') vaihdaKuva(-1);
-});
-
-Object.keys(galleriat).forEach(k => {
-  const el = document.getElementById('ruudukko-' + k);
-  el.innerHTML = galleriat[k].length ? galleriat[k].map((x, i) => `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${x.tiedosto}"><p>${x.teksti||''}</p></div>`).join('') : '<p style="color:#94a3b8;grid-column:1/-1;padding:20px 0">Kuvia lisätään tänne pian!</p>';
-});
-
-document.addEventListener('click', e => { if(!e.target.closest('.pudotus')) document.querySelectorAll('.pudotus').forEach(x => x.classList.remove('auki')); });
-function avaaSivu(id) { document.querySelectorAll('.pudotus').forEach(x => x.classList.remove('auki')); document.getElementById('etusivuNakyma').style.display='none'; document.querySelectorAll('.alasivu').forEach(s => s.classList.remove('aktiivinen')); document.getElementById('sivu-'+id).classList.add('aktiivinen'); }
-function palaaEtusivulle() { document.querySelectorAll('.alasivu').forEach(s => s.classList.remove('aktiivinen')); document.getElementById('etusivuNakyma').style.display='block'; }
-
-const nyt = new Date();
-const vp = ['sunnuntai','maanantai','tiistai','keskiviikko','torstai','perjantai','lauantai'][nyt.getDay()];
-const nimipaivat = {"18.11.":"Jousia, Max, Tenho","19.11.":"Liisa, Eliisa, Elisa","20.11.":"Jalmari, Jari","21.11.":"Hilma","22.11.":"Selja, Silja","23.11.":"Ismo","24.11.":"Lempi, Lemmikki, Sivi","25.11.":"Katri, Kaisa, Kaija, Katja, Kaarina","26.11.":"Sisko","27.11.":"Hilkka","28.11.":"Heini, Kaisla","29.11.":"Aimo","30.11.":"Antti, Antero, Atte"};
-document.getElementById('paivaNaytto').textContent = `${vp} ${nyt.getDate()}.${nyt.getMonth()+1}.${nyt.getFullYear()} ${nimipaivat[nyt.getDate()+'.'+(nyt.getMonth()+1)+'.']||''}`;
-
-function asetaIkoni(k) { return k===0?'☀️':k<=2?'⛅':k===3?'☁️':k<=48?'🌫️':k<=67?'🌧️':k<=77?'❄️':k<=82?'🌦️':k<=86?'🌨️':'⛈️'; }
-
-async function haeSaa() {
-  try {
-    const saaUrl = p + 'api' + '.' + 'open-meteo' + '.' + 'com/v1/forecast?latitude=62.7903&longitude=22.8403&current=temperature_2m,weather_code';
-    const r = await fetch(saaUrl);
-    const d = await r.json();
-    document.getElementById('saaIkoni').textContent = asetaIkoni(d.current.weather_code);
-    document.getElementById('saaLampo').textContent = Math.round(d.current.temperature_2m) + '°';
-  } catch (e) {}
-}
-haeSaa();
-
-document.getElementById('lomake').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const tila = document.getElementById('tila'), nappi = document.getElementById('lahetaNappi');
-  nappi.textContent = 'Lähetetään...';
-  try {
-    const postiUrl = p + 'api' + '.' + 'web3forms' + '.' + 'com/submit';
-    const res = await fetch(postiUrl, { method: 'POST', body: new FormData(this) });
-    const data = await res.json();
-    tila.style.display = 'block';
-    tila.style.color = data.success ? '#4ade80' : '#f87171';
-    tila.textContent = data.success ? 'Kiitos! Viestisi on lähetetty.' : 'Lähetys epäonnistui.';
-    if (data.success) this.reset();
-  } catch (err) { tila.style.display = 'block'; tila.style.color = '#f87171'; tila.textContent = 'Verkkovirhe.'; }
-  nappi.textContent = 'Lähetä viesti';
-});
-</script>
-</body>
-</html>
-
+  <div class="ikkuna">
     <button class="sulje" onclick="document.getElementById('yhteysModal').classList.remove('avoin')">&times;</button>
     <h2 style="margin-bottom:6px">Ota yhteyttä</h2>
     <p style="font-size:.9rem;color:#cbd5e1;margin-bottom:16px">Lähetä viesti ja palaamme asiaan niin pian kuin mahdollista!</p>
@@ -224,6 +120,7 @@ document.getElementById('lomake').addEventListener('submit', async function(e) {
     </form>
   </div>
 </div>
+
 <script>
 const p = 'https' + '://';
 document.getElementById('forecaLinkki').href = p + 'www' + '.' + 'foreca' + '.' + 'fi/finland/seinajoki';
@@ -244,12 +141,20 @@ const galleriat = {
   ]
 };
 
+function kokeilePaate(img) {
+  if (!img.dataset.kokeiltu) { img.dataset.kokeiltu = '1'; img.src = img.src.replace(/\.jpg$/i, '.JPG'); }
+  else if (img.dataset.kokeiltu === '1') { img.dataset.kokeiltu = '2'; img.src = img.src.replace(/\.jpg$/i, '.jpeg'); }
+}
+
 let nykyinenGalleria = 'vili', nykyinenIndeksi = 0;
 
 function avaaLightbox(gal, idx) {
   nykyinenGalleria = gal; nykyinenIndeksi = idx;
   const k = galleriat[gal][idx];
-  document.getElementById('lbKuva').src = k.tiedosto;
+  const lbImg = document.getElementById('lbKuva');
+  delete lbImg.dataset.kokeiltu;
+  lbImg.onerror = () => kokeilePaate(lbImg);
+  lbImg.src = k.tiedosto;
   document.getElementById('lbTeksti').textContent = k.teksti || '';
   document.getElementById('lightboxModal').classList.add('avoin');
 }
@@ -269,7 +174,7 @@ document.addEventListener('keydown', e => {
 
 Object.keys(galleriat).forEach(k => {
   const el = document.getElementById('ruudukko-' + k);
-  el.innerHTML = galleriat[k].length ? galleriat[k].map((x, i) => `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${x.tiedosto}"><p>${x.teksti||''}</p></div>`).join('') : '<p style="color:#94a3b8;grid-column:1/-1;padding:20px 0">Kuvia lisätään tänne pian!</p>';
+  el.innerHTML = galleriat[k].length ? galleriat[k].map((x, i) => `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${x.tiedosto}" onerror="kokeilePaate(this)"><p>${x.teksti||''}</p></div>`).join('') : '<p style="color:#94a3b8;grid-column:1/-1;padding:20px 0">Kuvia lisätään tänne pian!</p>';
 });
 
 document.addEventListener('click', e => { if(!e.target.closest('.pudotus')) document.querySelectorAll('.pudotus').forEach(x => x.classList.remove('auki')); });
