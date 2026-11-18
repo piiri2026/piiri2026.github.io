@@ -5,358 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Piiri – Valokuvia Seinäjoelta</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #ffffff;
       background-color: #11161d;
-      /* Korjattu taustakuvan nimi taustakuva1.jpg */
-      background-image: linear-gradient(rgba(15, 20, 28, 0.55), rgba(15, 20, 28, 0.78)), url('taustakuva1.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      background-image: linear-gradient(rgba(10, 14, 20, 0.45), rgba(10, 14, 20, 0.72)), url('taustakuva1.jpg');
+      background-size: cover; background-position: center; background-attachment: fixed;
+      min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;
     }
-
-    /* Yläpalkin elementit (Sää vasemmalla, päivämäärä oikealla) */
-    .saa-laatikko {
-      position: fixed;
-      top: 18px;
-      left: 24px;
-      background: rgba(15, 20, 28, 0.65);
-      backdrop-filter: blur(8px);
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      color: #e2e8f0;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.2s;
-      z-index: 10;
+    .saa-laatikko, .paiva-palkki {
+      position: fixed; top: 18px; background: rgba(15, 20, 28, 0.6); backdrop-filter: blur(8px);
+      padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; color: #f1f5f9; border: 1px solid rgba(255, 255, 255, 0.15); z-index: 10;
     }
-
-    .saa-laatikko:hover {
-      background: rgba(15, 20, 28, 0.85);
-      transform: translateY(-1px);
-    }
-
-    .saa-ikoni {
-      font-size: 1.4rem;
-      line-height: 1;
-    }
-
-    .saa-tiedot {
-      display: flex;
-      flex-direction: column;
-      text-align: left;
-    }
-
-    .saa-otsikko {
-      font-weight: 600;
-      color: #ffffff;
-      font-size: 0.95rem;
-    }
-
-    .saa-kuvaus {
-      font-size: 0.8rem;
-      color: #cbd5e1;
-    }
-
-    .paiva-palkki {
-      position: fixed;
-      top: 18px;
-      right: 24px;
-      background: rgba(15, 20, 28, 0.65);
-      backdrop-filter: blur(8px);
-      padding: 10px 16px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      color: #e2e8f0;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      z-index: 10;
-    }
-
-    /* Etusivun päälaatikko */
-    .etusivu-sisalto {
-      max-width: 720px;
-      text-align: center;
-      background: rgba(15, 20, 28, 0.55);
-      backdrop-filter: blur(10px);
-      padding: 45px 35px;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    }
-
-    h1 {
-      font-size: 3.5rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      margin-bottom: 18px;
-      color: #f8fafc;
-      text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-    }
-
-    .esittely {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: #e2e8f0;
-      margin-bottom: 32px;
-    }
-
-    /* Nappien alue */
-    .nappi-rivi {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: center;
-    }
-
-    .nappi {
-      background: linear-gradient(135deg, #d97706, #b45309);
-      color: #ffffff;
-      border: none;
-      padding: 13px 28px;
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-      box-shadow: 0 6px 20px rgba(217, 119, 6, 0.35);
-    }
-
-    .nappi:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(217, 119, 6, 0.5);
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-    }
-
-    /* Ponnahdusikkuna (Ota yhteyttä) */
-    .modal-tausta {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(6px);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .modal-tausta.avoin {
-      display: flex;
-    }
-
-    .modal-ikkuna {
-      background: #1e2530;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 18px;
-      max-width: 480px;
-      width: 100%;
-      padding: 30px;
-      position: relative;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
-      text-align: left;
-    }
-
-    .sulje-nappi {
-      position: absolute;
-      top: 15px;
-      right: 18px;
-      background: none;
-      border: none;
-      color: #94a3b8;
-      font-size: 1.6rem;
-      cursor: pointer;
-    }
-
-    .sulje-nappi:hover {
-      color: #ffffff;
-    }
-
-    .modal-ikkuna h2 {
-      font-size: 1.4rem;
-      margin-bottom: 8px;
-      color: #f8fafc;
-    }
-
-    .modal-kuvaus {
-      font-size: 0.95rem;
-      color: #cbd5e1;
-      margin-bottom: 20px;
-    }
-
-    .nimi-rivi {
-      display: flex;
-      gap: 12px;
-    }
-
-    .lomake-ryhma {
-      margin-bottom: 15px;
-      width: 100%;
-    }
-
-    label {
-      display: block;
-      font-size: 0.85rem;
-      margin-bottom: 5px;
-      color: #cbd5e1;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(15, 20, 28, 0.8);
-      color: #ffffff;
-      font-size: 0.95rem;
-      font-family: inherit;
-    }
-
-    input:focus, textarea:focus {
-      outline: none;
-      border-color: #f59e0b;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    .laheta-nappi {
-      width: 100%;
-      margin-top: 5px;
-    }
-
-    .lomake-tila {
-      margin-top: 12px;
-      font-size: 0.9rem;
-      text-align: center;
-      color: #4ade80;
-      display: none;
-    }
-
-    @media (max-width: 768px) {
-      .saa-laatikko, .paiva-palkki {
-        position: static;
-        margin-bottom: 12px;
-      }
-      .nimi-rivi {
-        flex-direction: column;
-        gap: 0;
-      }
-      h1 {
-        font-size: 2.6rem;
-      }
-    }
+    .saa-laatikko { left: 24px; display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .paiva-palkki { right: 24px; }
+    .etusivu-sisalto { max-width: 760px; text-align: center; padding: 20px; }
+    h1 { font-size: 4rem; font-weight: 700; letter-spacing: 4px; margin-bottom: 20px; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85); }
+    .esittely { font-size: 1.15rem; line-height: 1.75; margin-bottom: 36px; text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9); }
+    .nappi { background: linear-gradient(135deg, #d97706, #b45309); color: #fff; border: none; padding: 13px 30px; font-size: 1rem; font-weight: 600; border-radius: 30px; cursor: pointer; }
+    .modal-tausta { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(6px); z-index: 100; align-items: center; justify-content: center; }
+    .modal-tausta.avoin { display: flex; }
+    .modal-ikkuna { background: #1e2530; border-radius: 18px; max-width: 480px; width: 100%; padding: 30px; position: relative; }
+    input, textarea { width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 10px; background: rgba(15,20,28,0.8); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
   </style>
 </head>
 <body>
-
-  <!-- Säälaatikko vasemmassa yläkulmassa (klikkaamalla aukeaa Foreca) -->
-  <a href="https://www.foreca.fi/Finland/Seinajoki" target="_blank" rel="noopener" class="saa-laatikko" title="Katso tarkempi ennuste Forecasta">
-    <span class="saa-ikoni" id="saaIkoni">🌦️</span>
-    <div class="saa-tiedot">
-      <span class="saa-otsikko" id="saaLampo">Seinäjoki ...</span>
-      <span class="saa-kuvaus" id="saaTeksti">Haetaan säätietoja...</span>
-    </div>
+  <a href="https://foreca.fi" target="_blank" class="saa-laatikko">
+    <span id="saaIkoni">🌦️</span>
+    <div><div id="saaLampo">Seinäjoki</div><div id="saaTeksti" style="font-size:0.8rem;color:#cbd5e1;">Ladataan...</div></div>
   </a>
-
-  <!-- Päivämäärä ja nimipäivät oikeassa yläkulmassa -->
   <div class="paiva-palkki" id="paivaNaytto"></div>
-
-  <!-- Pääsivun sisältö -->
   <main class="etusivu-sisalto">
     <h1>Piiri</h1>
-    <p class="esittely">
-      Tältä sivustolta löytyy enimmäkseen valokuvia uudenkarhealla järjestelmäkameralla Canon EOS 1100D (2011) otettuja ja ihan kännykälläkin räpsimisiä. Kuvat keskittyvät enimmäkseen uudehkoon Seinäjoen Piirin alueeseen ja kuvaajan sielunelämään. Lisäilen uusia kuvia aina kun aikaa löytyy.
-    </p>
-
-    <div class="nappi-rivi">
-      <!-- Tähän kohtaan lisätään myöhemmin gallerianapit (esim. Vili) -->
-      <button class="nappi" onclick="avaaYhteydenotto()">Ota yhteyttä</button>
-    </div>
+    <p class="esittely">Tältä sivustolta löytyy enimmäkseen valokuvia uudenkarhealla järjestelmäkameralla Canon EOS 1100D (2011) otettuja ja ihan kännykälläkin räpsimisiä...</p>
+    <button class="nappi" onclick="document.getElementById('yhteysModal').classList.add('avoin')">Ota yhteyttä</button>
   </main>
-
-  <!-- Ponnahdusikkuna: Ota yhteyttä -->
-  <div class="modal-tausta" id="yhteysModal" onclick="suljeJosTausta(event)">
+  <div class="modal-tausta" id="yhteysModal">
     <div class="modal-ikkuna">
-      <button class="sulje-nappi" onclick="suljeYhteydenotto()" title="Sulje">&times;</button>
+      <button style="position:absolute;top:15px;right:18px;background:none;border:none;color:#fff;font-size:1.5rem;" onclick="document.getElementById('yhteysModal').classList.remove('avoin')">&times;</button>
       <h2>Ota yhteyttä</h2>
-      <p class="modal-kuvaus">Lähetä viesti ja palaamme asiaan niin pian kuin mahdollista!</p>
-
-      <!-- VAIHDA TÄHÄN OMA FORMSPREE-OSOITTEESI -->
-      <form id="yhteysLomake" action="https://formspree.io" method="POST">
-        <div class="nimi-rivi">
-          <div class="lomake-ryhma">
-            <label for="etunimi">Etunimi</label>
-            <input type="text" id="etunimi" name="Etunimi" required>
-          </div>
-          <div class="lomake-ryhma">
-            <label for="sukunimi">Sukunimi</label>
-            <input type="text" id="sukunimi" name="Sukunimi" required>
-          </div>
-        </div>
-
-        <div class="lomake-ryhma">
-          <label for="sahkoposti">Sähköpostiosoite</label>
-          <input type="email" id="sahkoposti" name="Sähköposti" required>
-        </div>
-
-        <div class="lomake-ryhma">
-          <label for="viesti">Viestisi</label>
-          <textarea id="viesti" name="Viesti" required></textarea>
-        </div>
-
-        <button type="submit" class="nappi laheta-nappi">Lähetä viesti</button>
-        <p class="lomake-tila" id="lomakeTila">Kiitos! Viestisi on lähetetty.</p>
+      <form id="yhteysLomake">
+        <input type="text" placeholder="Etunimi" required>
+        <input type="email" placeholder="Sähköposti" required>
+        <textarea placeholder="Viestisi" required></textarea>
+        <button type="submit" class="nappi" style="width:100%;">Lähetä</button>
       </form>
     </div>
   </div>
-
   <script>
-    // 1. Seinäjoen reaaliaikainen sää
+    // Päivämäärä ja nimipäivät
+    const nyt = new Date();
+    const pvm = `${nyt.getDate()}.${nyt.getMonth() + 1}.${nyt.getFullYear()}`;
+    const viikonpaivat = ['sunnuntai', 'maanantai', 'tiistai', 'keskiviikko', 'torstai', 'perjantai', 'lauantai'];
+    const nimipaivat = { "18.11.": "Jousia, Max, Tenho", "19.11.": "Liisa, Eliisa", "20.11.": "Jalmari, Jari" };
+    document.getElementById('paivaNaytto').textContent = `${viikonpaivat[nyt.getDay()]} ${pvm} ${nimipaivat[`${nyt.getDate()}.${nyt.getMonth()+1}.`] || ''}`;
+
+    // Säädata Open-Meteo-rajapinnasta
     async function haeSaa() {
       try {
-        // Seinäjoen koordinaatit: 62.7903, 22.8403
-        const url = 'https://open-meteo.com';
-        const vastaus = await fetch(url);
-        const data = await vastaus.json();
-
+        const res = await fetch('https://open-meteo.com');
+        const data = await res.json();
         const lampo = Math.round(data.current.temperature_2m);
-        const koodi = data.current.weather_code;
-        const etumerkki = lampo > 0 ? '+' : '';
-
-        // Sääkoodien muunnos suomeksi ja ikoneiksi
-        let ikoni = '☁️';
-        let kuvaus = 'Pilvistä';
-
-        if (koodi === 0) { ikoni = '☀️'; kuvaus = 'Selkeää'; }
-        else if (koodi === 1 || koodi === 2) { ikoni = '🌤️'; kuvaus = 'Puolipilvistä'; }
-        else if (koodi === 3) { ikoni = '☁️'; kuvaus = 'Pilvistä'; }
-        else if (koodi === 45 || koodi === 48) { ikoni = '🌫️'; kuvaus = 'Sumuista'; }
-        else if (koodi >= 51 && koodi <= 57) { ikoni = '🌦️'; kuvaus = 'Tihkusadetta'; }
-        else if (koodi >= 61 && koodi <= 67) { ikoni = '🌧️'; kuvaus = 'Vesisadetta'; }
-        else if (koodi >= 71 && koodi <= 77) { ikoni = '❄️'; kuvaus = 'Lumisadetta'; }
-        else if (koodi >= 80 && koodi <= 82) { ikoni = '🌦️'; kuvaus = 'Pilvistä ja sadekuuroja'; }
-        else if (koodi >= 85 && koodi <= 86) { ikoni = '🌨️'; kuvaus = 'Lumikuuroja'; }
-        else if (koodi >= 95) { ikoni = '⛈️'; kuvaus = 'Ukkosta'; }
-
-
+        document.getElementById('saaLampo').textContent = `Seinäjoki ${lampo > 0 ? '+' : ''}${lampo}°C`;
+        document.getElementById('saaTeksti').textContent = 'Sääohjeiden mukainen';
+      } catch (e) {
+        document.getElementById('saaTeksti').textContent = 'Ei saatavilla';
+      }
+    }
+    haeSaa();
+  </script>
 </body>
 </html>
