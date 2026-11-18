@@ -103,7 +103,11 @@ textarea{min-height:95px;resize:vertical}
   <button class="lb-nuoli" style="right:16px" onclick="vaihdaKuva(1)">&#10095;</button>
 </div>
 
-<button class="nappi yhteys-nappi" onclick="document.getElementById('yhteysModal').classList.add('avoin')">Ota yhteyttä</button>
+<div class="alakulma-napit">
+  <button type="button" class="valikko-nappi" onclick="palaaEtusivulle()">ETUSIVU</button>
+  <button type="button" class="nappi" onclick="document.getElementById('yhteysModal').classList.add('avoin')">Ota yhteyttä</button>
+</div>
+
 
 <div class="modal" id="yhteysModal" onclick="if(event.target===this)this.classList.remove('avoin')">
   <div class="ikkuna">
