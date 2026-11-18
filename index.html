@@ -8,15 +8,23 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',sans-serif;color:#fff;background:#11161d url('taustakuva1.jpg') center/cover fixed;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;position:relative}
 body::before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(10,14,20,0.45),rgba(10,14,20,0.72));z-index:0}
-.saa,.paiva{position:fixed;top:18px;background:rgba(15,20,28,0.65);backdrop-filter:blur(8px);padding:8px 16px;border-radius:20px;font-size:0.9rem;color:#f1f5f9;border:1px solid rgba(255,255,255,0.15);z-index:10;text-decoration:none}
-.saa{left:24px;display:flex;align-items:center;gap:10px}
-.paiva{right:24px}
+
+/* Säälaatikko vasemmassa yläkulmassa */
+.saa{position:fixed;top:18px;left:24px;background:rgba(15,20,28,0.65);backdrop-filter:blur(8px);padding:10px 18px;border-radius:18px;color:#f1f5f9;border:1px solid rgba(255,255,255,0.15);z-index:10;text-decoration:none;text-align:center;min-width:125px;transition:background 0.2s}
+.saa:hover{background:rgba(15,20,28,0.85)}
+.saa-kaupunki{font-weight:700;font-size:0.95rem;margin-bottom:4px;color:#fff}
+.saa-rivi{display:flex;align-items:center;justify-content:center;gap:8px}
+.saa-ikoni{font-size:2rem;line-height:1}
+.saa-lampo{font-size:1.7rem;font-weight:600;color:#fff;line-height:1}
+
+.paiva{position:fixed;top:18px;right:24px;background:rgba(15,20,28,0.65);backdrop-filter:blur(8px);padding:10px 16px;border-radius:20px;font-size:0.9rem;color:#f1f5f9;border:1px solid rgba(255,255,255,0.15);z-index:10}
 .sisalto{position:relative;z-index:2;max-width:760px;text-align:center}
 h1{font-size:4rem;letter-spacing:4px;margin-bottom:20px;text-shadow:0 4px 20px rgba(0,0,0,0.9)}
 .esittely{font-size:1.15rem;line-height:1.75;margin-bottom:36px;text-shadow:0 2px 12px rgba(0,0,0,0.95)}
 .nappi{background:linear-gradient(135deg,#d97706,#b45309);color:#fff;border:none;padding:12px 26px;font-size:1rem;font-weight:600;border-radius:30px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.5)}
 .nappi:hover{background:linear-gradient(135deg,#f59e0b,#d97706)}
 .yhteys-nappi{position:fixed;bottom:22px;left:24px;z-index:10}
+
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal.avoin{display:flex}
 .ikkuna{background:#1e2530;border:1px solid rgba(255,255,255,0.2);border-radius:18px;max-width:460px;width:100%;padding:28px;position:relative}
@@ -29,11 +37,11 @@ textarea{min-height:95px;resize:vertical}
 </head>
 <body>
 
-<a href="https://foreca.fi" target="_blank" rel="noopener" class="saa">
-  <span id="saaIkoni" style="font-size:1.4rem">🌦️</span>
-  <div>
-    <div id="saaLampo" style="font-weight:600">Seinäjoki</div>
-    <div id="saaTeksti" style="font-size:0.8rem;color:#cbd5e1">Haetaan...</div>
+<a href="https://foreca.fi" target="_blank" rel="noopener" class="saa" title="Avaa Foreca">
+  <div class="saa-kaupunki">Seinäjoki</div>
+  <div class="saa-rivi">
+    <span class="saa-ikoni" id="saaIkoni">🌦️</span>
+    <span class="saa-lampo" id="saaLampo">--°</span>
   </div>
 </a>
 
@@ -52,14 +60,16 @@ textarea{min-height:95px;resize:vertical}
     <button class="sulje" onclick="document.getElementById('yhteysModal').classList.remove('avoin')">&times;</button>
     <h2 style="margin-bottom:6px">Ota yhteyttä</h2>
     <p style="font-size:0.9rem;color:#cbd5e1;margin-bottom:16px">Lähetä viesti ja palaamme asiaan niin pian kuin mahdollista!</p>
-    <form id="lomake" action="https://formspree.io" method="POST">
+    <form id="lomake" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="16658353-ffae-40ca-867b-74c5b1bcca94">
+      <input type="hidden" name="subject" value="Uusi viesti Piiri-sivustolta">
       <div class="rivi">
         <input type="text" name="Etunimi" placeholder="Etunimi" required>
         <input type="text" name="Sukunimi" placeholder="Sukunimi" required>
       </div>
-      <input type="email" name="Sähköposti" placeholder="Sähköpostiosoite" required>
-      <textarea name="Viesti" placeholder="Viestisi" required></textarea>
-      <button type="submit" class="nappi" style="width:100%">Lähetä viesti</button>
+      <input type="email" name="email" placeholder="Sähköpostiosoite" required>
+      <textarea name="message" placeholder="Viestisi" required></textarea>
+      <button type="submit" class="nappi" id="lahetaNappi" style="width:100%">Lähetä viesti</button>
       <p id="tila" style="margin-top:10px;text-align:center;font-size:0.9rem;display:none"></p>
     </form>
   </div>
@@ -76,24 +86,23 @@ async function haeSaa() {
   try {
     const r = await fetch('https://open-meteo.com');
     const d = await r.json();
-    const t = Math.round(d.current.temperature_2m);
-    const c = d.current.weather_code;
-    const kuvaukset = {0:['☀️','Selkeää'],1:['🌤️','Melko selkeää'],2:['⛅','Puolipilvistä'],3:['☁️','Pilvistä'],45:['🌫️','Sumua'],51:['🌦️','Tihkusadetta'],61:['🌧️','Vesisadetta'],71:['❄️','Lumisadetta'],80:['🌦️','Pilvistä ja sadekuuroja'],85:['🌨️','Lumikuuroja'],95:['⛈️','Ukkosta']};
-    const avain = Object.keys(kuvaukset).reverse().find(k => c >= k) || 3;
-    document.getElementById('saaIkoni').textContent = kuvaukset[avain][0];
-    document.getElementById('saaLampo').textContent = `Seinäjoki ${t > 0 ? '+' : ''}${t}°C`;
-    document.getElementById('saaTeksti').textContent = kuvaukset[avain][1];
+    const t = Math.round(d.current_weather.temperature);
+    const c = d.current_weather.weathercode;
+    let ikoni = '☁️';
+    if (c === 0) ikoni = '☀️';
+    else if (c <= 2) ikoni = '⛅';
+    else if (c === 3) ikoni = '☁️';
+    else if (c <= 48) ikoni = '🌫️';
+    else if (c <= 67) ikoni = '🌧️';
+    else if (c <= 77) ikoni = '❄️';
+    else if (c <= 82) ikoni = '🌦️';
+    else if (c <= 86) ikoni = '🌨️';
+    else ikoni = '⛈️';
+
+    document.getElementById('saaIkoni').textContent = ikoni;
+    document.getElementById('saaLampo').textContent = `${t}°`;
   } catch (e) {
-    try {
-      const r2 = await fetch('https://wttr.in');
-      const d2 = await r2.json();
-      const cur = d2.current_condition[0];
-      const t2 = cur.temp_C;
-      document.getElementById('saaLampo').textContent = `Seinäjoki ${t2 > 0 ? '+' : ''}${t2}°C`;
-      document.getElementById('saaTeksti').textContent = 'Katso tarkemmin Forecasta';
-    } catch (e2) {
-      document.getElementById('saaTeksti').textContent = 'Avaa Foreca';
-    }
+    document.getElementById('saaLampo').textContent = '';
   }
 }
 haeSaa();
@@ -101,10 +110,29 @@ haeSaa();
 document.getElementById('lomake').addEventListener('submit', async function(e) {
   e.preventDefault();
   const tila = document.getElementById('tila');
-  const res = await fetch(this.action, {method:'POST', body:new FormData(this), headers:{'Accept':'application/json'}});
-  tila.style.display = 'block';
-  if (res.ok) { this.reset(); tila.style.color = '#4ade80'; tila.textContent = 'Kiitos! Viestisi on lähetetty.'; }
-  else { tila.style.color = '#f87171'; tila.textContent = 'Lähetys epäonnistui. Tarkista Formspree-koodi.'; }
+  const nappi = document.getElementById('lahetaNappi');
+  nappi.textContent = 'Lähetetään...';
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: new FormData(this)
+    });
+    const data = await res.json();
+    tila.style.display = 'block';
+    if (data.success) {
+      this.reset();
+      tila.style.color = '#4ade80';
+      tila.textContent = 'Kiitos! Viestisi on lähetetty.';
+    } else {
+      tila.style.color = '#f87171';
+      tila.textContent = 'Viestin lähetys epäonnistui. Yritä uudelleen.';
+    }
+  } catch (err) {
+    tila.style.display = 'block';
+    tila.style.color = '#f87171';
+    tila.textContent = 'Verkkovirhe. Yritä uudelleen.';
+  }
+  nappi.textContent = 'Lähetä viesti';
 });
 </script>
 </body>
