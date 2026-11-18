@@ -30,7 +30,7 @@ h1{font-size:4rem;letter-spacing:4px;margin-bottom:20px;text-shadow:0 4px 20px r
 .valikko-nappi:hover,.pudotus.auki .valikko-nappi{background:#b49b82;border-color:#b49b82;color:#fff}
 .alavalikko{display:none;position:absolute;top:100%;left:0;min-width:230px;background:#b49b82;box-shadow:0 12px 30px rgba(0,0,0,0.6);z-index:20;text-align:left;border-radius:0 0 4px 4px;overflow:hidden}
 .pudotus:hover .alavalikko,.pudotus.auki .alavalikko{display:block}
-.alavalikko-linkki{display:block;width:100%;padding:15px 22px;color:#fff;background:none;border:none;border-bottom:1px solid rgba(255,255,255,0.18);font-family:inherit;font-size:0.95rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;text-align:left;cursor:pointer;transition:background 0.2s}
+.alavalikko-linkki{display:block;width:100%;padding:15px 22px;color:#fff;background:none;border:none;border-bottom:1px solid rgba(255,255,255,0.18);font-family:inherit;font-size:0.95rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;text-align:left;text-decoration:none;cursor:pointer;transition:background 0.2s}
 .alavalikko-linkki:last-child{border-bottom:none}
 .alavalikko-linkki:hover{background:#9c836a}
 
@@ -61,7 +61,7 @@ textarea{min-height:95px;resize:vertical}
 <body>
 
 <div class="ylapalkki">
-  <a href="https://foreca.fi" target="_blank" rel="noopener" class="saa" title="Avaa Seinäjoen sää Forecasta">
+  <a id="forecaLinkki" href="#" target="_blank" rel="noopener" class="saa" title="Avaa Seinäjoen sää Forecasta">
     <div class="saa-kaupunki">Seinäjoki</div>
     <div class="saa-rivi">
       <span class="saa-ikoni" id="saaIkoni">🌦️</span>
@@ -81,7 +81,7 @@ textarea{min-height:95px;resize:vertical}
       <div class="pudotus" id="piiriValikko">
         <button type="button" class="valikko-nappi" onclick="toggleValikko('piiriValikko')">PIIRIN ALUE ▾</button>
         <div class="alavalikko">
-          <button type="button" class="alavalikko-linkki" onclick="avaaKartta()">KARTAT</button>
+          <a id="karttaLinkki" href="#" target="_blank" rel="noopener" class="alavalikko-linkki">KARTAT</a>
           <button type="button" class="alavalikko-linkki" onclick="avaaSivu('piirintie11')">PIIRINTIE 11</button>
         </div>
       </div>
@@ -130,6 +130,16 @@ textarea{min-height:95px;resize:vertical}
 </div>
 
 <script>
+// Ulkoiset linkit muodostetaan palasina (suojaa osoitteen katkeamiselta kopioidessa)
+const forecaOsa1 = 'https://' + 'www.foreca.fi';
+const forecaOsa2 = '/finland/seinajoki';
+document.getElementById('forecaLinkki').href = forecaOsa1 + forecaOsa2;
+
+const karttaOsa1 = 'https://' + '://google.com';
+const karttaOsa2 = '/maps/@62.7664993,';
+const karttaOsa3 = '22.821372,15z';
+document.getElementById('karttaLinkki').href = karttaOsa1 + karttaOsa2 + karttaOsa3;
+
 // Gallerioiden kuvat (lisää tähän tiedostonimet ja kuvatekstit kun lataat kuvat GitHubiin)
 const galleriat = {
   piirintie11: [
@@ -157,20 +167,4 @@ function lataaGalleriat() {
   });
 }
 lataaGalleriat();
-
-// Valikkojen ja alasivujen hallinta
-function toggleValikko(id) {
-  document.getElementById(id).classList.toggle('auki');
-}
-
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.pudotus')) {
-    document.querySelectorAll('.pudotus').forEach(p => p.classList.remove('auki'));
-  }
-});
-
-function avaaKartta() {
-  const karttaUrl = 'https://' + 'www.google.com' + '/maps/@62.7664993,22.821372,15z?entry=ttu&g_ep=EgoyMDI2MTExNi4wIKXMDSoASAFQAw%3D%3D';
-  window.open(karttaUrl, '_blank', 'noopener');
-}
 
