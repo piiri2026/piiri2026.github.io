@@ -17,7 +17,7 @@ body::before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(1
 .saa-ikoni{font-size:2rem;line-height:1}
 .saa-lampo{font-size:1.7rem;font-weight:600;color:#fff;line-height:1}
 .paiva{padding:12px 18px;border-radius:20px;font-size:.95rem}
-.sisalto{position:relative;z-index:5;max-width:820px;width:100%;text-align:center}
+.sisalto{position:relative;z-index:5;max-width:860px;width:100%;text-align:center}
 h1{font-size:4rem;letter-spacing:4px;margin-bottom:20px;text-shadow:0 4px 20px rgba(0,0,0,.9)}
 .esittely{font-size:1.15rem;line-height:1.75;margin-bottom:36px;text-shadow:0 2px 12px rgba(0,0,0,.95)}
 .valikko{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;margin-top:10px}
@@ -34,16 +34,22 @@ h1{font-size:4rem;letter-spacing:4px;margin-bottom:20px;text-shadow:0 4px 20px r
 .alasivu h2{font-size:2rem;letter-spacing:2px;margin-bottom:10px;text-transform:uppercase}
 .alasivu-kuvaus{color:#cbd5e1;margin-bottom:24px}
 .kuva-ruudukko{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:26px}
-.kuva-kortti{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;overflow:hidden}
+.kuva-kortti{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .2s}
+.kuva-kortti:hover{transform:translateY(-4px);border-color:#b49b82}
 .kuva-kortti img{width:100%;height:190px;object-fit:cover;display:block}
 .kuva-kortti p{padding:10px;font-size:.9rem;color:#e2e8f0}
 .nappi{background:linear-gradient(135deg,#d97706,#b45309);color:#fff;border:none;padding:12px 26px;font-size:1rem;font-weight:600;border-radius:30px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.5)}
 .nappi:hover{background:linear-gradient(135deg,#f59e0b,#d97706)}
 .yhteys-nappi{position:fixed;bottom:22px;left:24px;z-index:10}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;padding:20px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal.avoin{display:flex}
 .ikkuna{background:#1e2530;border:1px solid rgba(255,255,255,.2);border-radius:18px;max-width:460px;width:100%;padding:28px;position:relative}
-.sulje{position:absolute;top:14px;right:18px;background:none;border:none;color:#94a3b8;font-size:1.6rem;cursor:pointer}
+.sulje{position:absolute;top:14px;right:18px;background:none;border:none;color:#cbd5e1;font-size:2rem;cursor:pointer;z-index:110}
+.lb-sisalto{position:relative;max-width:92vw;max-height:90vh;text-align:center}
+.lb-sisalto img{max-width:90vw;max-height:78vh;border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,.8);object-fit:contain}
+.lb-teksti{margin-top:12px;font-size:1.05rem;color:#f1f5f9}
+.lb-nuoli{position:fixed;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);color:#fff;border:none;font-size:2rem;padding:12px 18px;border-radius:50%;cursor:pointer}
+.lb-nuoli:hover{background:#b49b82}
 .rivi{display:flex;gap:10px}
 input,textarea{width:100%;padding:10px;margin:6px 0 14px;border-radius:10px;background:rgba(15,20,28,.8);color:#fff;border:1px solid rgba(255,255,255,.2);font-family:inherit}
 textarea{min-height:95px;resize:vertical}
@@ -90,6 +96,13 @@ textarea{min-height:95px;resize:vertical}
   </section>
 </main>
 
+<div class="modal" id="lightboxModal" onclick="if(event.target===this)this.classList.remove('avoin')">
+  <button class="sulje" onclick="document.getElementById('lightboxModal').classList.remove('avoin')">&times;</button>
+  <button class="lb-nuoli" style="left:16px" onclick="vaihdaKuva(-1)">&#10094;</button>
+  <div class="lb-sisalto"><img id="lbKuva" src=""><p class="lb-teksti" id="lbTeksti"></p></div>
+  <button class="lb-nuoli" style="right:16px" onclick="vaihdaKuva(1)">&#10095;</button>
+</div>
+
 <button class="nappi yhteys-nappi" onclick="document.getElementById('yhteysModal').classList.add('avoin')">Ota yhteyttä</button>
 
 <div class="modal" id="yhteysModal" onclick="if(event.target===this)this.classList.remove('avoin')">
@@ -113,11 +126,47 @@ const p = 'https' + '://';
 document.getElementById('forecaLinkki').href = p + 'www' + '.' + 'foreca' + '.' + 'fi/finland/seinajoki';
 document.getElementById('karttaLinkki').href = p + 'www' + '.' + 'google' + '.' + 'com/maps/@62.7664993,22.821372,15z';
 
-const galleriat = { piirintie11: [], vili: [] };
+const galleriat = {
+  piirintie11: [],
+  vili: [
+    { tiedosto: 'vili1.jpg', teksti: 'Vili 1' },
+    { tiedosto: 'vili2.jpg', teksti: 'Vili 2' },
+    { tiedosto: 'vili3.jpg', teksti: 'Vili 3' },
+    { tiedosto: 'vili4.jpg', teksti: 'Vili 4' },
+    { tiedosto: 'vili5.jpg', teksti: 'Vili 5' },
+    { tiedosto: 'vili6.jpg', teksti: 'Vili 6' },
+    { tiedosto: 'vili7.jpg', teksti: 'Vili 7' },
+    { tiedosto: 'vili8.jpg', teksti: 'Vili 8' },
+    { tiedosto: 'vili9.jpg', teksti: 'Vili 9' }
+  ]
+};
+
+let nykyinenGalleria = 'vili', nykyinenIndeksi = 0;
+
+function avaaLightbox(gal, idx) {
+  nykyinenGalleria = gal; nykyinenIndeksi = idx;
+  const k = galleriat[gal][idx];
+  document.getElementById('lbKuva').src = k.tiedosto;
+  document.getElementById('lbTeksti').textContent = k.teksti || '';
+  document.getElementById('lightboxModal').classList.add('avoin');
+}
+
+function vaihdaKuva(suunta) {
+  const lista = galleriat[nykyinenGalleria];
+  nykyinenIndeksi = (nykyinenIndeksi + suunta + lista.length) % lista.length;
+  avaaLightbox(nykyinenGalleria, nykyinenIndeksi);
+}
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightboxModal').classList.contains('avoin')) return;
+  if (e.key === 'Escape') document.getElementById('lightboxModal').classList.remove('avoin');
+  if (e.key === 'ArrowRight') vaihdaKuva(1);
+  if (e.key === 'ArrowLeft') vaihdaKuva(-1);
+});
 
 Object.keys(galleriat).forEach(k => {
   const el = document.getElementById('ruudukko-' + k);
-  el.innerHTML = galleriat[k].length ? galleriat[k].map(x => `<div class="kuva-kortti"><img src="${x.tiedosto}"><p>${x.teksti||''}</p></div>`).join('') : '<p style="color:#94a3b8;grid-column:1/-1;padding:20px 0">Kuvia lisätään tänne pian!</p>';
+  el.innerHTML = galleriat[k].length ? galleriat[k].map((x, i) => `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${x.tiedosto}"><p>${x.teksti||''}</p></div>`).join('') : '<p style="color:#94a3b8;grid-column:1/-1;padding:20px 0">Kuvia lisätään tänne pian!</p>';
 });
 
 document.addEventListener('click', e => { if(!e.target.closest('.pudotus')) document.querySelectorAll('.pudotus').forEach(x => x.classList.remove('auki')); });
