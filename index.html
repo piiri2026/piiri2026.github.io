@@ -109,6 +109,7 @@ textarea{min-height:95px;resize:vertical}
       <button type="button" class="nav-nappi" onclick="document.getElementById('henkValikko').classList.toggle('auki')">HENK.KOHT. KUVAT ▾</button>
       <div class="alavalikko">
         <button type="button" onclick="avaaSalattuSivu('vili')">🔒 VILI-KISSA</button>
+        <button type="button" onclick="avaaSalattuSivu('omatupa')">🔒 OMA TUPA</button>
       </div>
     </div>
   </nav>
@@ -147,6 +148,15 @@ textarea{min-height:95px;resize:vertical}
     <div class="kuva-ruudukko" id="ruudukko-vili"></div>
     <button type="button" class="nappi" onclick="palaaEtusivulle()">← Takaisin etusivulle</button>
   </section>
+    <section id="sivu-omatupa" class="alasivu">
+    <div class="alasivu-sisalto">
+      <h2>Oma tupa</h2>
+      <p class="alasivu-kuvaus">Kuvia omasta tuvasta ja kodin yksityiskohdista.</p>
+      <div class="kuva-ruudukko" id="ruudukko-omatupa"></div>
+      <button type="button" class="nappi" onclick="palaaEtusivulle()">← Takaisin etusivulle</button>
+    </div>
+  </section>
+
 </main>
 
 <div class="modal" id="salasanaModal" onclick="if(event.target===this)this.classList.remove('avoin')">
@@ -248,7 +258,7 @@ const galleriat = {
     { tiedosto: 'vili7.jpg', teksti: 'Nyt on isompi kiipeilyteline kun vanha oli niin onnettoman pieni ja kaatuili jo minun hypyistäni' },
     { tiedosto: 'vili8.jpg', teksti: 'Eikö mennä jo päikkäreille' },
     { tiedosto: 'vili9.jpg', teksti: 'Ai tuolta se suihkus käynti näyttää, ei mulle kiitos' }
-  ]
+  ], omatupa: []
 };
 
 function kokeilePaate(img) {
