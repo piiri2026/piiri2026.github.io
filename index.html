@@ -110,6 +110,7 @@ textarea{min-height:95px;resize:vertical}
       <div class="alavalikko">
         <button type="button" onclick="avaaSalattuSivu('vili')">🔒 VILI-KISSA</button>
         <button type="button" onclick="avaaSalattuSivu('omatupa')">🔒 OMA TUPA</button>
+         <button type="button" onclick="avaaSalattuSivu('vieraat')">🔒 VIERAAT</button>
       </div>
     </div>
   </nav>
@@ -156,7 +157,14 @@ textarea{min-height:95px;resize:vertical}
       <button type="button" class="nappi" onclick="palaaEtusivulle()">← Takaisin etusivulle</button>
     </div>
   </section>
-
+<section id="sivu-vieraat" class="alasivu">
+      <div class="alasivu-sisalto">
+        <h2>Vieraat</h2>
+        <p class="alasivu-kuvaus">Kuvia vieraista ja yhteisistä hetkistä.</p>
+        <div class="kuva-ruudukko" id="ruudukko-vieraat"></div>
+        <button type="button" class="nappi" onclick="palaaEtusivulle()">← Takaisin etusivulle</button>
+      </div>
+    </section>
 </main>
 
 <div class="modal" id="salasanaModal" onclick="if(event.target===this)this.classList.remove('avoin')">
@@ -285,6 +293,18 @@ const galleriat = {
     { tiedosto: 'tupa7.jpg', teksti: 'Vessa' },
     { tiedosto: 'tupa8.jpg', teksti: 'Huusholli' },
     { tiedosto: 'tupa9.jpg', teksti: 'Tarjoilu' }
+  ],
+  vieraat: [
+    { tiedosto: 'vieras1.jpg', teksti: 'Vieras 1' },
+    { tiedosto: 'vieras2.jpg', teksti: 'Vieras 2' },
+    { tiedosto: 'vieras3.jpg', teksti: 'Vieras 3' },
+    { tiedosto: 'vieras4.jpg', teksti: 'Vieras 4' },
+    { tiedosto: 'vieras5.jpg', teksti: 'Vieras 5' },
+    { tiedosto: 'vieras6.jpg', teksti: 'Vieras 6' },
+    { tiedosto: 'vieras7.jpg', teksti: 'Vieras 7' },
+    { tiedosto: 'vieras8.jpg', teksti: 'Vieras 8' },
+    { tiedosto: 'vieras9.jpg', teksti: 'Vieras 9' },
+    { tiedosto: 'vieras10.jpg', teksti: 'Vieras 10' }
   ]
 };
 
