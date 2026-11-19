@@ -184,7 +184,7 @@ textarea{min-height:95px;resize:vertical}
   </div>
 </div>
 <script>
-const SALASANA = 'vili2026'; // Vaihda tähän haluamasi salasana
+const SALASANA = 'vili2026';
 const p = 'https' + '://';
 document.getElementById('forecaLinkki').href = p + 'www' + '.' + 'foreca' + '.' + 'fi/finland/seinajoki';
 document.getElementById('karttaLinkki').href = p + 'www' + '.' + 'google' + '.' + 'com/maps/@62.7664993,22.821372,15z';
@@ -231,8 +231,13 @@ const galleriat = {
     { tiedosto: 'piirintie2.jpg', teksti: 'Julkisivu' },
     { tiedosto: 'piirintie3.jpg', teksti: 'Julkisivu' },
     { tiedosto: 'piirintie4.jpg', teksti: 'Julkisivu' }
-  ], piirintieIlta: [],
-
+  ],
+  piirintieIlta: [
+    { tiedosto: 'ilta1.jpg', teksti: 'Ilta loisteessa 1' },
+    { tiedosto: 'ilta2.jpg', teksti: 'Ilta loisteessa 2' },
+    { tiedosto: 'ilta3.jpg', teksti: 'Ilta loisteessa 3' },
+    { tiedosto: 'ilta4.jpg', teksti: 'Ilta loisteessa 4' }
+  ],
   vili: [
     { tiedosto: 'vili1.jpg', teksti: 'Oman kodin ensi nuuhkaisut' },
     { tiedosto: 'vili2.jpg', teksti: 'Paikkoja tutkin' },
@@ -240,7 +245,7 @@ const galleriat = {
     { tiedosto: 'vili4.jpg', teksti: 'Näkeeköhän ne mua jos oon ihan paikallaan' },
     { tiedosto: 'vili5.jpg', teksti: 'Tästä on lyhyt matka ottaa rusketusraidat ja palata varjoon' },
     { tiedosto: 'vili6.jpg', teksti: 'Harjoittelen silmiin katsomista' },
-    { tiedosto: 'vili7.jpg', teksti: 'Nyt on isompi kiipeilyteline kun vanha oli niin onnettoman pieni ja kaatuili jo minun hypyistäni  ' },
+    { tiedosto: 'vili7.jpg', teksti: 'Nyt on isompi kiipeilyteline kun vanha oli niin onnettoman pieni ja kaatuili jo minun hypyistäni' },
     { tiedosto: 'vili8.jpg', teksti: 'Eikö mennä jo päikkäreille' },
     { tiedosto: 'vili9.jpg', teksti: 'Ai tuolta se suihkus käynti näyttää, ei mulle kiitos' }
   ]
@@ -279,9 +284,8 @@ document.addEventListener('keydown', e => {
 
 Object.keys(galleriat).forEach(k => {
   const el = document.getElementById('ruudukko-' + k);
-  el.innerHTML = galleriat[k].length ? galleriat[k].map((x, i) => `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${x.tiedosto}" onerror="kokeilePaate(this)"><p>${x.teksti||''}</p></div>`).join('') : '';
+  el.innerHTML = galleriat[k].map((x, i) => `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${x.tiedosto}" onerror="kokeilePaate(this)"><p>${x.teksti||''}</p></div>`).join('');
 });
-
 
 document.addEventListener('click', e => {
   if (!e.target.closest('.pudotus')) document.querySelectorAll('.pudotus').forEach(x => x.classList.remove('auki'));
@@ -294,8 +298,13 @@ function avaaSivu(id) {
   document.getElementById('etusivuNakyma').style.display = 'none';
   document.querySelectorAll('.alasivu').forEach(s => s.classList.remove('aktiivinen'));
   document.getElementById('sivu-' + id).classList.add('aktiivinen');
+  if (id === 'piirintie11') {
+    document.getElementById('ruudukko-piirintie11').style.display = 'none';
+    document.getElementById('ruudukko-piirintieIlta').style.display = 'none';
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function palaaEtusivulle() {
   document.getElementById('navLista').classList.remove('mobiili-auki');
   document.querySelectorAll('.alasivu').forEach(s => s.classList.remove('aktiivinen'));
@@ -315,9 +324,9 @@ function vaihdaPiirintieKansio(id) {
   }
 }
 
-
 const nyt = new Date();
 const vp = ['sunnuntai','maanantai','tiistai','keskiviikko','torstai','perjantai','lauantai'][nyt.getDay()];
+
 const np1 = {
   "1.1.":"Uudenvuodenpäivä","2.1.":"Aapeli","3.1.":"Elmeri, Elmer, Elmo","4.1.":"Ruut","5.1.":"Lea, Leea","6.1.":"Harri","7.1.":"Aukusti, Aku","8.1.":"Hilppa, Titta","9.1.":"Veikko, Veli, Veijo, Veikka","10.1.":"Nyyrikki",
   "11.1.":"Kari, Karri","12.1.":"Toini","13.1.":"Nuutti","14.1.":"Sakari, Saku","15.1.":"Solja","16.1.":"Ilmari, Ilmo","17.1.":"Toni, Anttoni, Antto, Anton","18.1.":"Laura","19.1.":"Heikki, Henrik, Henrikki, Henri","20.1.":"Henna, Henni, Henriikka",
