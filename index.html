@@ -254,8 +254,9 @@ document.addEventListener('keydown', e => {
 
 Object.keys(galleriat).forEach(k => {
   const el = document.getElementById('ruudukko-' + k);
-  el.innerHTML = galleriat[k].length ? galleriat[k].map((x, i) => `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${x.tiedosto}" onerror="kokeilePaate(this)"><p>${x.teksti||''}</p></div>`).join('') : '<p style="color:#94a3b8;grid-column:1/-1;padding:20px 0">Kuvia lisätään tänne pian!</p>';
+  el.innerHTML = galleriat[k].length ? galleriat[k].map((x, i) => `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${x.tiedosto}" onerror="kokeilePaate(this)"><p>${x.teksti||''}</p></div>`).join('') : '';
 });
+
 
 document.addEventListener('click', e => {
   if (!e.target.closest('.pudotus')) document.querySelectorAll('.pudotus').forEach(x => x.classList.remove('auki'));
