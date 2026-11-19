@@ -131,7 +131,7 @@ textarea{min-height:95px;resize:vertical}
         <button type="button" class="nappi" onclick="vaihdaPiirintieKansio('piirintie11')">Pihapiiriä</button>
         <button type="button" class="nappi" onclick="vaihdaPiirintieKansio('piirintieIlta')">Ilta loisteessa</button>
       </div>
-      <div class="kuva-ruudukko" id="ruudukko-piirintie11"></div>
+      <div class="kuva-ruudukko" id="ruudukko-piirintie11" style="display:none></div>
       <div class="kuva-ruudukko" id="ruudukko-piirintieIlta" style="display:none"></div>
       <button type="button" class="nappi" onclick="palaaEtusivulle()">← Takaisin etusivulle</button>
     </div>
@@ -295,17 +295,25 @@ function avaaSivu(id) {
   document.getElementById('sivu-' + id).classList.add('aktiivinen');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function vaihdaPiirintieKansio(id) {
-  document.getElementById('ruudukko-piirintie11').style.display = id === 'piirintie11' ? 'grid' : 'none';
-  document.getElementById('ruudukko-piirintieIlta').style.display = id === 'piirintieIlta' ? 'grid' : 'none';
-}
-
 function palaaEtusivulle() {
   document.getElementById('navLista').classList.remove('mobiili-auki');
   document.querySelectorAll('.alasivu').forEach(s => s.classList.remove('aktiivinen'));
-  document.getElementById('etusivuNakyma').style.display = 'block';
+  document.getElementById('etusivuNakyma').style.display = '';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+function vaihdaPiirintieKansio(id) {
+  const piha = document.getElementById('ruudukko-piirintie11');
+  const ilta = document.getElementById('ruudukko-piirintieIlta');
+  if (id === 'piirintie11') {
+    piha.style.display = piha.style.display === 'grid' ? 'none' : 'grid';
+    ilta.style.display = 'none';
+  } else {
+    ilta.style.display = ilta.style.display === 'grid' ? 'none' : 'grid';
+    piha.style.display = 'none';
+  }
+}
+
 
 const nyt = new Date();
 const vp = ['sunnuntai','maanantai','tiistai','keskiviikko','torstai','perjantai','lauantai'][nyt.getDay()];
