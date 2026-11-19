@@ -207,7 +207,6 @@ let odottavaSivu = '';
 function avaaSalattuSivu(id) {
   document.querySelectorAll('.pudotus').forEach(x => x.classList.remove('auki'));
   document.getElementById('navLista').classList.remove('mobiili-auki');
-  if (sessionStorage.getItem('piiri_auki') === '1') { avaaSivu(id); return; }
   odottavaSivu = id;
   document.getElementById('salasanaSyote').value = '';
   document.getElementById('salasanaVirhe').style.display = 'none';
@@ -217,13 +216,13 @@ function avaaSalattuSivu(id) {
 
 function tarkistaSalasana() {
   if (document.getElementById('salasanaSyote').value === SALASANA) {
-    sessionStorage.setItem('piiri_auki', '1');
     document.getElementById('salasanaModal').classList.remove('avoin');
     avaaSivu(odottavaSivu);
   } else {
     document.getElementById('salasanaVirhe').style.display = 'block';
   }
 }
+
 
 const galleriat = {
   piirintie11: [
