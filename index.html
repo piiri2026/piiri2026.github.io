@@ -74,9 +74,13 @@ textarea{min-height:95px;resize:vertical}
   .esittely{font-size:1rem;line-height:1.6}
   .kuva-ruudukko{grid-template-columns:1fr}
   .lb-nuoli{padding:10px 13px;font-size:1.5rem}
-  .rivi{flex-direction:column;gap:0}
+    .rivi{flex-direction:column;gap:0}
+}
+@media(min-width:901px){
+  #etusivuNakyma{min-height:calc(100vh - 180px);display:flex;flex-direction:column;justify-content:center;align-items:center}
 }
 </style>
+
 </head>
 <body>
 
@@ -118,15 +122,21 @@ textarea{min-height:95px;resize:vertical}
     <p class="esittely">Tältä sivustolta löytyy enimmäkseen valokuvia uudenkarhealla järjestelmäkameralla Canon EOS 1100D (2011) otettuja ja ihan kännykälläkin räpsimisiä. Kuvat keskittyvät enimmäkseen uudehkoon Seinäjoen Piirin alueeseen ja kuvaajan sielunelämään. Lisäilen uusia kuvia aina kun aikaa löytyy.</p>
   </div>
 
-      <section id="sivu-piirintie11" class="alasivu">
+        <section id="sivu-piirintie11" class="alasivu">
     <img src="piirintie11_paa.jpg.JPG" alt="Piirintie 11 kerrostalo" class="alasivu-hero">
     <div class="alasivu-sisalto">
       <h2>Piirintie 11</h2>
       <p class="alasivu-kuvaus" style="line-height:1.7;text-align:left;margin-top:12px">Piirintie 11 (60220 Seinäjoki) on <a id="sevasLinkki" href="#" target="_blank" rel="noopener" style="color:#b49b82;font-weight:700;text-decoration:underline">Sevas Kodit Oy:n</a> kerrostalovuokrakohde Huhtalan kaupunginosassa, Törnävän ja Piirin alueen kupeessa. Kohteessa on yhteensä 73 asuntoa kerroksissa 1–6, ja se on valmistunut vuoden 2025 lopussa.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:20px 0">
+        <button type="button" class="nappi" onclick="vaihdaPiirintieKansio('piirintie11')">Pihapiiriä</button>
+        <button type="button" class="nappi" onclick="vaihdaPiirintieKansio('piirintieIlta')">Ilta loisteessa</button>
+      </div>
       <div class="kuva-ruudukko" id="ruudukko-piirintie11"></div>
+      <div class="kuva-ruudukko" id="ruudukko-piirintieIlta" style="display:none"></div>
       <button type="button" class="nappi" onclick="palaaEtusivulle()">← Takaisin etusivulle</button>
     </div>
   </section>
+
 
 
 
@@ -220,7 +230,7 @@ const galleriat = {
     { tiedosto: 'piirintie2.jpg', teksti: 'Julkisivu' },
     { tiedosto: 'piirintie3.jpg', teksti: 'Julkisivu' },
     { tiedosto: 'piirintie4.jpg', teksti: 'Julkisivu' }
-  ],
+  ], piirintieIlta: [],
 
   vili: [
     { tiedosto: 'vili1.jpg', teksti: 'Oman kodin ensi nuuhkaisut' },
@@ -284,6 +294,10 @@ function avaaSivu(id) {
   document.querySelectorAll('.alasivu').forEach(s => s.classList.remove('aktiivinen'));
   document.getElementById('sivu-' + id).classList.add('aktiivinen');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function vaihdaPiirintieKansio(id) {
+  document.getElementById('ruudukko-piirintie11').style.display = id === 'piirintie11' ? 'grid' : 'none';
+  document.getElementById('ruudukko-piirintieIlta').style.display = id === 'piirintieIlta' ? 'grid' : 'none';
 }
 
 function palaaEtusivulle() {
