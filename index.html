@@ -176,7 +176,8 @@ textarea{min-height:95px;resize:vertical}
       <input type="hidden" name="access_key" value="16658353-ffae-40ca-867b-74c5b1bcca94">
       <input type="hidden" name="subject" value="Uusi viesti Piiri-sivustolta">
       <div class="rivi"><input type="text" name="Etunimi" placeholder="Etunimi" required><input type="text" name="Sukunimi" placeholder="Sukunimi" required></div>
-      <input type="email" name="email" placeholder="Sähköpostiosoite" required>
+           <input type="text" id="yhteysTieto" name="Yhteystieto" placeholder="Sähköpostiosoite tai puhnro (+358 40 123 4567)" required>
+
       <textarea name="message" placeholder="Viestisi" required></textarea>
       <button type="submit" class="nappi" id="lahetaNappi" style="width:100%">Lähetä viesti</button>
       <p id="tila" style="margin-top:10px;text-align:center;font-size:.9rem;display:none"></p>
@@ -386,6 +387,18 @@ haeSaa();
 document.getElementById('lomake').addEventListener('submit', async function(e) {
   e.preventDefault();
   const tila = document.getElementById('tila'), nappi = document.getElementById('lahetaNappi');
+  const arvo = document.getElementById('yhteysTieto').value.trim();
+  const onSahkoposti = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(arvo);
+  const numerot = arvo.replace(/[\s\-()]/g, '');
+  const onPuhelin = /^\+?\d{7,15}$/.test(numerot);
+
+  if (!onSahkoposti && !onPuhelin) {
+    tila.style.display = 'block';
+    tila.style.color = '#f87171';
+    tila.textContent = 'Anna kelvollinen sähköpostiosoite tai puhelinnumero (esim. +358 40 123 4567).';
+    return;
+  }
+
   nappi.textContent = 'Lähetetään...';
   try {
     const postiUrl = p + 'api' + '.' + 'web3forms' + '.' + 'com/submit';
@@ -398,6 +411,7 @@ document.getElementById('lomake').addEventListener('submit', async function(e) {
   } catch (err) { tila.style.display = 'block'; tila.style.color = '#f87171'; tila.textContent = 'Verkkovirhe.'; }
   nappi.textContent = 'Lähetä viesti';
 });
+
 </script>
 </body>
 </html>
