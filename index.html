@@ -113,12 +113,14 @@ textarea{min-height:95px;resize:vertical}
     <p class="esittely">Tältä sivustolta löytyy enimmäkseen valokuvia uudenkarhealla järjestelmäkameralla Canon EOS 1100D (2011) otettuja ja ihan kännykälläkin räpsimisiä. Kuvat keskittyvät enimmäkseen uudehkoon Seinäjoen Piirin alueeseen ja kuvaajan sielunelämään. Lisäilen uusia kuvia aina kun aikaa löytyy.</p>
   </div>
 
-  <section id="sivu-piirintie11" class="alasivu">
+    <section id="sivu-piirintie11" class="alasivu">
     <h2>Piirintie 11</h2>
-    <p class="alasivu-kuvaus">Valokuvia Piirintie 11:n ympäristöstä.</p>
+    <img src="piirintie11_paa.jpg" onerror="kokeilePaate(this)" alt="Piirintie 11 kerrostalo" style="width:100%;max-height:420px;object-fit:cover;border-radius:12px;margin:12px 0 18px;border:1px solid rgba(255,255,255,.15)">
+    <p class="alasivu-kuvaus" style="line-height:1.7;text-align:left">Piirintie 11 (60220 Seinäjoki) on <a id="sevasLinkki" href="#" target="_blank" rel="noopener" style="color:#b49b82;font-weight:700;text-decoration:underline">Sevas Kodit Oy:n</a> kerrostalovuokrakohde Huhtalan kaupunginosassa, Törnävän ja Piirin alueen kupeessa. Kohteessa on yhteensä 73 asuntoa kerroksissa 1–6, ja se on valmistunut vuoden 2025 lopussa.</p>
     <div class="kuva-ruudukko" id="ruudukko-piirintie11"></div>
     <button type="button" class="nappi" onclick="palaaEtusivulle()">← Takaisin etusivulle</button>
   </section>
+
 
   <section id="sivu-vili" class="alasivu">
     <h2>Vili-kissa</h2>
@@ -167,6 +169,7 @@ const SALASANA = 'vili2026'; // Vaihda tähän haluamasi salasana
 const p = 'https' + '://';
 document.getElementById('forecaLinkki').href = p + 'www' + '.' + 'foreca' + '.' + 'fi/finland/seinajoki';
 document.getElementById('karttaLinkki').href = p + 'www' + '.' + 'google' + '.' + 'com/maps/@62.7664993,22.821372,15z';
+document.getElementById('sevasLinkki').href = p + 'sevas' + '.' + 'fi/';
 
 let edellinenScroll = window.scrollY;
 const ylaPalkki = document.getElementById('ylaPalkki');
