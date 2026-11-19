@@ -59,24 +59,9 @@ textarea{min-height:95px;resize:vertical}
 
 /* Mobiilinäkymä (piirille.fi-tyylinen valikko) */
 .lb-nuoli{z-index:120;background:rgba(15,20,28,.7)}
-@media(max-width:850px){
-  body{background-size:cover;background-position:center top;background-attachment:scroll;padding-top:116px}
-  .ylapalkki{flex-wrap:wrap;padding:10px 14px;gap:8px}
-  .yla-vasen{display:contents}
-  .saa{order:1;padding:6px 10px;font-size:.9rem}
-  .hampurilainen{display:block;order:2}
-  .ylapalkki > .nappi{order:3;padding:8px 12px;font-size:.82rem}
-  .paiva{display:block;order:4;width:100%;text-align:center;font-size:.84rem;padding-top:6px;border-top:1px solid rgba(255,255,255,.12)}
-  .nav-lista{display:none;position:fixed;top:106px;left:0;right:0;background:#151b24;border-bottom:1px solid rgba(255,255,255,.2);flex-direction:column;align-items:stretch;padding:14px 20px 24px;gap:6px;box-shadow:0 15px 30px rgba(0,0,0,.85)}
-  .nav-lista.mobiili-auki{display:flex}
-  .nav-nappi{text-align:left;width:100%;padding:14px 12px;font-size:1.05rem;border-bottom:1px solid rgba(255,255,255,.08)}
-  .alavalikko{position:static;box-shadow:none;background:rgba(180,155,130,.2);margin-top:4px}
-  h1{font-size:2.7rem;margin-top:10px}
-  .esittely{font-size:1rem;line-height:1.6}
-  .kuva-ruudukko{grid-template-columns:1fr}
-  .lb-nuoli{padding:10px 13px;font-size:1.5rem}
-  .rivi{flex-direction:column;gap:0}
-}
+  body{background-size:100% auto;background-position:center 106px;background-repeat:no-repeat;background-attachment:scroll;padding-top:116px}
+  body::before{background:linear-gradient(to bottom,rgba(10,14,20,.15) 0%,rgba(10,14,20,.35) 38vw,rgba(17,22,29,.95) 68vw,#11161d 80vw)}
+
 
 </style>
 </head>
