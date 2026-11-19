@@ -64,7 +64,8 @@ textarea{min-height:95px;resize:vertical}
   .saa{order:1;padding:6px 10px;font-size:.88rem}
   .hampurilainen{display:block;order:2}
   .ylapalkki > .nappi{order:3;padding:7px 12px;font-size:.8rem}
-  .paiva{display:block;order:4;width:100%;text-align:center;font-size:.82rem;padding-top:6px;border-top:1px solid rgba(255,255,255,.12)}
+    .paiva{display:block !important;order:4;width:100%;text-align:center;font-size:.82rem;padding-top:6px;border-top:1px solid rgba(255,255,255,.12)}
+
   .nav-lista{display:none;position:fixed;top:98px;left:0;right:0;background:#151b24;border-bottom:1px solid rgba(255,255,255,.2);flex-direction:column;align-items:stretch;padding:12px 18px 22px;gap:4px;box-shadow:0 15px 30px rgba(0,0,0,.9)}
   .nav-lista.mobiili-auki{display:flex}
   .nav-nappi{text-align:left;width:100%;padding:14px 12px;font-size:1rem;border-bottom:1px solid rgba(255,255,255,.08)}
@@ -214,11 +215,13 @@ function tarkistaSalasana() {
 }
 
 const galleriat = {
-  piirintie11: [ { tiedosto: 'piirintie1.jpg', teksti: 'Pihapiiriä' },
-    { tiedosto: 'piirintie2.jpg', teksti: 'Julkisivu' }
-    { tiedosto: 'piirintie3.jpg', teksti: 'Julkisivu' }  
-  { tiedosto: 'piirintie4.jpg', teksti: 'Julkisivu' }
+  piirintie11: [
+    { tiedosto: 'piirintie1.jpg', teksti: 'Pihapiiriä' },
+    { tiedosto: 'piirintie2.jpg', teksti: 'Julkisivu' },
+    { tiedosto: 'piirintie3.jpg', teksti: 'Julkisivu' },
+    { tiedosto: 'piirintie4.jpg', teksti: 'Julkisivu' }
   ],
+
   vili: [
     { tiedosto: 'vili1.jpg', teksti: 'Oman kodin ensi nuuhkaisut' },
     { tiedosto: 'vili2.jpg', teksti: 'Paikkoja tutkin' },
