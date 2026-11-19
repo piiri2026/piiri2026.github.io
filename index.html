@@ -7,36 +7,33 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',sans-serif;color:#fff;background:#11161d url('taustakuva1.jpg') center top/cover fixed;min-height:100vh;padding-top:96px;position:relative}
-body::before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(10,14,20,.20),rgba(10,14,20,.48));z-index:0;pointer-events:none}
+body::before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(10,14,20,.22),rgba(10,14,20,.52));z-index:0;pointer-events:none}
 
-/* Älykäs yläpalkki */
-.ylapalkki{position:fixed;top:0;left:0;right:0;min-height:76px;background:rgba(15,20,28,.88);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:space-between;padding:10px 24px;z-index:50;transition:transform .3s ease}
+.ylapalkki{position:fixed;top:0;left:0;right:0;min-height:74px;background:rgba(15,20,28,.9);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:space-between;padding:10px 24px;z-index:50;transition:transform .3s ease}
 .ylapalkki.piilossa{transform:translateY(-100%)}
 .yla-vasen{display:flex;align-items:center;gap:12px}
-.saa{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);padding:6px 12px;border-radius:12px;text-decoration:none;color:#fff;font-weight:600;font-size:.95rem}
+.saa{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);padding:6px 12px;border-radius:12px;text-decoration:none;color:#fff;font-weight:600;font-size:.95rem;white-space:nowrap}
 .saa:hover{background:rgba(255,255,255,.16)}
 .paiva{font-size:.88rem;color:#cbd5e1}
 
-/* Tietokoneen navigaatio */
 .nav-lista{display:flex;align-items:center;gap:6px}
-.nav-nappi{background:none;border:none;color:#fff;padding:10px 14px;font-size:.92rem;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;cursor:pointer;border-radius:6px}
-.nav-nappi:hover,.pudotus.auki .nav-nappi{background:#b49b82;color:#fff}
+.nav-nappi{background:none;border:none;color:#fff;padding:10px 14px;font-size:.9rem;font-weight:600;letter-spacing:1.1px;text-transform:uppercase;cursor:pointer;border-radius:6px;white-space:nowrap}
+.nav-nappi:hover,.pudotus.auki .nav-nappi{background:#b49b82}
 .pudotus{position:relative}
-.alavalikko{display:none;position:absolute;top:100%;left:0;min-width:210px;background:#b49b82;box-shadow:0 10px 25px rgba(0,0,0,.6);border-radius:6px;overflow:hidden;z-index:60}
+.alavalikko{display:none;position:absolute;top:100%;left:0;min-width:220px;background:#b49b82;box-shadow:0 10px 25px rgba(0,0,0,.6);border-radius:6px;overflow:hidden;z-index:60}
 .pudotus:hover .alavalikko,.pudotus.auki .alavalikko{display:block}
 .alavalikko a,.alavalikko button{display:block;width:100%;padding:13px 18px;color:#fff;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.18);font-family:inherit;font-size:.88rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:left;text-decoration:none;cursor:pointer}
 .alavalikko a:last-child,.alavalikko button:last-child{border-bottom:none}
 .alavalikko a:hover,.alavalikko button:hover{background:#9c836a}
 
-.nappi{background:linear-gradient(135deg,#b49b82,#947b62);color:#fff;border:none;padding:10px 20px;font-size:.9rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:8px;cursor:pointer}
+.nappi{background:linear-gradient(135deg,#b49b82,#947b62);color:#fff;border:none;padding:10px 18px;font-size:.88rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:8px;cursor:pointer;white-space:nowrap}
 .nappi:hover{background:linear-gradient(135deg,#c5ad94,#a68c72)}
-.hampurilainen{display:none;background:none;border:1px solid rgba(255,255,255,.25);color:#fff;font-size:1.6rem;padding:4px 12px;border-radius:8px;cursor:pointer}
+.hampurilainen{display:none;background:none;border:1px solid rgba(255,255,255,.25);color:#fff;font-size:1.5rem;padding:4px 12px;border-radius:8px;cursor:pointer}
 
-/* Pääsisältö ja galleriat */
-.sisalto{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:40px 20px 60px;text-align:center}
-h1{font-size:4rem;letter-spacing:4px;margin-bottom:18px;text-shadow:0 4px 20px rgba(0,0,0,.9)}
-.esittely{font-size:1.15rem;line-height:1.75;max-width:740px;margin:0 auto;text-shadow:0 2px 12px rgba(0,0,0,.95)}
-.alasivu{display:none;background:rgba(15,20,28,.85);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:28px}
+.sisalto{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:36px 20px 60px;text-align:center}
+h1{font-size:4rem;letter-spacing:4px;margin-bottom:18px;text-shadow:0 4px 20px rgba(0,0,0,.95)}
+.esittely{font-size:1.15rem;line-height:1.75;max-width:740px;margin:0 auto;text-shadow:0 2px 14px rgba(0,0,0,.98)}
+.alasivu{display:none;background:rgba(15,20,28,.86);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:28px}
 .alasivu.aktiivinen{display:block}
 .alasivu h2{font-size:1.9rem;letter-spacing:2px;margin-bottom:8px;text-transform:uppercase}
 .alasivu-kuvaus{color:#cbd5e1;margin-bottom:22px}
@@ -44,7 +41,6 @@ h1{font-size:4rem;letter-spacing:4px;margin-bottom:18px;text-shadow:0 4px 20px r
 .kuva-kortti{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;overflow:hidden;cursor:pointer}
 .kuva-kortti img{width:100%;height:190px;object-fit:cover;display:block}
 .kuva-kortti p{padding:10px;font-size:.9rem;color:#e2e8f0}
-/* Ponnahdusikkunat ja lightbox */
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal.avoin{display:flex}
 .ikkuna{background:#1e2530;border:1px solid rgba(255,255,255,.2);border-radius:18px;max-width:460px;width:100%;padding:28px;position:relative;text-align:left}
@@ -52,17 +48,29 @@ h1{font-size:4rem;letter-spacing:4px;margin-bottom:18px;text-shadow:0 4px 20px r
 .lb-sisalto{position:relative;max-width:92vw;max-height:90vh;text-align:center}
 .lb-sisalto img{max-width:90vw;max-height:78vh;border-radius:10px;object-fit:contain}
 .lb-teksti{margin-top:12px;font-size:1.05rem}
-.lb-nuoli{position:fixed;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);color:#fff;border:none;font-size:2rem;padding:10px 16px;border-radius:50%;cursor:pointer}
+.lb-nuoli{position:fixed;top:50%;transform:translateY(-50%);background:rgba(15,20,28,.75);color:#fff;border:none;font-size:2rem;padding:10px 16px;border-radius:50%;cursor:pointer;z-index:120}
 .rivi{display:flex;gap:10px}
 input,textarea{width:100%;padding:10px;margin:6px 0 14px;border-radius:10px;background:rgba(15,20,28,.8);color:#fff;border:1px solid rgba(255,255,255,.2);font-family:inherit}
 textarea{min-height:95px;resize:vertical}
 
-/* Mobiilinäkymä (piirille.fi-tyylinen valikko) */
-.lb-nuoli{z-index:120;background:rgba(15,20,28,.7)}
-  body{background-size:100% auto;background-position:center 106px;background-repeat:no-repeat;background-attachment:scroll;padding-top:116px}
-  body::before{background:linear-gradient(to bottom,rgba(10,14,20,.15) 0%,rgba(10,14,20,.35) 38vw,rgba(17,22,29,.95) 68vw,#11161d 80vw)}
-
-
+@media(max-width:900px){
+  body{background-size:cover;background-position:35% top;background-attachment:scroll;padding-top:118px}
+  .ylapalkki{flex-wrap:wrap;padding:8px 12px;gap:8px;min-height:auto}
+  .yla-vasen{display:contents}
+  .saa{order:1;padding:6px 10px;font-size:.88rem}
+  .hampurilainen{display:block;order:2}
+  .ylapalkki > .nappi{order:3;padding:7px 12px;font-size:.8rem}
+  .paiva{display:block;order:4;width:100%;text-align:center;font-size:.82rem;padding-top:6px;border-top:1px solid rgba(255,255,255,.12)}
+  .nav-lista{display:none;position:fixed;top:98px;left:0;right:0;background:#151b24;border-bottom:1px solid rgba(255,255,255,.2);flex-direction:column;align-items:stretch;padding:12px 18px 22px;gap:4px;box-shadow:0 15px 30px rgba(0,0,0,.9)}
+  .nav-lista.mobiili-auki{display:flex}
+  .nav-nappi{text-align:left;width:100%;padding:14px 12px;font-size:1rem;border-bottom:1px solid rgba(255,255,255,.08)}
+  .alavalikko{position:static;box-shadow:none;background:rgba(180,155,130,.22);margin-top:4px}
+  h1{font-size:2.7rem;margin-top:8px}
+  .esittely{font-size:1rem;line-height:1.6}
+  .kuva-ruudukko{grid-template-columns:1fr}
+  .lb-nuoli{padding:10px 13px;font-size:1.5rem}
+  .rivi{flex-direction:column;gap:0}
+}
 </style>
 </head>
 <body>
@@ -88,7 +96,12 @@ textarea{min-height:95px;resize:vertical}
         <button type="button" onclick="avaaSivu('piirintie11')">PIIRINTIE 11</button>
       </div>
     </div>
-    <button type="button" class="nav-nappi" onclick="avaaSivu('vili')">VILI-KISSA</button>
+    <div class="pudotus" id="henkValikko">
+      <button type="button" class="nav-nappi" onclick="document.getElementById('henkValikko').classList.toggle('auki')">HENK.KOHT. KUVAT ▾</button>
+      <div class="alavalikko">
+        <button type="button" onclick="avaaSalattuSivu('vili')">🔒 VILI-KISSA</button>
+      </div>
+    </div>
   </nav>
 
   <button type="button" class="nappi" onclick="document.getElementById('yhteysModal').classList.add('avoin')">Ota yhteyttä</button>
@@ -115,11 +128,22 @@ textarea{min-height:95px;resize:vertical}
   </section>
 </main>
 
+<div class="modal" id="salasanaModal" onclick="if(event.target===this)this.classList.remove('avoin')">
+  <div class="ikkuna">
+    <button class="sulje" onclick="document.getElementById('salasanaModal').classList.remove('avoin')">&times;</button>
+    <h2 style="margin-bottom:8px">🔒 Salattu galleria</h2>
+    <p style="font-size:.92rem;color:#cbd5e1;line-height:1.5;margin-bottom:14px">Näiden kuvien katsomiseen tarvitset salasanan. Voit sitä halutessasi pyytää <a href="#" onclick="event.preventDefault();document.getElementById('salasanaModal').classList.remove('avoin');document.getElementById('yhteysModal').classList.add('avoin')" style="color:#b49b82;font-weight:700">Ota yhteyttä</a> -napin kautta.</p>
+    <input type="password" id="salasanaSyote" placeholder="Syötä salasana" onkeydown="if(event.key==='Enter')tarkistaSalasana()">
+    <button type="button" class="nappi" style="width:100%" onclick="tarkistaSalasana()">Avaa kuvat</button>
+    <p id="salasanaVirhe" style="color:#f87171;font-size:.88rem;margin-top:10px;text-align:center;display:none">Väärä salasana. Kokeile uudelleen tai pyydä salasanaa.</p>
+  </div>
+</div>
+
 <div class="modal" id="lightboxModal" onclick="if(event.target===this)this.classList.remove('avoin')">
   <button class="sulje" onclick="document.getElementById('lightboxModal').classList.remove('avoin')">&times;</button>
-  <button class="lb-nuoli" style="left:14px" onclick="vaihdaKuva(-1)">❮</button>
+  <button class="lb-nuoli" style="left:10px" onclick="vaihdaKuva(-1)">❮</button>
   <div class="lb-sisalto"><img id="lbKuva" src=""><p class="lb-teksti" id="lbTeksti"></p></div>
-  <button class="lb-nuoli" style="right:14px" onclick="vaihdaKuva(1)">❯</button>
+  <button class="lb-nuoli" style="right:10px" onclick="vaihdaKuva(1)">❯</button>
 </div>
 
 <div class="modal" id="yhteysModal" onclick="if(event.target===this)this.classList.remove('avoin')">
@@ -139,11 +163,11 @@ textarea{min-height:95px;resize:vertical}
   </div>
 </div>
 <script>
+const SALASANA = 'vili2026'; // Vaihda tähän haluamasi salasana
 const p = 'https' + '://';
 document.getElementById('forecaLinkki').href = p + 'www' + '.' + 'foreca' + '.' + 'fi/finland/seinajoki';
 document.getElementById('karttaLinkki').href = p + 'www' + '.' + 'google' + '.' + 'com/maps/@62.7664993,22.821372,15z';
 
-// Älykäs yläpalkki: piiloon alaspäin selatessa, esiin ylöspäin selatessa
 let edellinenScroll = window.scrollY;
 const ylaPalkki = document.getElementById('ylaPalkki');
 window.addEventListener('scroll', () => {
@@ -156,6 +180,28 @@ window.addEventListener('scroll', () => {
   }
   edellinenScroll = nytScroll;
 }, { passive: true });
+
+let odottavaSivu = '';
+function avaaSalattuSivu(id) {
+  document.querySelectorAll('.pudotus').forEach(x => x.classList.remove('auki'));
+  document.getElementById('navLista').classList.remove('mobiili-auki');
+  if (sessionStorage.getItem('piiri_auki') === '1') { avaaSivu(id); return; }
+  odottavaSivu = id;
+  document.getElementById('salasanaSyote').value = '';
+  document.getElementById('salasanaVirhe').style.display = 'none';
+  document.getElementById('salasanaModal').classList.add('avoin');
+  setTimeout(() => document.getElementById('salasanaSyote').focus(), 100);
+}
+
+function tarkistaSalasana() {
+  if (document.getElementById('salasanaSyote').value === SALASANA) {
+    sessionStorage.setItem('piiri_auki', '1');
+    document.getElementById('salasanaModal').classList.remove('avoin');
+    avaaSivu(odottavaSivu);
+  } else {
+    document.getElementById('salasanaVirhe').style.display = 'block';
+  }
+}
 
 const galleriat = {
   piirintie11: [],
@@ -231,7 +277,6 @@ function palaaEtusivulle() {
 
 const nyt = new Date();
 const vp = ['sunnuntai','maanantai','tiistai','keskiviikko','torstai','perjantai','lauantai'][nyt.getDay()];
-
 const np1 = {
   "1.1.":"Uudenvuodenpäivä","2.1.":"Aapeli","3.1.":"Elmeri, Elmer, Elmo","4.1.":"Ruut","5.1.":"Lea, Leea","6.1.":"Harri","7.1.":"Aukusti, Aku","8.1.":"Hilppa, Titta","9.1.":"Veikko, Veli, Veijo, Veikka","10.1.":"Nyyrikki",
   "11.1.":"Kari, Karri","12.1.":"Toini","13.1.":"Nuutti","14.1.":"Sakari, Saku","15.1.":"Solja","16.1.":"Ilmari, Ilmo","17.1.":"Toni, Anttoni, Antto, Anton","18.1.":"Laura","19.1.":"Heikki, Henrik, Henrikki, Henri","20.1.":"Henna, Henni, Henriikka",
@@ -273,9 +318,7 @@ const np2 = {
   "18.12.":"Aapo, Aappo, Rami","19.12.":"Iikka, Iiro, Iisakki, Isko","20.12.":"Benjamin, Kerkko","21.12.":"Tuomas, Tuomo, Tommi, Tomi","22.12.":"Raafael","23.12.":"Senni","24.12.":"Aatami, Eeva, Eevi, Eveliina","25.12.":"Joulupäivä","26.12.":"Tapani, Teppo, Tahvo","27.12.":"Hannu, Hannes, Hans",
   "28.12.":"Piia","29.12.":"Rauha","30.12.":"Daavid, Taavetti, Taavi","31.12.":"Sylvester, Silvo"
 };
-
-
-const nimipaivat = Object.assign({}, typeof np1 !== 'undefined' ? np1 : {}, typeof np2 !== 'undefined' ? np2 : {});
+const nimipaivat = Object.assign({}, np1, np2);
 document.getElementById('paivaNaytto').textContent = `${vp} ${nyt.getDate()}.${nyt.getMonth()+1}.${nyt.getFullYear()} ${nimipaivat[nyt.getDate()+'.'+(nyt.getMonth()+1)+'.']||''}`;
 
 function asetaIkoni(k) { return k===0?'☀️':k<=2?'⛅':k===3?'☁️':k<=48?'🌫️':k<=67?'🌧️':k<=77?'❄️':k<=82?'🌦️':k<=86?'🌨️':'⛈️'; }
