@@ -21,7 +21,8 @@ body::before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(1
 .nav-nappi:hover,.pudotus.auki .nav-nappi{background:#b49b82}
 .pudotus{position:relative}
 .alavalikko{display:none;position:absolute;top:100%;left:0;min-width:220px;background:#b49b82;box-shadow:0 10px 25px rgba(0,0,0,.6);border-radius:6px;overflow:hidden;z-index:60}
-.pudotus:hover .alavalikko,.pudotus.auki .alavalikko{display:block}
+#piiriValikko:hover .alavalikko,.pudotus.auki .alavalikko{display:block}
+
 .alavalikko a,.alavalikko button{display:block;width:100%;padding:13px 18px;color:#fff;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.18);font-family:inherit;font-size:.88rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:left;text-decoration:none;cursor:pointer}
 .alavalikko a:last-child,.alavalikko button:last-child{border-bottom:none}
 .alavalikko a:hover,.alavalikko button:hover{background:#9c836a}
@@ -105,14 +106,16 @@ textarea{min-height:95px;resize:vertical}
         <button type="button" onclick="avaaSivu('piirintie11')">PIIRINTIE 11</button>
       </div>
     </div>
-    <div class="pudotus" id="henkValikko">
-      <button type="button" class="nav-nappi" onclick="document.getElementById('henkValikko').classList.toggle('auki')">HENK.KOHT. KUVAT ▾</button>
+        <div class="pudotus" id="henkValikko">
+      <button type="button" class="nav-nappi" onclick="avaaHenkValikko()">HENK.KOHT. KUVAT ▾</button>
       <div class="alavalikko">
-        <button type="button" onclick="avaaSalattuSivu('vili')">🔒 VILI-KISSA</button>
-        <button type="button" onclick="avaaSalattuSivu('omatupa')">🔒 OMA TUPA</button>
-         <button type="button" onclick="avaaSalattuSivu('vieraat')">🔒 VIERAAT</button>
-        <button type="button" onclick="avaaSalattuSivu('muksut')">🔒 MUKSUT</button>
+        <button type="button" onclick="avaaSivu('vili')">🔒 VILI-KISSA</button>
+        <button type="button" onclick="avaaSivu('omatupa')">🔒 OMA TUPA</button>
+        <button type="button" onclick="avaaSivu('vieraat')">🔒 VIERAAT</button>
+        <button type="button" onclick="avaaSivu('muksut')">🔒 MUKSUT</button>
       </div>
+    </div>
+
       </div>
     </div>
   </nav>
@@ -213,7 +216,7 @@ textarea{min-height:95px;resize:vertical}
   </div>
 </div>
 <script>
-const SALASANA = 'vili2026';
+
 const p = 'https' + '://';
 document.getElementById('forecaLinkki').href = p + 'www' + '.' + 'foreca' + '.' + 'fi/finland/seinajoki';
 document.getElementById('karttaLinkki').href = p + 'www' + '.' + 'google' + '.' + 'com/maps/@62.7664993,22.821372,15z';
@@ -232,49 +235,55 @@ window.addEventListener('scroll', () => {
   edellinenScroll = nytScroll;
 }, { passive: true });
 
-let odottavaSivu = '';
-function avaaSalattuSivu(id) {
-  document.querySelectorAll('.pudotus').forEach(x => x.classList.remove('auki'));
+let henkAvattu = false;
+function avaaHenkValikko() {
+  if (henkAvattu) {
+    document.getElementById('henkValikko').classList.toggle('auki');
+    return;
+  }
   document.getElementById('navLista').classList.remove('mobiili-auki');
-  odottavaSivu = id;
   document.getElementById('salasanaSyote').value = '';
   document.getElementById('salasanaVirhe').style.display = 'none';
   document.getElementById('salasanaModal').classList.add('avoin');
   setTimeout(() => document.getElementById('salasanaSyote').focus(), 100);
 }
 
-function tarkistaSalasana() {
-  if (document.getElementById('salasanaSyote').value === SALASANA) {
+async function tarkistaSalasana() {
+  const syote = document.getElementById('salasanaSyote').value;
+  try {
+    const puhtaat = await puraAES(SALATTU_DATA, syote);
+    Object.assign(galleriat, JSON.parse(puhtaat));
+    paivitaRuudukot();
+    henkAvattu = true;
     document.getElementById('salasanaModal').classList.remove('avoin');
-    avaaSivu(odottavaSivu);
-  } else {
+    document.getElementById('henkValikko').classList.add('auki');
+  } catch (e) {
     document.getElementById('salasanaVirhe').style.display = 'block';
   }
 }
 
 
+
+const SALATTU_DATA = null; // Liitä tähän salaustyökalun tulos (esim. {"s":"...","i":"...","d":"..."})
+
 const galleriat = {
   piirintie11: [
-    { tiedosto: 'piirintie1.jpg', teksti: 'Piirintie 11 kerrostalo' },
-    { tiedosto: 'piirintie2.jpg', teksti: 'Julkisivu' },
-    { tiedosto: 'piirintie3.jpg', teksti: 'Leikkipuisto1' },
-    { tiedosto: 'piirintie4.jpg', teksti: 'Leikkipuisto2' },
-    { tiedosto: 'piirintie5.jpg', teksti: 'Sisäpiha1' },
-    { tiedosto: 'piirintie6.jpg', teksti: 'Sisäpiha2' },
-    { tiedosto: 'piirintie7.jpg', teksti: 'Teatteri Hysteria ja Ravintola Verstas' },
-    { tiedosto: 'piirintie8.jpg', teksti: 'Entisen Törnävän piirimielisairaalan oma vesitorni vuodelta 1928' },
-    { tiedosto: 'piirintie9.jpg', teksti: 'Verstaan terassia' },
-    { tiedosto: 'piirintie10.jpg', teksti: 'Verstas menu' }
+    // ... pidä nykyiset piirintie1..10 rivit tässä ...
   ],
   piirintieIlta: [
-    { tiedosto: 'ilta1.jpg', teksti: 'Pyöräkatos' },
-    { tiedosto: 'ilta2.jpg', teksti: 'Sisäpiha' },
-    { tiedosto: 'ilta3.jpg', teksti: 'Piirintie 11 pimeällä ' },
-    { tiedosto: 'ilta4.jpg', teksti: 'Piirintie edestä' },
-    { tiedosto: 'ilta5.jpg', teksti: 'Vesitorni' },
-    { tiedosto: 'ilta6.jpg', teksti: 'Ikäihmisten Palvelukoti Kallio' },
-    { tiedosto: 'ilta7.jpg', teksti: 'Seurala' },
-    { tiedosto: 'ilta8.jpg', teksti: 'Piirin kirkko vuodelta 1950' }
+    // ... pidä nykyiset ilta1..8 rivit tässä ...
+  ]
+};
+
+async function puraAES(paketti, salasana) {
+  const b2a = b => Uint8Array.from(atob(b), c => c.charCodeAt(0));
+  const enc = new TextEncoder();
+  const avainMat = await crypto.subtle.importKey('raw', enc.encode(salasana), 'PBKDF2', false, ['deriveKey']);
+  const avain = await crypto.subtle.deriveKey({name:'PBKDF2', salt:b2a(paketti.s), iterations:100000, hash:'SHA-256'}, avainMat, {name:'AES-GCM', length:256}, false, ['decrypt']);
+  const purettu = await crypto.subtle.decrypt({name:'AES-GCM', iv:b2a(paketti.i)}, avain, b2a(paketti.d));
+  return new TextDecoder().decode(purettu);
+}
+
   ],
   vili: [
     { tiedosto: 'vili1.jpg', teksti: 'Oman kodin ensi nuuhkaisut' },
