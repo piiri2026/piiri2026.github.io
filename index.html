@@ -115,9 +115,6 @@ textarea{min-height:95px;resize:vertical}
         <button type="button" onclick="avaaSivu('muksut')">🔒 MUKSUT</button>
       </div>
     </div>
-
-      </div>
-    </div>
   </nav>
 
   <button type="button" class="nappi" onclick="document.getElementById('yhteysModal').classList.add('avoin')">Ota yhteyttä</button>
@@ -299,72 +296,6 @@ async function puraAES(paketti, salasana) {
   const purettu = await crypto.subtle.decrypt({name:'AES-GCM', iv:b2a(paketti.i)}, avain, b2a(paketti.d));
   return new TextDecoder().decode(purettu);
 }
-
-
-  ],
-  vili: [
-    { tiedosto: 'vili1.jpg', teksti: 'Oman kodin ensi nuuhkaisut' },
-    { tiedosto: 'vili2.jpg', teksti: 'Paikkoja tutkin' },
-    { tiedosto: 'vili3.jpg', teksti: 'Täähän on tosi kiva' },
-    { tiedosto: 'vili4.jpg', teksti: 'Näkeeköhän ne mua jos oon ihan paikallaan' },
-    { tiedosto: 'vili5.jpg', teksti: 'Tästä on lyhyt matka ottaa rusketusraidat ja palata varjoon' },
-    { tiedosto: 'vili6.jpg', teksti: 'Harjoittelen silmiin katsomista' },
-    { tiedosto: 'vili7.jpg', teksti: 'Nyt on isompi kiipeilyteline kun vanha oli niin onnettoman pieni ja kaatuili jo minun hypyistäni' },
-    { tiedosto: 'vili8.jpg', teksti: 'Eikö mennä jo päikkäreille' },
-    { tiedosto: 'vili9.jpg', teksti: 'Ai tuolta se suihkus käynti näyttää, ei mulle kiitos' },
-    { tiedosto: 'vili10.jpg', teksti: 'Mää ruokin hiiretkin niin lihoovat ja pistän suihin' },
-    { tiedosto: 'vili11.jpg', teksti: 'Joko mentäis nukkuu' },
-    { tiedosto: 'vili12.jpg', teksti: 'You are my sunshine' },
-    { tiedosto: 'vili13.jpg', teksti: 'No, en varppina herää' },
-    { tiedosto: 'vili14.jpg', teksti: 'Joulua odotellessa' },
-    { tiedosto: 'vili15.jpg', teksti: 'Ei, ei se ollut tonttu' },
-    { tiedosto: 'vili16.jpg', teksti: 'Ootan täs kiltisti' }
-  ],
-  omatupa: [
-    { tiedosto: 'tupa0.jpg', teksti: 'Oma koti kullan kallis' },
-    { tiedosto: 'tupa1.jpg', teksti: 'Olkkari 1' },
-    { tiedosto: 'tupa2.jpg', teksti: 'Olkkari 2' },
-    { tiedosto: 'tupa3.jpg', teksti: 'Olkkari 3' },
-    { tiedosto: 'tupa4.jpg', teksti: 'Keittiö 1' },
-    { tiedosto: 'tupa5.jpg', teksti: 'Makkari' },
-    { tiedosto: 'tupa6.jpg', teksti: 'Keittiö 2' },
-    { tiedosto: 'tupa7.jpg', teksti: 'Vessa' },
-    { tiedosto: 'tupa8.jpg', teksti: 'Huusholli' },
-    { tiedosto: 'tupa9.jpg', teksti: 'Tarjoilu' }
-  ],
-  vieraat: [
-    { tiedosto: 'vieras1.jpg', teksti: 'Helena mummeli, Erkki pappa ja Hannele kylässä' },
-    { tiedosto: 'vieras2.jpg', teksti: 'Eukot juoruaa' },
-    { tiedosto: 'vieras3.jpg', teksti: 'Siis paras aika nyt torkuille' },
-    { tiedosto: 'vieras4.jpg', teksti: 'Verstaalla ruoka maitto' },
-    { tiedosto: 'vieras5.jpg', teksti: 'Verstaalla riittää aina porukkaa' },
-    { tiedosto: 'vieras6.jpg', teksti: 'Mihinköhän matka käy' },
-    { tiedosto: 'vieras7.jpg', teksti: 'Suprise!' },
-    { tiedosto: 'vieras8.jpg', teksti: 'Ja taas joku kuvaa' },
-    { tiedosto: 'vieras9.jpg', teksti: 'Kampaamossa' },
-    { tiedosto: 'vieras10.jpg', teksti: 'Välillä muutakin kuin Verstas' },
-    { tiedosto: 'vieras11.jpg', teksti: 'Joulumaa' },
-    { tiedosto: 'vieras12.jpg', teksti: 'Ruokarobotti palvelee' }
-  ],
-   muksut: [
-    { tiedosto: 'muksut1.jpg', teksti: 'Muksut 1' },
-    { tiedosto: 'muksut2.jpg', teksti: 'Muksut 2' },
-    { tiedosto: 'muksut3.jpg', teksti: 'Muksut 3' },
-    { tiedosto: 'muksut4.jpg', teksti: 'Muksut 4' },
-    { tiedosto: 'muksut5.jpg', teksti: 'Muksut 5' },
-    { tiedosto: 'muksut6.jpg', teksti: 'Muksut 6' },
-    { tiedosto: 'muksut7.jpg', teksti: 'Muksut 7' },
-    { tiedosto: 'muksut8.jpg', teksti: 'Muksut 8' },
-    { tiedosto: 'muksut9.jpg', teksti: 'Muksut 9' },
-    { tiedosto: 'muksut10.jpg', teksti: 'Muksut 10' },
-    { tiedosto: 'muksut11.jpg', teksti: 'Muksut 11' },
-    { tiedosto: 'muksut12.jpg', teksti: 'Muksut 12' },
-    { tiedosto: 'muksut13.jpg', teksti: 'Muksut 13' },
-    { tiedosto: 'muksut14.jpg', teksti: 'Muksut 14' },
-    { tiedosto: 'muksut15.jpg', teksti: 'Muksut 15' },
-  ]
-};
-
 
 function kokeilePaate(img) {
   if (!img.dataset.kokeiltu) { img.dataset.kokeiltu = '1'; img.src = img.src.replace(/\.jpg$/i, '.JPG'); }
