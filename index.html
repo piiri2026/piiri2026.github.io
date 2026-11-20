@@ -264,14 +264,30 @@ async function tarkistaSalasana() {
 
 
 
-const SALATTU_DATA = null; // Liitä tähän salaustyökalun tulos (esim. {"s":"...","i":"...","d":"..."})
+const SALATTU_DATA = null;
 
 const galleriat = {
   piirintie11: [
-    // ... pidä nykyiset piirintie1..10 rivit tässä ...
+    { tiedosto: 'piirintie1.jpg', teksti: 'Piirintie 11 kerrostalo' },
+    { tiedosto: 'piirintie2.jpg', teksti: 'Julkisivu' },
+    { tiedosto: 'piirintie3.jpg', teksti: 'Leikkipuisto1' },
+    { tiedosto: 'piirintie4.jpg', teksti: 'Leikkipuisto2' },
+    { tiedosto: 'piirintie5.jpg', teksti: 'Sisäpiha1' },
+    { tiedosto: 'piirintie6.jpg', teksti: 'Sisäpiha2' },
+    { tiedosto: 'piirintie7.jpg', teksti: 'Teatteri Hysteria ja Ravintola Verstas' },
+    { tiedosto: 'piirintie8.jpg', teksti: 'Entisen Törnävän piirimielisairaalan oma vesitorni vuodelta 1928' },
+    { tiedosto: 'piirintie9.jpg', teksti: 'Verstaan terassia' },
+    { tiedosto: 'piirintie10.jpg', teksti: 'Verstas menu' }
   ],
   piirintieIlta: [
-    // ... pidä nykyiset ilta1..8 rivit tässä ...
+    { tiedosto: 'ilta1.jpg', teksti: 'Pyöräkatos' },
+    { tiedosto: 'ilta2.jpg', teksti: 'Sisäpiha' },
+    { tiedosto: 'ilta3.jpg', teksti: 'Piirintie 11 pimeällä ' },
+    { tiedosto: 'ilta4.jpg', teksti: 'Piirintie edestä' },
+    { tiedosto: 'ilta5.jpg', teksti: 'Vesitorni' },
+    { tiedosto: 'ilta6.jpg', teksti: 'Ikäihmisten Palvelukoti Kallio' },
+    { tiedosto: 'ilta7.jpg', teksti: 'Seurala' },
+    { tiedosto: 'ilta8.jpg', teksti: 'Piirin kirkko vuodelta 1950' }
   ]
 };
 
@@ -283,6 +299,7 @@ async function puraAES(paketti, salasana) {
   const purettu = await crypto.subtle.decrypt({name:'AES-GCM', iv:b2a(paketti.i)}, avain, b2a(paketti.d));
   return new TextDecoder().decode(purettu);
 }
+
 
   ],
   vili: [
