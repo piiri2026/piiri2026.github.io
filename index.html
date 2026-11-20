@@ -331,10 +331,13 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') vaihdaKuva(-1);
 });
 
-Object.keys(galleriat).forEach(k => {
-  const el = document.getElementById('ruudukko-' + k);
-  el.innerHTML = galleriat[k].map((x, i) => `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${x.tiedosto}" onerror="kokeilePaate(this)"><p>${x.teksti||''}</p></div>`).join('');
-});
+function paivitaRuudukot() {
+  Object.keys(galleriat).forEach(k => {
+    const el = document.getElementById('ruudukko-' + k);
+    if (el) el.innerHTML = galleriat[k].map((x, i) => `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${x.tiedosto}" onerror="kokeilePaate(this)"><p>${x.teksti||''}</p></div>`).join('');
+  });
+}
+paivitaRuudukot();
 
 document.addEventListener('click', e => {
   if (!e.target.closest('.pudotus')) document.querySelectorAll('.pudotus').forEach(x => x.classList.remove('auki'));
