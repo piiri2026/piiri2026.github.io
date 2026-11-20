@@ -111,6 +111,8 @@ textarea{min-height:95px;resize:vertical}
         <button type="button" onclick="avaaSalattuSivu('vili')">🔒 VILI-KISSA</button>
         <button type="button" onclick="avaaSalattuSivu('omatupa')">🔒 OMA TUPA</button>
          <button type="button" onclick="avaaSalattuSivu('vieraat')">🔒 VIERAAT</button>
+        <button type="button" onclick="avaaSalattuSivu('muksut')">🔒 MUKSUT</button>
+      </div>
       </div>
     </div>
   </nav>
@@ -162,6 +164,14 @@ textarea{min-height:95px;resize:vertical}
         <h2>Vieraat</h2>
         <p class="alasivu-kuvaus">Kuvia vieraista ja yhteisistä hetkistä.</p>
         <div class="kuva-ruudukko" id="ruudukko-vieraat"></div>
+        <button type="button" class="nappi" onclick="palaaEtusivulle()">← Takaisin etusivulle</button>
+      </div>
+    </section>
+  <section id="sivu-muksut" class="alasivu">
+      <div class="alasivu-sisalto">
+        <h2>Muksut</h2>
+        <p class="alasivu-kuvaus">Kuvia muksuista ja yhteisistä hetkistä.</p>
+        <div class="kuva-ruudukko" id="ruudukko-muksut"></div>
         <button type="button" class="nappi" onclick="palaaEtusivulle()">← Takaisin etusivulle</button>
       </div>
     </section>
@@ -309,6 +319,23 @@ const galleriat = {
     { tiedosto: 'vieras10.jpg', teksti: 'Välillä muutakin kuin Verstas' },
     { tiedosto: 'vieras11.jpg', teksti: 'Joulumaa' },
     { tiedosto: 'vieras12.jpg', teksti: 'Ruokarobotti palvelee' }
+  ],
+   muksut: [
+    { tiedosto: 'muksut1.jpg', teksti: 'Muksut 1' },
+    { tiedosto: 'muksut2.jpg', teksti: 'Muksut 2' },
+    { tiedosto: 'muksut3.jpg', teksti: 'Muksut 3' },
+    { tiedosto: 'muksut4.jpg', teksti: 'Muksut 4' },
+    { tiedosto: 'muksut5.jpg', teksti: 'Muksut 5' },
+    { tiedosto: 'muksut6.jpg', teksti: 'Muksut 6' },
+    { tiedosto: 'muksut7.jpg', teksti: 'Muksut 7' },
+    { tiedosto: 'muksut8.jpg', teksti: 'Muksut 8' },
+    { tiedosto: 'muksut9.jpg', teksti: 'Muksut 9' },
+    { tiedosto: 'muksut10.jpg', teksti: 'Muksut 10' },
+    { tiedosto: 'muksut11.jpg', teksti: 'Muksut 11' },
+    { tiedosto: 'muksut12.jpg', teksti: 'Muksut 12' },
+    { tiedosto: 'muksut13.jpg', teksti: 'Muksut 13' },
+    { tiedosto: 'muksut14.jpg', teksti: 'Muksut 14' },
+    { tiedosto: 'muksut15.jpg', teksti: 'Muksut 15' },
   ]
 };
 
