@@ -256,6 +256,7 @@ async function tarkistaSalasana() {
     document.getElementById('salasanaModal').classList.remove('avoin');
     document.getElementById('henkValikko').classList.add('auki');
   } catch (e) {
+console.error('Salauksen purku epäonnistui:', e);
     document.getElementById('salasanaVirhe').style.display = 'block';
   }
 }
