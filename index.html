@@ -57,6 +57,11 @@ h1{font-size:4rem;letter-spacing:4px;margin-bottom:18px;text-shadow:0 4px 20px r
 .rivi{display:flex;gap:10px}
 input,textarea{width:100%;padding:10px;margin:6px 0 14px;border-radius:10px;background:rgba(15,20,28,.8);color:#fff;border:1px solid rgba(255,255,255,.2);font-family:inherit}
 textarea{min-height:95px;resize:vertical}
+.musa-lista{display:flex;flex-direction:column;gap:14px;margin-bottom:24px;text-align:left}
+.musa-kortti{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:14px 18px}
+.musa-kortti p{font-weight:600;margin-bottom:8px;color:#e2e8f0}
+.musa-kortti audio{width:100%;height:38px}
+
 
 @media(max-width:900px){
   body{background-size:cover;background-position:35% top;background-attachment:scroll;padding-top:118px}
@@ -113,6 +118,8 @@ textarea{min-height:95px;resize:vertical}
         <button type="button" onclick="avaaSivu('omatupa')">🔒 OMA TUPA</button>
         <button type="button" onclick="avaaSivu('vieraat')">🔒 VIERAAT</button>
         <button type="button" onclick="avaaSivu('muksut')">🔒 MUKSUT</button>
+        <button type="button" onclick="avaaSivu('musa')">🎵 OMA MUSA</button>
+
       </div>
     </div>
   </nav>
@@ -175,6 +182,15 @@ textarea{min-height:95px;resize:vertical}
         <button type="button" class="nappi" onclick="palaaEtusivulle()">← Takaisin etusivulle</button>
       </div>
     </section>
+  <section id="sivu-musa" class="alasivu">
+    <div class="alasivu-sisalto">
+      <h2>Oma musa</h2>
+      <p class="alasivu-kuvaus">Omia äänitteitä ja kappaleita.</p>
+      <div class="musa-lista" id="lista-musa"></div>
+      <button type="button" class="nappi" onclick="palaaEtusivulle()">← Takaisin etusivulle</button>
+    </div>
+  </section>
+
 </main>
 
 <div class="modal" id="salasanaModal" onclick="if(event.target===this)this.classList.remove('avoin')">
@@ -250,8 +266,10 @@ async function tarkistaSalasana() {
   try {
     const osa1 = JSON.parse(await puraAES(SALATTU_1, syote));
     const osa2 = JSON.parse(await puraAES(SALATTU_2, syote));
-    Object.assign(galleriat, osa1, osa2);
+    const osa3 = SALATTU_MUSA ? JSON.parse(await puraAES(SALATTU_MUSA, syote)) : { musa: [] };
+    Object.assign(galleriat, osa1, osa2, osa3);
     paivitaRuudukot();
+    paivitaMusa();
     henkAvattu = true;
     document.getElementById('salasanaModal').classList.remove('avoin');
     document.getElementById('henkValikko').classList.add('auki');
@@ -264,6 +282,8 @@ console.error('Salauksen purku epäonnistui:', e);
 const SALATTU_1 = {"s":"d/IkUmjK6TbuMuH1SC+LOw==","i":"mbzsEY18gEduUXSc","d":"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"};
 
 const SALATTU_2 ={"s":"cUASDJzS7IaQQVvG0nkbQw==","i":"h4hKGsmg/HY5hS+J","d":"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"};
+const SALATTU_MUSA = {"s":"pJPhaSPsueBHE4EiFxDrDQ==","i":"626PWKtotV3/WwT2","d":"LHY38CyHLgAvcOvk7XTul37yuWOIvPUFK62S1R92g6EBu2xRq1Y5dAK9u1wLNByWK22muF/U65GEjUn84l7GiWlw/+yPgL2l5LN9Bm0nSjE6AD+V1fxERjukb2jNAAlVrqLYobTz2Jn08GkPGFUitCEsnXkIjrbMGw+i9751doJfyQQbYetFS/gcDRSWrxJ7VhkaQIy3/27/7eIu1c+grWiXuGCZ+n+WIZDZQp1PiORwvIZfynWOdseNrIX28IVYjvhhuLHlcyGBc09cODN8gmkPflQY7nbwp7UCKPsG8/5XhKp3HshGYVVOtW4ZG6qwqifwT9HXv8U="};
+
 
 const galleriat = {
 
@@ -339,6 +359,12 @@ function paivitaRuudukot() {
 }
 paivitaRuudukot();
 
+function paivitaMusa() {
+  const el = document.getElementById('lista-musa');
+  if (!el || !galleriat.musa) return;
+  el.innerHTML = galleriat.musa.map(x => `<div class="musa-kortti"><p>🎵 ${x.nimi}</p><audio controls preload="none" src="${x.tiedosto}" onplay="document.querySelectorAll('#lista-musa audio').forEach(a=>{if(a!==this)a.pause()})"></audio></div>`).join('');
+}
+
 document.addEventListener('click', e => {
   if (!e.target.closest('.pudotus')) document.querySelectorAll('.pudotus').forEach(x => x.classList.remove('auki'));
   if (!e.target.closest('#ylaPalkki')) document.getElementById('navLista').classList.remove('mobiili-auki');
@@ -358,6 +384,7 @@ function avaaSivu(id) {
 }
 
 function palaaEtusivulle() {
+  document.querySelectorAll('#lista-musa audio').forEach(a => a.pause());
   document.getElementById('navLista').classList.remove('mobiili-auki');
   document.querySelectorAll('.alasivu').forEach(s => s.classList.remove('aktiivinen'));
   document.getElementById('etusivuNakyma').style.display = '';
