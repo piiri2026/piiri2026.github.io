@@ -388,7 +388,10 @@ function paivitaMusa() {
     </div>`).join('');
 }
 
+
 function aloitaBiisi(soitin, idx) {
+  if (window.goatcounter) window.goatcounter.count({ path: '/musa/' + galleriat.musa[idx].nimi, title: galleriat.musa[idx].nimi, event: false });
+
   document.querySelectorAll('#lista-musa audio').forEach(a => { if (a !== soitin) a.pause(); });
   document.querySelectorAll('.musa-kuva, .musa-sanat').forEach(e => e.style.display = 'none');
   const img = document.getElementById('musa-img-' + idx);
