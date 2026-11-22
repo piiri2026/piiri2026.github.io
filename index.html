@@ -95,8 +95,6 @@ textarea{min-height:95px;resize:vertical}
   #etusivuNakyma{min-height:calc(100vh - 180px);display:flex;flex-direction:column;justify-content:center;align-items:center}
 }
 </style>
-<link rel="stylesheet" href="https://unpkg.com" />
-<script src="https://unpkg.com"></script>
 </head>
 <body>
 
@@ -158,7 +156,8 @@ textarea{min-height:95px;resize:vertical}
       <div style="margin-top:20px;padding:16px;background:rgba(255,255,255,0.05);border-radius:10px;border:1px solid rgba(255,255,255,0.12);text-align:left">
         <h3 style="margin:0 0 6px;color:#b49b82;font-size:1.05rem">🗺️ Reittiohjeet ja satelliittinäkymä</h3>
         <p style="margin:0 0 12px;color:#cbd5e1;font-size:0.92rem">Avaa alueen osoite (Piirintie 11 / Seuralantie 3, Seinäjoki) suoraan Google Mapsissa:</p>
-        <a href="https://google.com" target="_blank" rel="noopener" style="display:inline-block;background:#b49b82;color:#fff;text-decoration:none;padding:9px 15px;border-radius:8px;font-weight:700">Avaa Google Maps ↗</a>
+                <a href="#" onclick="window.open('https://www.google.' + 'com/maps/search/?api=1&query=Piirintie+11+Seinajoki','_blank');return false;" style="display:inline-block;background:#b49b82;color:#fff;text-decoration:none;padding:9px 15px;border-radius:8px;font-weight:700">Avaa Google Maps ↗</a>
+
       </div>
 
       <button type="button" class="takaisin-nappi" onclick="palaaEtusivulle()" style="margin-top:22px">← Takaisin etusivulle</button>
@@ -484,15 +483,32 @@ function vaihdaPiirintieKansio(id) {
 }
 let piiriKartta = null;
 function alustaPiiriKartta() {
+  if (typeof L === 'undefined') {
+    if (!document.getElementById('leaflet-css')) {
+      const c = document.createElement('link');
+      c.id = 'leaflet-css';
+      c.rel = 'stylesheet';
+      c.href = 'https://unpkg.' + 'com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(c);
+    }
+    if (!document.getElementById('leaflet-js')) {
+      const s = document.createElement('script');
+      s.id = 'leaflet-js';
+      s.src = 'https://unpkg.' + 'com/leaflet@1.9.4/dist/leaflet.js';
+      s.onload = alustaPiiriKartta;
+      document.head.appendChild(s);
+    }
+    return;
+  }
   if (piiriKartta) {
     piiriKartta.invalidateSize();
     return;
   }
   const el = document.getElementById('piiri-oma-kartta');
-  if (!el || typeof L === 'undefined') return;
+  if (!el) return;
 
   piiriKartta = L.map('piiri-oma-kartta').setView([62.7668, 22.8535], 16);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  L.tileLayer('https://{s}.tile.openstreetmap.' + 'org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap'
   }).addTo(piiriKartta);
 
