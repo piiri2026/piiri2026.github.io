@@ -95,7 +95,8 @@ textarea{min-height:95px;resize:vertical}
   #etusivuNakyma{min-height:calc(100vh - 180px);display:flex;flex-direction:column;justify-content:center;align-items:center}
 }
 </style>
-
+<link rel="stylesheet" href="https://unpkg.com" />
+<script src="https://unpkg.com"></script>
 </head>
 <body>
 
@@ -116,7 +117,7 @@ textarea{min-height:95px;resize:vertical}
     <div class="pudotus" id="piiriValikko">
       <button type="button" class="nav-nappi" onclick="document.getElementById('piiriValikko').classList.toggle('auki')">PIIRIN ALUE ▾</button>
       <div class="alavalikko">
-        <a id="karttaLinkki" href="#" target="_blank" rel="noopener">KARTAT</a>
+                <button type="button" onclick="avaaSivu('kartat')">KARTAT</button>
         <button type="button" onclick="avaaSivu('piirintie11')">PIIRINTIE 11</button>
       </div>
     </div>
@@ -141,6 +142,28 @@ textarea{min-height:95px;resize:vertical}
     <h1>Piiri</h1>
     <p class="esittely">Tältä sivustolta löytyy enimmäkseen valokuvia uudenkarhealla järjestelmäkameralla Canon EOS 1100D (2011) otettuja ja ihan kännykälläkin räpsimisiä. Kuvat keskittyvät enimmäkseen uudehkoon Seinäjoen Piirin alueeseen ja kuvaajan sielunelämään. Lisäilen uusia kuvia aina kun aikaa löytyy.</p>
   </div>
+  <section id="sivu-kartat" class="alasivu">
+    <div class="alasivu-sisalto">
+      <h2>Kartat – Seinäjoen Piirin alue</h2>
+      <p class="alasivu-kuvaus" style="line-height:1.7;text-align:left;margin-top:12px">
+        Tutustu Piirin historiallisiin rakennuksiin ja kuvauskohteisiin alla olevalla interaktiivisella kartalla, tai avaa reittiohjeet Google Mapsissa.
+      </p>
+
+      <h3 style="margin:22px 0 8px;color:#b49b82;text-align:left">📍 Piirin rakennukset ja kuvauskohteet</h3>
+      <p style="margin:0 0 12px;color:#94a3b8;font-size:0.95rem;text-align:left">
+        Klikkaa kartan merkkejä nähdäksesi lisätietoja kohteista.
+      </p>
+      <div id="piiri-oma-kartta" style="width:100%;height:420px;border-radius:12px;border:1px solid rgba(255,255,255,0.18);z-index:1"></div>
+
+      <div style="margin-top:20px;padding:16px;background:rgba(255,255,255,0.05);border-radius:10px;border:1px solid rgba(255,255,255,0.12);text-align:left">
+        <h3 style="margin:0 0 6px;color:#b49b82;font-size:1.05rem">🗺️ Reittiohjeet ja satelliittinäkymä</h3>
+        <p style="margin:0 0 12px;color:#cbd5e1;font-size:0.92rem">Avaa alueen osoite (Piirintie 11 / Seuralantie 3, Seinäjoki) suoraan Google Mapsissa:</p>
+        <a href="https://google.com" target="_blank" rel="noopener" style="display:inline-block;background:#b49b82;color:#fff;text-decoration:none;padding:9px 15px;border-radius:8px;font-weight:700">Avaa Google Maps ↗</a>
+      </div>
+
+      <button type="button" class="takaisin-nappi" onclick="palaaEtusivulle()" style="margin-top:22px">← Takaisin etusivulle</button>
+    </div>
+  </section>
 
         <section id="sivu-piirintie11" class="alasivu">
     <img src="piirintie11_paa.jpg.JPG" alt="Sevas Kodit Oy:n vuokra-asunnot ja kerrostalo osoitteessa Piirintie 11, Seinäjoki" class="alasivu-hero">
@@ -433,6 +456,10 @@ function avaaSivu(id) {
     document.getElementById('ruudukko-piirintie11').style.display = 'none';
     document.getElementById('ruudukko-piirintieIlta').style.display = 'none';
   }
+  if (id === 'kartat') {
+    setTimeout(alustaPiiriKartta, 100);
+  }
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -454,6 +481,36 @@ function vaihdaPiirintieKansio(id) {
     ilta.style.display = ilta.style.display === 'grid' ? 'none' : 'grid';
     piha.style.display = 'none';
   }
+}
+let piiriKartta = null;
+function alustaPiiriKartta() {
+  if (piiriKartta) {
+    piiriKartta.invalidateSize();
+    return;
+  }
+  const el = document.getElementById('piiri-oma-kartta');
+  if (!el || typeof L === 'undefined') return;
+
+  piiriKartta = L.map('piiri-oma-kartta').setView([62.7668, 22.8535], 16);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap'
+  }).addTo(piiriKartta);
+
+  const kohteet = [
+    { nimi: 'Piirintie 11', lat: 62.7689, lon: 22.8568, teksti: 'Sevas Kodit Oy:n kerrostalo (valmistunut 2025, 73 asuntoa).' },
+    { nimi: 'Vanha vesitorni (1928)', lat: 62.7663, lon: 22.8492, teksti: 'Entisen Törnävän piirimielisairaalan historiallinen vesitorni.' },
+    { nimi: 'Seurala (1)', lat: 62.7652, lon: 22.8482, teksti: 'Piirin portilla sijaitseva historiallinen juhla- ja tapahtumatila.' },
+    { nimi: 'Hallintola (2)', lat: 62.7660, lon: 22.8505, teksti: 'Alueen perinteikäs hallintorakennus ja toimistotilat.' },
+    { nimi: 'Sairaalamuseo (3)', lat: 62.7667, lon: 22.8495, teksti: 'Seinäjoen museoiden erikoismuseo sairaanhoidon historiasta.' },
+    { nimi: 'Ravintola Verstas & Teatteri Hysteria (11)', lat: 62.7673, lon: 22.8548, teksti: 'Tunnelmallinen lounas- ja illallisravintola sekä ammattiteatteri.' },
+    { nimi: 'Piirin kirkko (15)', lat: 62.7682, lon: 22.8512, teksti: 'Seinäjoen seurakunnan historiallinen kirkko Piirin alueella.' },
+    { nimi: 'Piirin kesälava (16)', lat: 62.7658, lon: 22.8562, teksti: 'Ulkoilmanäyttämö ja kesätapahtumien keskus.' }
+  ];
+
+  kohteet.forEach(k => {
+    L.marker([k.lat, k.lon]).addTo(piiriKartta)
+      .bindPopup(`<b>${k.nimi}</b><br>${k.teksti}`);
+  });
 }
 
 const nyt = new Date();
