@@ -419,6 +419,7 @@ document.addEventListener('click', e => {
 });
 
 function avaaSivu(id) {
+  if (window.goatcounter) window.goatcounter.count({ path: '/' + id, title: id, event: false });
   document.querySelectorAll('.pudotus').forEach(x => x.classList.remove('auki'));
   document.getElementById('navLista').classList.remove('mobiili-auki');
   document.getElementById('etusivuNakyma').style.display = 'none';
