@@ -143,7 +143,7 @@ textarea{min-height:95px;resize:vertical}
   </div>
 
         <section id="sivu-piirintie11" class="alasivu">
-    <img src="piirintie11_paa.jpg.JPG" alt="Piirintie 11 kerrostalo" class="alasivu-hero">
+    <img src="piirintie11_paa.jpg.JPG" alt="Sevas Kodit Oy:n vuokra-asunnot ja kerrostalo osoitteessa Piirintie 11, Seinäjoki" class="alasivu-hero">
     <div class="alasivu-sisalto">
       <h2>Piirintie 11</h2>
       <p class="alasivu-kuvaus" style="line-height:1.7;text-align:left;margin-top:12px">Piirintie 11 (60220 Seinäjoki) on <a id="sevasLinkki" href="#" target="_blank" rel="noopener" style="color:#b49b82;font-weight:700;text-decoration:underline">Sevas Kodit Oy:n</a> kerrostalovuokrakohde Huhtalan kaupunginosassa, Törnävän ja Piirin alueen kupeessa. Kohteessa on yhteensä 73 asuntoa kerroksissa 1–6, ja se on valmistunut vuoden 2025 lopussa.</p>
@@ -305,14 +305,14 @@ const SALATTU_MUSA3 = {"s":"kqgZGhQ+0KhZdbVRc7LGzw==","i":"UWiaLK1irDqlHnwi","d"
 const galleriat = {
 
   piirintie11: [
-    { tiedosto: 'piirintie1.jpg', teksti: 'Piirintie 11 kerrostalo' },
+    { tiedosto: 'piirintie1.jpg', teksti: 'Sevas Kodit Oy:n vuokra-asunnot ja kerrostalo osoitteessa Piirintie 11, Seinäjoki' },
     { tiedosto: 'piirintie2.jpg', teksti: 'Julkisivu' },
     { tiedosto: 'piirintie3.jpg', teksti: 'Leikkipuisto1' },
     { tiedosto: 'piirintie4.jpg', teksti: 'Leikkipuisto2' },
     { tiedosto: 'piirintie5.jpg', teksti: 'Sisäpiha1' },
     { tiedosto: 'piirintie6.jpg', teksti: 'Sisäpiha2' },
     { tiedosto: 'piirintie7.jpg', teksti: 'Teatteri Hysteria ja Ravintola Verstas' },
-    { tiedosto: 'piirintie8.jpg', teksti: 'Entisen Törnävän piirimielisairaalan oma vesitorni vuodelta 1928' },
+    { tiedosto: 'piirintie8.jpg', teksti: 'Seinäjoen Piirin ja entisen Törnävän piirimielisairaalan oma vanha vesitorni vuodelta 1928' },
     { tiedosto: 'piirintie9.jpg', teksti: 'Verstaan terassia' },
     { tiedosto: 'piirintie10.jpg', teksti: 'Verstas menu' }
   ],
@@ -371,7 +371,8 @@ document.addEventListener('keydown', e => {
 function paivitaRuudukot() {
   Object.keys(galleriat).forEach(k => {
     const el = document.getElementById('ruudukko-' + k);
-    if (el) el.innerHTML = galleriat[k].map((x, i) => `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${x.tiedosto}" onerror="kokeilePaate(this)"><p>${x.teksti||''}</p></div>`).join('');
+    if (el) el.innerHTML = galleriat[k].map((x, i) => `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${x.tiedosto}" alt="${x.teksti}" onerror="kokeilePaate(this)">
+<p>${x.teksti||''}</p></div>`).join('');
   });
 }
 paivitaRuudukot();
