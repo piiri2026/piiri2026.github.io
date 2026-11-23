@@ -166,7 +166,8 @@ textarea{min-height:95px;resize:vertical}
       </div>
 
       <div id="tabSisaltoPalvelut" style="display:none;margin-top:12px;padding:14px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.12);text-align:left">
-        <p style="margin:0 0 10px;color:#94a3b8;font-size:0.85rem">Lähtöpaikka: Piirintie 11. Napauta kohdetta avataksesi lyhimmän kävelyreitin Google Mapsissa:</p>
+                <p style="margin:0 0 10px;color:#94a3b8;font-size:0.85rem">Mainitut etäisyydet on mitattu lähtöpisteestä Piirintie 11. Napauttamalla kohdetta Google Maps opastaa lyhimmän kävelyreitin suoraan omasta nykyisestä sijainnistasi:</p>
+
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;font-size:0.9rem;color:#e2e8f0">
           <button type="button" onclick="avaaKavelyreitti('K-Supermarket Koskenala', '62.7782,22.8385')" style="text-align:left;padding:12px;background:rgba(0,0,0,0.28);border:1px solid rgba(180,155,130,0.35);border-radius:8px;color:#e2e8f0;cursor:pointer">
             <strong style="color:#b49b82">🛒 Lähin ruokakauppa: K-Supermarket Koskenala</strong><br>
@@ -657,8 +658,8 @@ function vaihdaKarttaTab(tab) {
 }
 
 function avaaKavelyreitti(kohdeNimi, kohdeKoord) {
-  if (confirm('Haluatko että opastan lyhimmän kävelyreitin kohteeseen "' + kohdeNimi + '"?')) {
-    const url = 'https://www.google.' + 'com/maps/dir/?api=1&origin=62.771398,22.826077&destination=' + encodeURIComponent(kohdeKoord) + '&travelmode=walking';
+  if (confirm('Haluatko että opastan lyhimmän kävelyreitin nykyisestä sijainnistasi kohteeseen "' + kohdeNimi + '"?')) {
+    const url = 'https://www.google.' + 'com/maps/dir/?api=1&destination=' + encodeURIComponent(kohdeKoord) + '&travelmode=walking';
     const ikkuna = window.open(url, '_blank');
     if (!ikkuna) window.location.href = url;
   }
