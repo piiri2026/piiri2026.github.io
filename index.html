@@ -152,33 +152,35 @@ textarea{min-height:95px;resize:vertical}
         Klikkaa kartan merkkejä nähdäksesi lisätietoja kohteista.
       </p>
       <div id="piiri-oma-kartta" style="width:100%;height:420px;border-radius:12px;border:1px solid rgba(255,255,255,0.18);z-index:1"></div>
-           <div id="piiri-kohdelista" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px"></div>
+                 <div id="piiri-kohdelista" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:12px"></div>
 
       <div style="margin-top:22px;padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.12);text-align:left">
-        <h3 style="margin:0 0 10px;color:#b49b82;font-size:1.05rem">🧭 Lähipalvelut ja etäisyydet (lähtöpaikka Piirintie 11)</h3>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;font-size:0.92rem;color:#e2e8f0">
-          <div style="padding:10px 12px;background:rgba(0,0,0,0.2);border-radius:8px">
-            <strong style="color:#b49b82">🛒 Lähin ruokakauppa</strong><br>
-            K-Supermarket Koskenala — n. 1,4 km<br>
-            <span style="color:#94a3b8;font-size:0.84rem">S-market Kivistö — n. 1,9 km</span>
-          </div>
-          <div style="padding:10px 12px;background:rgba(0,0,0,0.2);border-radius:8px">
-            <strong style="color:#b49b82">💊 Lähin apteekki</strong><br>
-            Kivistön apteekki (S-marketin yhteydessä) — n. 1,9 km<br>
-            <span style="color:#94a3b8;font-size:0.84rem">Keskussairaalan apteekkipiste — n. 0,6 km</span>
-          </div>
-          <div style="padding:10px 12px;background:rgba(0,0,0,0.2);border-radius:8px">
-            <strong style="color:#b49b82">🏥 Terveyspalvelut</strong><br>
-            Seinäjoen keskussairaala & Y-talo — n. 0,5–0,8 km<br>
-            <span style="color:#94a3b8;font-size:0.84rem">Kävelymatka puistotietä pitkin n. 7–10 min</span>
-          </div>
-          <div style="padding:10px 12px;background:rgba(0,0,0,0.2);border-radius:8px">
-            <strong style="color:#b49b82">🏖️ Ulkoilu & uimaranta</strong><br>
-            Kyrkösjärven uimaranta ja leikkipaikka — n. 1,1 km<br>
-            <span style="color:#94a3b8;font-size:0.84rem">Piirin puistoalue ja kesälava — n. 0,3–0,5 km</span>
-          </div>
+        <h3 style="margin:0 0 6px;color:#b49b82;font-size:1.05rem">🧭 Lähipalvelut ja etäisyydet (lähtöpaikka Piirintie 11)</h3>
+        <p style="margin:0 0 12px;color:#94a3b8;font-size:0.85rem">Napauta laatikkoa avataksesi lyhimmän kävelyreitin lähimpään kohteeseen Google Mapsissa.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;font-size:0.9rem;color:#e2e8f0">
+          <button type="button" onclick="avaaKavelyreitti('K-Supermarket Koskenala', '62.7782,22.8385')" style="text-align:left;padding:11px 12px;background:rgba(0,0,0,0.25);border:1px solid rgba(180,155,130,0.28);border-radius:8px;color:#e2e8f0;cursor:pointer">
+            <strong style="color:#b49b82">🛒 Lähin ruokakauppa: K-Supermarket Koskenala</strong><br>
+            Etäisyys n. 1,4 km 🚶‍♂️<br>
+            <span style="color:#94a3b8;font-size:0.82rem">Muut lähikaupat: S-market Törnävä (n. 1,6 km), S-market Kivistö (n. 1,9 km)</span>
+          </button>
+          <button type="button" onclick="avaaKavelyreitti('Kivistön apteekki', '62.7738,22.8475')" style="text-align:left;padding:11px 12px;background:rgba(0,0,0,0.25);border:1px solid rgba(180,155,130,0.28);border-radius:8px;color:#e2e8f0;cursor:pointer">
+            <strong style="color:#b49b82">💊 Lähin apteekki: Kivistön apteekki</strong><br>
+            S-market Kivistön yhteydessä — n. 1,9 km 🚶‍♂️<br>
+            <span style="color:#94a3b8;font-size:0.82rem">Keskussairaalan apteekkipiste — n. 0,6 km</span>
+          </button>
+          <button type="button" onclick="avaaKavelyreitti('Seinäjoen keskussairaala', '62.7715,22.8223')" style="text-align:left;padding:11px 12px;background:rgba(0,0,0,0.25);border:1px solid rgba(180,155,130,0.28);border-radius:8px;color:#e2e8f0;cursor:pointer">
+            <strong style="color:#b49b82">🏥 Terveyspalvelut: Keskussairaala & Y-talo</strong><br>
+            Etäisyys n. 0,5–0,8 km 🚶‍♂️<br>
+            <span style="color:#94a3b8;font-size:0.82rem">Kävelymatka puistotietä pitkin n. 7–10 min</span>
+          </button>
+          <button type="button" onclick="avaaKavelyreitti('Kyrkösjärven uimaranta', '62.7693,22.8135')" style="text-align:left;padding:11px 12px;background:rgba(0,0,0,0.25);border:1px solid rgba(180,155,130,0.28);border-radius:8px;color:#e2e8f0;cursor:pointer">
+            <strong style="color:#b49b82">🏖️ Ulkoilu & uimaranta: Kyrkösjärvi</strong><br>
+            Uimaranta ja leikkipaikka — n. 1,1 km 🚶‍♂️<br>
+            <span style="color:#94a3b8;font-size:0.82rem">Piirin puistoalue ja kesälava — n. 0,3–0,5 km</span>
+          </button>
         </div>
       </div>
+
 
       <div style="margin-top:20px;padding:16px;background:rgba(255,255,255,0.05);border-radius:10px;border:1px solid rgba(255,255,255,0.12);text-align:left">
         <h3 style="margin:0 0 6px;color:#b49b82;font-size:1.05rem">🗺️ Reittiohjeet ja satelliittinäkymä</h3>
@@ -533,7 +535,13 @@ function alustaPiiriKartta() {
   const el = document.getElementById('piiri-oma-kartta');
   if (!el) return;
 
-  piiriKartta = L.map('piiri-oma-kartta').setView([62.7704, 22.8255], 15);
+    const onMobiili = window.innerWidth < 768;
+  if (onMobiili) el.style.height = '300px';
+  piiriKartta = L.map('piiri-oma-kartta', {
+    dragging: !onMobiili,
+    tap: !onMobiili
+  }).setView([62.7704, 22.8255], 15);
+
   L.tileLayer('https://{s}.tile.openstreetmap.' + 'org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap'
   }).addTo(piiriKartta);
