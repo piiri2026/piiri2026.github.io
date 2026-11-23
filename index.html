@@ -152,7 +152,34 @@ textarea{min-height:95px;resize:vertical}
         Klikkaa kartan merkkejä nähdäksesi lisätietoja kohteista.
       </p>
       <div id="piiri-oma-kartta" style="width:100%;height:420px;border-radius:12px;border:1px solid rgba(255,255,255,0.18);z-index:1"></div>
-      <div id="piiri-kohdelista" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;margin-top:14px"></div>
+           <div id="piiri-kohdelista" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px"></div>
+
+      <div style="margin-top:22px;padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(255,255,255,0.12);text-align:left">
+        <h3 style="margin:0 0 10px;color:#b49b82;font-size:1.05rem">🧭 Lähipalvelut ja etäisyydet (lähtöpaikka Piirintie 11)</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;font-size:0.92rem;color:#e2e8f0">
+          <div style="padding:10px 12px;background:rgba(0,0,0,0.2);border-radius:8px">
+            <strong style="color:#b49b82">🛒 Lähin ruokakauppa</strong><br>
+            K-Supermarket Koskenala — n. 1,4 km<br>
+            <span style="color:#94a3b8;font-size:0.84rem">S-market Kivistö — n. 1,9 km</span>
+          </div>
+          <div style="padding:10px 12px;background:rgba(0,0,0,0.2);border-radius:8px">
+            <strong style="color:#b49b82">💊 Lähin apteekki</strong><br>
+            Kivistön apteekki (S-marketin yhteydessä) — n. 1,9 km<br>
+            <span style="color:#94a3b8;font-size:0.84rem">Keskussairaalan apteekkipiste — n. 0,6 km</span>
+          </div>
+          <div style="padding:10px 12px;background:rgba(0,0,0,0.2);border-radius:8px">
+            <strong style="color:#b49b82">🏥 Terveyspalvelut</strong><br>
+            Seinäjoen keskussairaala & Y-talo — n. 0,5–0,8 km<br>
+            <span style="color:#94a3b8;font-size:0.84rem">Kävelymatka puistotietä pitkin n. 7–10 min</span>
+          </div>
+          <div style="padding:10px 12px;background:rgba(0,0,0,0.2);border-radius:8px">
+            <strong style="color:#b49b82">🏖️ Ulkoilu & uimaranta</strong><br>
+            Kyrkösjärven uimaranta ja leikkipaikka — n. 1,1 km<br>
+            <span style="color:#94a3b8;font-size:0.84rem">Piirin puistoalue ja kesälava — n. 0,3–0,5 km</span>
+          </div>
+        </div>
+      </div>
+
       <div style="margin-top:20px;padding:16px;background:rgba(255,255,255,0.05);border-radius:10px;border:1px solid rgba(255,255,255,0.12);text-align:left">
         <h3 style="margin:0 0 6px;color:#b49b82;font-size:1.05rem">🗺️ Reittiohjeet ja satelliittinäkymä</h3>
         <p style="margin:0 0 12px;color:#cbd5e1;font-size:0.92rem">Avaa alueen osoite (Piirintie 11 / Seuralantie 3, Seinäjoki) suoraan Google Mapsissa:</p>
@@ -579,11 +606,11 @@ function alustaPiiriKartta() {
     const nasta = L.marker([k.lat, k.lon]).addTo(piiriKartta)
       .bindPopup(`<div style="max-width:215px"><b>${k.nimi}</b><br><span style="font-size:13px">${k.teksti}</span>${kuvaHtml}</div>`);
 
-    if (listaEl) {
+        if (listaEl) {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.style.cssText = 'text-align:left;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);color:#e2e8f0;padding:10px 12px;border-radius:8px;cursor:pointer;font-size:0.9rem';
-      btn.innerHTML = `<strong style="color:#b49b82">📍 ${k.nimi}</strong><br><span style="font-size:0.8rem;color:#94a3b8">${k.teksti}</span>`;
+      btn.style.cssText = 'background:rgba(255,255,255,0.08);border:1px solid rgba(180,155,130,0.35);color:#f1f5f9;padding:8px 12px;border-radius:20px;cursor:pointer;font-size:0.85rem;font-weight:600;line-height:1.2';
+      btn.textContent = '📍 ' + k.nimi;
       btn.onclick = () => {
         piiriKartta.setView([k.lat, k.lon], 17);
         nasta.openPopup();
@@ -591,6 +618,7 @@ function alustaPiiriKartta() {
       };
       listaEl.appendChild(btn);
     }
+
   });
 
 }
