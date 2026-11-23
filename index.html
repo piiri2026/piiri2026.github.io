@@ -430,14 +430,17 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft') vaihdaKuva(-1);
 });
 
-function paivitaRuudukot() {
-  Object.keys(galleriat).forEach(k => {
+function paivitaRuudukot(vainKansio) {
+  const avaimet = vainKansio ? [vainKansio] : Object.keys(galleriat).filter(k => k !== 'piirintie11' && k !== 'piirintieIlta');
+  avaimet.forEach(k => {
     const el = document.getElementById('ruudukko-' + k);
-    if (el) el.innerHTML = galleriat[k].map((x, i) => `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${x.tiedosto}" alt="${x.teksti}" onerror="kokeilePaate(this)">
-<p>${x.teksti||''}</p></div>`).join('');
+    if (el && !el.dataset.ladattu) {
+      el.dataset.ladattu = '1';
+      el.innerHTML = galleriat[k].map((x, i) => `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${x.tiedosto}" alt="${x.teksti}" loading="lazy" onerror="kokeilePaate(this)"><p>${x.teksti||''}</p></div>`).join('');
+    }
   });
 }
-paivitaRuudukot();
+
 
 function paivitaMusa() {
   const el = document.getElementById('lista-musa');
@@ -498,6 +501,9 @@ function avaaSivu(id) {
   if (id === 'kartat') {
     setTimeout(alustaPiiriKartta, 100);
   }
+  if (id === 'vili' || id === 'omatupa' || id === 'vieraat' || id === 'muksut') {
+    paivitaRuudukot(id);
+  }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -514,10 +520,14 @@ function vaihdaPiirintieKansio(id) {
   const piha = document.getElementById('ruudukko-piirintie11');
   const ilta = document.getElementById('ruudukko-piirintieIlta');
   if (id === 'piirintie11') {
-    piha.style.display = piha.style.display === 'grid' ? 'none' : 'grid';
+    const auki = piha.style.display === 'grid';
+    if (!auki) paivitaRuudukot('piirintie11');
+    piha.style.display = auki ? 'none' : 'grid';
     ilta.style.display = 'none';
   } else {
-    ilta.style.display = ilta.style.display === 'grid' ? 'none' : 'grid';
+    const auki = ilta.style.display === 'grid';
+    if (!auki) paivitaRuudukot('piirintieIlta');
+    ilta.style.display = auki ? 'none' : 'grid';
     piha.style.display = 'none';
   }
 }
