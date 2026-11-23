@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Piiri – Valokuvia Seinäjoelta</title>
 <meta name="google-site-verification" content="JBMT5L6hNFE4xIOPgS5WIb88w_Ohgie5TWHw8W2ShVU" />
-<meta name="description" content="Piiri2026 – Valokuvia Seinäjoelta, Piirin alueelta ja Piirintie 11 pihapiiristä. Kamera Canon EOS 1100D, Vili-kissa ja kuvaajan tarinoita.">
-<meta name="keywords" content="piiri, piiri2026, piiri valokuvat, seinäjoki piiri, piirintie 11, valokuvia seinäjoelta, vili">
+<meta name="description" content="Piiri2026 – Valokuvia Seinäjoelta, Piirin alueen interaktiivinen kartta ja kuvauskohteet (Piirintie 11, vanha vesitorni, Seurala, Piirin kirkko, Verstas).">
+<meta name="keywords" content="piiri, piiri2026, piiri kartta, seinäjoki piiri kartta, piiri valokuvat, piirintie 11, vanha vesitorni, vili">
 <link rel="canonical" href="https://piiri2026.github.io">
 
 <style>
@@ -152,7 +152,7 @@ textarea{min-height:95px;resize:vertical}
         Klikkaa kartan merkkejä nähdäksesi lisätietoja kohteista.
       </p>
       <div id="piiri-oma-kartta" style="width:100%;height:420px;border-radius:12px;border:1px solid rgba(255,255,255,0.18);z-index:1"></div>
-
+      <div id="piiri-kohdelista" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;margin-top:14px"></div>
       <div style="margin-top:20px;padding:16px;background:rgba(255,255,255,0.05);border-radius:10px;border:1px solid rgba(255,255,255,0.12);text-align:left">
         <h3 style="margin:0 0 6px;color:#b49b82;font-size:1.05rem">🗺️ Reittiohjeet ja satelliittinäkymä</h3>
         <p style="margin:0 0 12px;color:#cbd5e1;font-size:0.92rem">Avaa alueen osoite (Piirintie 11 / Seuralantie 3, Seinäjoki) suoraan Google Mapsissa:</p>
@@ -569,13 +569,30 @@ function alustaPiiriKartta() {
     }
   ];
 
+    const listaEl = document.getElementById('piiri-kohdelista');
+  if (listaEl) listaEl.innerHTML = '';
+
   kohteet.forEach(k => {
     const kuvaHtml = k.kuva
       ? `<img src="${k.kuva}" alt="${k.nimi}" onerror="kokeilePaate(this)" onclick="avaaLightbox('${k.gal}',${k.idx})" style="width:100%;max-width:210px;height:125px;object-fit:cover;border-radius:6px;margin-top:8px;cursor:pointer;display:block"><span style="font-size:11px;color:#64748b">Klikkaa kuvaa suurentaaksesi</span>`
       : '';
-    L.marker([k.lat, k.lon]).addTo(piiriKartta)
+    const nasta = L.marker([k.lat, k.lon]).addTo(piiriKartta)
       .bindPopup(`<div style="max-width:215px"><b>${k.nimi}</b><br><span style="font-size:13px">${k.teksti}</span>${kuvaHtml}</div>`);
+
+    if (listaEl) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.style.cssText = 'text-align:left;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);color:#e2e8f0;padding:10px 12px;border-radius:8px;cursor:pointer;font-size:0.9rem';
+      btn.innerHTML = `<strong style="color:#b49b82">📍 ${k.nimi}</strong><br><span style="font-size:0.8rem;color:#94a3b8">${k.teksti}</span>`;
+      btn.onclick = () => {
+        piiriKartta.setView([k.lat, k.lon], 17);
+        nasta.openPopup();
+        document.getElementById('piiri-oma-kartta').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      };
+      listaEl.appendChild(btn);
+    }
   });
+
 }
 
 const nyt = new Date();
