@@ -47,6 +47,8 @@ body::before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(1
 .nappi:hover{background:linear-gradient(135deg,#c5ad94,#a68c72)}
 .nappi-toinen{background:rgba(15,20,28,.75);border:1px solid #b49b82}
 .nappi-toinen:hover{background:#b49b82}
+.koti-nappi{background:transparent !important;border:none;color:#fff;font-size:1rem;font-weight:800;letter-spacing:1.5px;padding:6px 4px;display:inline-flex;align-items:center;gap:5px;cursor:pointer;white-space:nowrap}
+
 .hampurilainen{display:none;background:none;border:1px solid rgba(255,255,255,.25);color:#fff;font-size:1.5rem;padding:4px 12px;border-radius:8px;cursor:pointer}
 
 .sisalto{position:relative;z-index:5;max-width:900px;width:100%;margin:0 auto;padding:36px 20px 60px;text-align:center;flex:1}
@@ -135,9 +137,10 @@ textarea{min-height:95px;resize:vertical}
 <body>
 
 <header class="ylapalkki" id="ylaPalkki">
-  <button type="button" class="nav-nappi" style="font-size:1rem;font-weight:800;letter-spacing:1.5px;padding:8px 10px;display:flex;align-items:center;gap:6px" onclick="palaaEtusivulle()" title="Palaa etusivulle">
+    <button type="button" class="koti-nappi" onclick="palaaEtusivulle()" title="Palaa etusivulle">
     <span>🏠</span><span>PIIRI</span>
   </button>
+
 
   <button type="button" class="hampurilainen" onclick="document.getElementById('navLista').classList.toggle('mobiili-auki')" aria-label="Valikko">☰ Valikko</button>
 
@@ -180,8 +183,8 @@ textarea{min-height:95px;resize:vertical}
     <h1>Seinäjoen Piiri</h1>
     <p class="alaotsikko-hero">Valokuvia ja karttoja historialliselta Piirin alueelta</p>
     <p class="esittely" style="margin-bottom:20px">Vehreä Piirin kaupunginosa (ent. Törnävän sairaala-alue) Seinäjoella. Tutustu alueen interaktiiviseen karttaan sekä kuviin historiallisista rakennuksista ja Piirintie 11 -kotikorttelista.</p>
-    <div class="etusivu-napit" style="gap:10px;margin-bottom:10px">
-      <button type="button" class="nappi" style="padding:10px 14px;font-size:.82rem" onclick="avaaSivu('kartat')">🗺️ Alueen kartta</button>
+        <div class="etusivu-napit" style="gap:10px;margin-bottom:10px">
+      <button type="button" class="nappi nappi-toinen" style="padding:10px 14px;font-size:.82rem" onclick="avaaSivu('kartat')">🗺️ Alueen kartta</button>
       <button type="button" class="nappi nappi-toinen" style="padding:10px 14px;font-size:.82rem" onclick="avaaSivu('piirintie11')">📷 Piirintie 11 -kuvat</button>
     </div>
   </div>
