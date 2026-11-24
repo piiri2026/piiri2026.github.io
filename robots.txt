@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://piiri2026.github.io/sitemap.xml
