@@ -5,16 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Piiri – Valokuvia Seinäjoelta</title>
 <meta name="google-site-verification" content="JBMT5L6hNFE4xIOPgS5WIb88w_Ohgie5TWHw8W2ShVU" />
-<meta name="description" content="Piiri2026 – Valokuvia Seinäjoelta, Piirin alueen interaktiivinen kartta ja kuvauskohteet (Piirintie 11, vanha vesitorni, Seurala, Piirin kirkko, Verstas).">
-<meta name="keywords" content="piiri, piiri2026, piiri kartta, seinäjoki piiri kartta, piiri valokuvat, piirintie 11, vanha vesitorni, vili">
-<link rel="canonical" href="https://piiri2026.github.io">
+<meta name="description" content="Piiri – Valokuvia Seinäjoen Piirin alueelta, interaktiivinen kartta ja kuvauskohteet (Piirintie 11, vanha vesitorni, Seurala, Piirin kirkko, Verstas).">
+<meta name="keywords" content="piiri, piiri2026, piiri kartta, seinäjoki piiri kartta, piiri valokuvat, piirintie 11, vanha vesitorni">
+<link rel="canonical" href="https://github.io">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://w3.org' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📷</text></svg>">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://github.io">
+<meta property="og:title" content="Piiri – Valokuvia Seinäjoelta">
+<meta property="og:description" content="Valokuvia Seinäjoen Piirin historialliselta alueelta, interaktiivinen kartta ja kuvauskohteet.">
+<meta property="og:image" content="https://github.iopiirintie11_paa.jpg.JPG">
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',sans-serif;color:#fff;background:#11161d url('taustakuva1.jpg') center top/cover fixed;min-height:100vh;padding-top:96px;position:relative}
-body::before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(10,14,20,.22),rgba(10,14,20,.52));z-index:0;pointer-events:none}
+body{font-family:'Segoe UI',sans-serif;color:#fff;background:#11161d url('taustakuva1.jpg') center top/cover fixed;min-height:100vh;padding-top:96px;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(10,14,20,.28),rgba(10,14,20,.62));z-index:0;pointer-events:none}
 
-.ylapalkki{position:fixed;top:0;left:0;right:0;min-height:74px;background:rgba(15,20,28,.9);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:space-between;padding:10px 24px;z-index:50;transition:transform .3s ease}
+.ylapalkki{position:fixed;top:0;left:0;right:0;min-height:74px;background:rgba(15,20,28,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:space-between;padding:10px 24px;z-index:50;transition:transform .3s ease}
 .ylapalkki.piilossa{transform:translateY(-100%)}
 .yla-vasen{display:flex;align-items:center;gap:12px}
 .saa{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);padding:6px 12px;border-radius:12px;text-decoration:none;color:#fff;font-weight:600;font-size:.95rem;white-space:nowrap}
@@ -26,42 +34,57 @@ body::before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(1
 .nav-nappi:hover,.pudotus.auki .nav-nappi{background:#b49b82}
 .pudotus{position:relative}
 .alavalikko{display:none;position:absolute;top:100%;left:0;min-width:220px;background:#b49b82;box-shadow:0 10px 25px rgba(0,0,0,.6);border-radius:6px;overflow:hidden;z-index:60}
-#piiriValikko:hover .alavalikko,.pudotus.auki .alavalikko{display:block}
+.pudotus.auki .alavalikko{display:block}
+@media(hover:hover){
+  .pudotus:not(.suljettu):hover .alavalikko{display:block}
+}
 
 .alavalikko a,.alavalikko button{display:block;width:100%;padding:13px 18px;color:#fff;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.18);font-family:inherit;font-size:.88rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:left;text-decoration:none;cursor:pointer}
 .alavalikko a:last-child,.alavalikko button:last-child{border-bottom:none}
 .alavalikko a:hover,.alavalikko button:hover{background:#9c836a}
 
-.nappi{background:linear-gradient(135deg,#b49b82,#947b62);color:#fff;border:none;padding:10px 18px;font-size:.88rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:8px;cursor:pointer;white-space:nowrap}
+.nappi{background:linear-gradient(135deg,#b49b82,#947b62);color:#fff;border:none;padding:10px 18px;font-size:.88rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:8px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block}
 .nappi:hover{background:linear-gradient(135deg,#c5ad94,#a68c72)}
+.nappi-toinen{background:rgba(15,20,28,.75);border:1px solid #b49b82}
+.nappi-toinen:hover{background:#b49b82}
 .hampurilainen{display:none;background:none;border:1px solid rgba(255,255,255,.25);color:#fff;font-size:1.5rem;padding:4px 12px;border-radius:8px;cursor:pointer}
 
-.sisalto{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:36px 20px 60px;text-align:center}
-h1{font-size:4rem;letter-spacing:4px;margin-bottom:18px;text-shadow:0 4px 20px rgba(0,0,0,.95)}
-.esittely{font-size:1.15rem;line-height:1.75;max-width:740px;margin:0 auto;text-shadow:0 2px 14px rgba(0,0,0,.98)}
+.sisalto{position:relative;z-index:5;max-width:900px;width:100%;margin:0 auto;padding:36px 20px 60px;text-align:center;flex:1}
+h1{font-size:3.4rem;letter-spacing:3px;margin-bottom:14px;text-shadow:0 4px 20px rgba(0,0,0,.95)}
+.alaotsikko-hero{font-size:1.25rem;color:#e2c9af;font-weight:600;margin-bottom:18px;text-shadow:0 2px 12px rgba(0,0,0,.95)}
+.esittely{font-size:1.08rem;line-height:1.7;max-width:720px;margin:0 auto 26px;text-shadow:0 2px 14px rgba(0,0,0,.98)}
+.etusivu-napit{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.kamera-info{font-size:.9rem;color:#cbd5e1;max-width:650px;margin:0 auto;background:rgba(15,20,28,.6);padding:12px 18px;border-radius:10px;border:1px solid rgba(255,255,255,.12)}
+
 .alasivu{display:none;position:fixed;inset:0;background:#11161d;z-index:20;overflow-y:auto;padding:96px 0 60px;text-align:center}
 .alasivu.aktiivinen{display:block}
 .alasivu-hero{width:100%;max-height:460px;object-fit:cover;display:block;margin-bottom:24px}
 .alasivu-sisalto{max-width:900px;margin:0 auto;padding:0 20px}
-
-.alasivu.aktiivinen{display:block}
 .alasivu h2{font-size:1.9rem;letter-spacing:2px;margin-bottom:8px;text-transform:uppercase}
 .alasivu-kuvaus{color:#cbd5e1;margin-bottom:22px}
+
 .kuva-ruudukko{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px}
-.kuva-kortti{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;overflow:hidden;cursor:pointer}
+.kuva-kortti{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .15s ease,border-color .15s ease}
+.kuva-kortti:hover,.kuva-kortti:focus{transform:translateY(-2px);border-color:#b49b82;outline:2px solid #b49b82}
 .kuva-kortti img{width:100%;height:190px;object-fit:cover;display:block}
 .kuva-kortti p{padding:10px;font-size:.9rem;color:#e2e8f0}
+
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal.avoin{display:flex}
-.ikkuna{background:#1e2530;border:1px solid rgba(255,255,255,.2);border-radius:18px;max-width:460px;width:100%;padding:28px;position:relative;text-align:left}
-.sulje{position:absolute;top:12px;right:16px;background:none;border:none;color:#cbd5e1;font-size:2rem;cursor:pointer}
+.ikkuna{background:#1e2530;border:1px solid rgba(255,255,255,.2);border-radius:18px;max-width:460px;width:100%;padding:28px;position:relative;text-align:left;max-height:92vh;overflow-y:auto}
+.sulje{position:absolute;top:12px;right:16px;background:none;border:none;color:#cbd5e1;font-size:2rem;cursor:pointer;line-height:1}
 .lb-sisalto{position:relative;max-width:92vw;max-height:90vh;text-align:center}
-.lb-sisalto img{max-width:90vw;max-height:78vh;border-radius:10px;object-fit:contain}
+.lb-sisalto img{max-width:90vw;max-height:76vh;border-radius:10px;object-fit:contain}
 .lb-teksti{margin-top:12px;font-size:1.05rem}
+.lb-laskuri{margin-top:4px;font-size:.85rem;color:#94a3b8}
 .lb-nuoli{position:fixed;top:50%;transform:translateY(-50%);background:rgba(15,20,28,.75);color:#fff;border:none;font-size:2rem;padding:10px 16px;border-radius:50%;cursor:pointer;z-index:120}
+
 .rivi{display:flex;gap:10px}
-input,textarea{width:100%;padding:10px;margin:6px 0 14px;border-radius:10px;background:rgba(15,20,28,.8);color:#fff;border:1px solid rgba(255,255,255,.2);font-family:inherit}
+.kentta-ryhma{flex:1;margin-bottom:12px}
+label{display:block;font-size:.85rem;font-weight:600;color:#cbd5e1;margin-bottom:4px}
+input,textarea{width:100%;padding:10px;border-radius:10px;background:rgba(15,20,28,.8);color:#fff;border:1px solid rgba(255,255,255,.2);font-family:inherit;font-size:.95rem}
 textarea{min-height:95px;resize:vertical}
+
 .musa-lista{display:flex;flex-direction:column;gap:14px;margin-bottom:24px;text-align:left}
 .musa-kortti{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:14px 18px}
 .musa-kortti p{font-weight:600;margin-bottom:8px;color:#e2e8f0}
@@ -70,32 +93,41 @@ textarea{min-height:95px;resize:vertical}
 .musa-sanat{margin-top:12px;padding:12px;background:rgba(0,0,0,.35);border-radius:8px;max-height:190px;overflow-y:auto;display:none;line-height:1.7;color:#94a3b8}
 .musa-sanat div.aktiivinen{color:#fff;font-weight:700;font-size:1.05rem;transform:scale(1.01)}
 
-
+.alatunniste{position:relative;z-index:1;text-align:center;padding:16px 20px;font-size:.82rem;color:#94a3b8;background:rgba(15,20,28,.65);border-top:1px solid rgba(255,255,255,.08)}
 
 @media(max-width:900px){
   body{background-size:cover;background-position:35% top;background-attachment:scroll;padding-top:118px}
+  .alasivu{padding-top:122px}
   .ylapalkki{flex-wrap:wrap;padding:8px 12px;gap:8px;min-height:auto}
   .yla-vasen{display:contents}
   .saa{order:1;padding:6px 10px;font-size:.88rem}
   .hampurilainen{display:block;order:2}
   .ylapalkki > .nappi{order:3;padding:7px 12px;font-size:.8rem}
-    .paiva{display:block !important;order:4;width:100%;text-align:center;font-size:.82rem;padding-top:6px;border-top:1px solid rgba(255,255,255,.12)}
+  .paiva{display:block !important;order:4;width:100%;text-align:center;font-size:.82rem;padding-top:6px;border-top:1px solid rgba(255,255,255,.12)}
 
   .nav-lista{display:none;position:fixed;top:98px;left:0;right:0;background:#151b24;border-bottom:1px solid rgba(255,255,255,.2);flex-direction:column;align-items:stretch;padding:12px 18px 22px;gap:4px;box-shadow:0 15px 30px rgba(0,0,0,.9)}
   .nav-lista.mobiili-auki{display:flex}
   .nav-nappi{text-align:left;width:100%;padding:14px 12px;font-size:1rem;border-bottom:1px solid rgba(255,255,255,.08)}
   .alavalikko{position:static;box-shadow:none;background:rgba(180,155,130,.22);margin-top:4px}
-  h1{font-size:2.7rem;margin-top:8px}
-  .esittely{font-size:1rem;line-height:1.6}
+  h1{font-size:2.4rem;margin-top:8px}
+  .alaotsikko-hero{font-size:1.08rem}
+  .esittely{font-size:.98rem;line-height:1.6}
   .kuva-ruudukko{grid-template-columns:1fr}
   .lb-nuoli{padding:10px 13px;font-size:1.5rem}
-    .rivi{flex-direction:column;gap:0}
+  .rivi{flex-direction:column;gap:0}
+}
+@media(max-width:380px){
+  body,.alasivu{padding-top:138px}
+  .saa{padding:5px 8px;font-size:.8rem}
+  .ylapalkki > .nappi{padding:6px 9px;font-size:.75rem}
+  .hampurilainen{padding:3px 9px;font-size:1.3rem}
 }
 @media(min-width:901px){
-  #etusivuNakyma{min-height:calc(100vh - 180px);display:flex;flex-direction:column;justify-content:center;align-items:center}
+  #etusivuNakyma{min-height:calc(100vh - 220px);display:flex;flex-direction:column;justify-content:center;align-items:center}
 }
 </style>
 </head>
+
 <body>
 
 <header class="ylapalkki" id="ylaPalkki">
@@ -136,10 +168,17 @@ textarea{min-height:95px;resize:vertical}
 </header>
 
 <main class="sisalto">
-  <div id="etusivuNakyma">
-    <h1>Piiri</h1>
-    <p class="esittely">Tältä sivustolta löytyy enimmäkseen valokuvia uudenkarhealla järjestelmäkameralla Canon EOS 1100D (2011) otettuja ja ihan kännykälläkin räpsimisiä. Kuvat keskittyvät enimmäkseen uudehkoon Seinäjoen Piirin alueeseen ja kuvaajan sielunelämään. Lisäilen uusia kuvia aina kun aikaa löytyy.</p>
+    <div id="etusivuNakyma">
+    <h1>Seinäjoen Piiri</h1>
+    <p class="alaotsikko-hero">Valokuvia ja karttoja historialliselta Piirin alueelta</p>
+    <p class="esittely">Piiri (entinen Törnävän sairaala-alue) on vehreä ja historiallinen kaupunginosa Seinäjoella. Tältä sivustolta löydät alueen interaktiivisen kartan sekä valokuvia niin vanhoista suojelluista rakennuksista kuin uudesta Piirintie 11 -kotikorttelista.</p>
+    <div class="etusivu-napit">
+      <button type="button" class="nappi" onclick="avaaSivu('kartat')">🗺️ Avaa alueen kartta</button>
+      <button type="button" class="nappi nappi-toinen" onclick="avaaSivu('piirintie11')">📷 Piirintie 11 -kuvat</button>
+    </div>
+    <p class="kamera-info">Kuvat on tallennettu pääosin Canon EOS 1100D (2011) -järjestelmäkameralla sekä kännykällä alueella kierrellessä.</p>
   </div>
+
   <section id="sivu-kartat" class="alasivu">
     <div class="alasivu-sisalto">
       <h2>Kartat – Seinäjoen Piirin alue</h2>
@@ -205,15 +244,16 @@ textarea{min-height:95px;resize:vertical}
     </div>
   </section>
 
-        <section id="sivu-piirintie11" class="alasivu">
-    <img src="piirintie11_paa.jpg.JPG" alt="Sevas Kodit Oy:n vuokra-asunnot ja kerrostalo osoitteessa Piirintie 11, Seinäjoki" class="alasivu-hero">
+          <section id="sivu-piirintie11" class="alasivu">
+    <img src="piirintie11_paa.jpg.JPG" alt="Sevas Kodit Oy:n vuokra-asunnot ja kerrostalo osoitteessa Piirintie 11, Seinäjoki" class="alasivu-hero" loading="lazy">
     <div class="alasivu-sisalto">
       <h2>Piirintie 11</h2>
       <p class="alasivu-kuvaus" style="line-height:1.7;text-align:left;margin-top:12px">Piirintie 11 (60220 Seinäjoki) on <a id="sevasLinkki" href="#" target="_blank" rel="noopener" style="color:#b49b82;font-weight:700;text-decoration:underline">Sevas Kodit Oy:n</a> kerrostalovuokrakohde Huhtalan kaupunginosassa, Törnävän ja Piirin alueen kupeessa. Kohteessa on yhteensä 73 asuntoa kerroksissa 1–6, ja se on valmistunut vuoden 2025 lopussa.</p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:20px 0">
         <button type="button" class="nappi" onclick="vaihdaPiirintieKansio('piirintie11')">Pihapiiriä</button>
-        <button type="button" class="nappi" onclick="vaihdaPiirintieKansio('piirintieIlta')">Ilta loisteessa</button>
+        <button type="button" class="nappi" onclick="vaihdaPiirintieKansio('piirintieIlta')">Iltaloisteessa</button>
       </div>
+
             <div class="kuva-ruudukko" id="ruudukko-piirintie11" style="display:none"></div>
       <div class="kuva-ruudukko" id="ruudukko-piirintieIlta" style="display:none"></div>
 
@@ -224,12 +264,15 @@ textarea{min-height:95px;resize:vertical}
 
 
 
-  <section id="sivu-vili" class="alasivu">
-    <h2>Vili-kissa</h2>
-    <p class="alasivu-kuvaus">Kuvia Vili-kissan seikkailuista ja lepohetkistä.</p>
-    <div class="kuva-ruudukko" id="ruudukko-vili"></div>
-    <button type="button" class="nappi" onclick="palaaEtusivulle()">← Takaisin etusivulle</button>
+    <section id="sivu-vili" class="alasivu">
+    <div class="alasivu-sisalto">
+      <h2>Vili-kissa</h2>
+      <p class="alasivu-kuvaus">Kuvia Vili-kissan seikkailuista ja lepohetkistä.</p>
+      <div class="kuva-ruudukko" id="ruudukko-vili"></div>
+      <button type="button" class="nappi" onclick="palaaEtusivulle()">← Takaisin etusivulle</button>
+    </div>
   </section>
+
     <section id="sivu-omatupa" class="alasivu">
     <div class="alasivu-sisalto">
       <h2>Oma tupa</h2>
@@ -265,11 +308,16 @@ textarea{min-height:95px;resize:vertical}
 
 </main>
 
+<footer class="alatunniste">
+  Piiri – Valokuvia Seinäjoelta · Sivusto ei käytä evästeitä
+</footer>
+
 <div class="modal" id="salasanaModal" onclick="if(event.target===this)this.classList.remove('avoin')">
   <div class="ikkuna">
-    <button class="sulje" onclick="document.getElementById('salasanaModal').classList.remove('avoin')">&times;</button>
+    <button class="sulje" aria-label="Sulje" onclick="document.getElementById('salasanaModal').classList.remove('avoin')">&times;</button>
     <h2 style="margin-bottom:8px">🔒 Salattu galleria</h2>
     <p style="font-size:.92rem;color:#cbd5e1;line-height:1.5;margin-bottom:14px">Näiden kuvien katsomiseen tarvitset salasanan. Voit sitä halutessasi pyytää <a href="#" onclick="event.preventDefault();document.getElementById('salasanaModal').classList.remove('avoin');document.getElementById('yhteysModal').classList.add('avoin')" style="color:#b49b82;font-weight:700">Ota yhteyttä</a> -napin kautta.</p>
+    <label for="salasanaSyote">Salasana</label>
     <input type="password" id="salasanaSyote" placeholder="Syötä salasana" onkeydown="if(event.key==='Enter')tarkistaSalasana()">
     <button type="button" class="nappi" style="width:100%" onclick="tarkistaSalasana()">Avaa kuvat</button>
     <p id="salasanaVirhe" style="color:#f87171;font-size:.88rem;margin-top:10px;text-align:center;display:none">Väärä salasana. Kokeile uudelleen tai pyydä salasanaa.</p>
@@ -277,29 +325,32 @@ textarea{min-height:95px;resize:vertical}
 </div>
 
 <div class="modal" id="lightboxModal" onclick="if(event.target===this)this.classList.remove('avoin')">
-  <button class="sulje" onclick="document.getElementById('lightboxModal').classList.remove('avoin')">&times;</button>
-  <button class="lb-nuoli" style="left:10px" onclick="vaihdaKuva(-1)">❮</button>
-  <div class="lb-sisalto"><img id="lbKuva" src=""><p class="lb-teksti" id="lbTeksti"></p></div>
-  <button class="lb-nuoli" style="right:10px" onclick="vaihdaKuva(1)">❯</button>
+  <button class="sulje" aria-label="Sulje" onclick="document.getElementById('lightboxModal').classList.remove('avoin')">&times;</button>
+  <button class="lb-nuoli" aria-label="Edellinen kuva" style="left:10px" onclick="vaihdaKuva(-1)">❮</button>
+  <div class="lb-sisalto"><img id="lbKuva" alt="Suurennettu valokuva"><p class="lb-teksti" id="lbTeksti"></p><p class="lb-laskuri" id="lbLaskuri"></p></div>
+  <button class="lb-nuoli" aria-label="Seuraava kuva" style="right:10px" onclick="vaihdaKuva(1)">❯</button>
 </div>
 
 <div class="modal" id="yhteysModal" onclick="if(event.target===this)this.classList.remove('avoin')">
   <div class="ikkuna">
-    <button class="sulje" onclick="document.getElementById('yhteysModal').classList.remove('avoin')">&times;</button>
+    <button class="sulje" aria-label="Sulje" onclick="document.getElementById('yhteysModal').classList.remove('avoin')">&times;</button>
     <h2 style="margin-bottom:6px">Ota yhteyttä</h2>
     <p style="font-size:.9rem;color:#cbd5e1;margin-bottom:16px">Lähetä viesti ja palaamme asiaan niin pian kuin mahdollista!</p>
     <form id="lomake">
       <input type="hidden" name="access_key" value="16658353-ffae-40ca-867b-74c5b1bcca94">
       <input type="hidden" name="subject" value="Uusi viesti Piiri-sivustolta">
-      <div class="rivi"><input type="text" name="Etunimi" placeholder="Etunimi" required><input type="text" name="Sukunimi" placeholder="Sukunimi" required></div>
-           <input type="text" id="yhteysTieto" name="Yhteystieto" placeholder="Sähköpostiosoite tai puhnro (+358 40 123 4567)" required>
-
-      <textarea name="message" placeholder="Viestisi" required></textarea>
+      <div class="rivi">
+        <div class="kentta-ryhma"><label for="etunimi">Etunimi</label><input type="text" id="etunimi" name="Etunimi" placeholder="Etunimi" required></div>
+        <div class="kentta-ryhma"><label for="sukunimi">Sukunimi</label><input type="text" id="sukunimi" name="Sukunimi" placeholder="Sukunimi" required></div>
+      </div>
+      <div class="kentta-ryhma"><label for="yhteysTieto">Sähköposti tai puhelinnumero</label><input type="text" id="yhteysTieto" name="Yhteystieto" placeholder="esim. nimi@esimerkki.fi tai 040 123 4567" required></div>
+      <div class="kentta-ryhma"><label for="viestiKentta">Viestisi</label><textarea id="viestiKentta" name="message" placeholder="Kirjoita viestisi tähän..." required></textarea></div>
       <button type="submit" class="nappi" id="lahetaNappi" style="width:100%">Lähetä viesti</button>
       <p id="tila" style="margin-top:10px;text-align:center;font-size:.9rem;display:none"></p>
     </form>
   </div>
 </div>
+
 <script>
 
 const p = 'https' + '://';
@@ -413,12 +464,15 @@ let nykyinenGalleria = 'vili', nykyinenIndeksi = 0;
 
 function avaaLightbox(gal, idx) {
   nykyinenGalleria = gal; nykyinenIndeksi = idx;
-  const k = galleriat[gal][idx];
+  const lista = galleriat[gal];
+  const k = lista[idx];
   const lbImg = document.getElementById('lbKuva');
   delete lbImg.dataset.kokeiltu;
   lbImg.onerror = () => kokeilePaate(lbImg);
   lbImg.src = k.tiedosto;
+  lbImg.alt = k.teksti || 'Valokuva Seinäjoen Piirin alueelta';
   document.getElementById('lbTeksti').textContent = k.teksti || '';
+  document.getElementById('lbLaskuri').textContent = `${idx + 1} / ${lista.length}`;
   document.getElementById('lightboxModal').classList.add('avoin');
 }
 
@@ -445,13 +499,12 @@ function paivitaRuudukot(vainKansio) {
       el.innerHTML = galleriat[k].map((x, i) => {
         const kuvaSrc = onJulkinen ? ('pieni_' + x.tiedosto.replace(/\.JPG$/i, '.jpg')) : x.tiedosto;
         const varalla = onJulkinen ? `this.onerror=function(){kokeilePaate(this)};this.src='${x.tiedosto}'` : `kokeilePaate(this)`;
-        return `<div class="kuva-kortti" onclick="avaaLightbox('${k}',${i})"><img src="${kuvaSrc}" alt="${x.teksti}" loading="lazy" onerror="${varalla}"><p>${x.teksti||''}</p></div>`;
+        const kuvaus = x.teksti || 'Valokuva galleriasta';
+        return `<div class="kuva-kortti" role="button" tabindex="0" aria-label="Avaa kuva: ${kuvaus}" onclick="avaaLightbox('${k}',${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();avaaLightbox('${k}',${i})}"><img src="${kuvaSrc}" alt="${kuvaus}" loading="lazy" onerror="${varalla}"><p>${x.teksti||''}</p></div>`;
       }).join('');
     }
   });
 }
-
-
 
 function paivitaMusa() {
   const el = document.getElementById('lista-musa');
@@ -459,16 +512,14 @@ function paivitaMusa() {
   el.innerHTML = galleriat.musa.map((x, idx) => `
     <div class="musa-kortti">
       <p>🎵 ${x.nimi}</p>
-      ${x.kuva ? `<img id="musa-img-${idx}" class="musa-kuva" src="${x.kuva}">` : ''}
+      ${x.kuva ? `<img id="musa-img-${idx}" class="musa-kuva" src="${x.kuva}" alt="${x.nimi}">` : ''}
       <audio controls preload="none" src="${x.tiedosto}" onplay="aloitaBiisi(this,${idx})" ontimeupdate="paivitaSanat(this,${idx})"></audio>
       ${x.sanat ? `<div id="musa-lyriikka-${idx}" class="musa-sanat">${x.sanat.map((r, ri) => `<div id="rivi-${idx}-${ri}">${r.t}</div>`).join('')}</div>` : ''}
     </div>`).join('');
 }
 
-
 function aloitaBiisi(soitin, idx) {
   if (window.goatcounter) window.goatcounter.count({ path: '/musa/' + galleriat.musa[idx].nimi, title: galleriat.musa[idx].nimi, event: false });
-
   document.querySelectorAll('#lista-musa audio').forEach(a => { if (a !== soitin) a.pause(); });
   document.querySelectorAll('.musa-kuva, .musa-sanat').forEach(e => e.style.display = 'none');
   const img = document.getElementById('musa-img-' + idx);
@@ -492,19 +543,30 @@ function paivitaSanat(soitin, idx) {
   });
 }
 
-
 document.addEventListener('click', e => {
   if (!e.target.closest('.pudotus')) document.querySelectorAll('.pudotus').forEach(x => x.classList.remove('auki'));
   if (!e.target.closest('#ylaPalkki')) document.getElementById('navLista').classList.remove('mobiili-auki');
 });
 
-function avaaSivu(id) {
-  if (window.goatcounter) window.goatcounter.count({ path: '/' + id, title: id, event: false });
-  document.querySelectorAll('.pudotus').forEach(x => x.classList.remove('auki'));
+function suljeValikot() {
+  document.querySelectorAll('.pudotus').forEach(x => {
+    x.classList.remove('auki');
+    x.classList.add('suljettu');
+    x.addEventListener('mouseleave', () => x.classList.remove('suljettu'), { once: true });
+  });
   document.getElementById('navLista').classList.remove('mobiili-auki');
+}
+
+function avaaSivu(id, ohitaHistoria) {
+  if (!document.getElementById('sivu-' + id)) return;
+  if (window.goatcounter) window.goatcounter.count({ path: '/' + id, title: id, event: false });
+  suljeValikot();
   document.getElementById('etusivuNakyma').style.display = 'none';
   document.querySelectorAll('.alasivu').forEach(s => s.classList.remove('aktiivinen'));
   document.getElementById('sivu-' + id).classList.add('aktiivinen');
+  if (!ohitaHistoria && window.location.hash !== '#' + id) {
+    history.pushState({ sivu: id }, '', '#' + id);
+  }
   if (id === 'piirintie11') {
     document.getElementById('ruudukko-piirintie11').style.display = 'none';
     document.getElementById('ruudukko-piirintieIlta').style.display = 'none';
@@ -515,17 +577,32 @@ function avaaSivu(id) {
   if (id === 'vili' || id === 'omatupa' || id === 'vieraat' || id === 'muksut') {
     paivitaRuudukot(id);
   }
-
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function palaaEtusivulle() {
+function palaaEtusivulle(ohitaHistoria) {
   document.querySelectorAll('#lista-musa audio').forEach(a => a.pause());
-  document.getElementById('navLista').classList.remove('mobiili-auki');
+  suljeValikot();
   document.querySelectorAll('.alasivu').forEach(s => s.classList.remove('aktiivinen'));
   document.getElementById('etusivuNakyma').style.display = '';
+  if (!ohitaHistoria && window.location.hash) {
+    history.pushState({ sivu: '' }, '', window.location.pathname);
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+window.addEventListener('popstate', () => {
+  const h = window.location.hash.replace('#', '');
+  if (h && document.getElementById('sivu-' + h)) avaaSivu(h, true);
+  else palaaEtusivulle(true);
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  const h = window.location.hash.replace('#', '');
+  if (h && (h === 'kartat' || h === 'piirintie11')) {
+    avaaSivu(h, true);
+  }
+});
 
 function vaihdaPiirintieKansio(id) {
   const piha = document.getElementById('ruudukko-piirintie11');
@@ -542,6 +619,7 @@ function vaihdaPiirintieKansio(id) {
     piha.style.display = 'none';
   }
 }
+
 let piiriKartta = null;
 function alustaPiiriKartta() {
   if (typeof L === 'undefined') {
