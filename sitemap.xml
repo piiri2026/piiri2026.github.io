@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://sitemaps.org"
+        xmlns:image="http://google.com">
+  <url>
+    <loc>https://github.io</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://github.iopiirintie11_paa.jpg.JPG</image:loc>
+      <image:title>Piirintie 11, Seinäjoki</image:title>
+    </image:image>
+  </url>
+</urlset>
