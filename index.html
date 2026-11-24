@@ -36,7 +36,7 @@ body::before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(1
 .alavalikko{display:none;position:absolute;top:100%;left:0;min-width:220px;background:#b49b82;box-shadow:0 10px 25px rgba(0,0,0,.6);border-radius:6px;overflow:hidden;z-index:60}
 .pudotus.auki .alavalikko{display:block}
 @media(hover:hover){
-  .pudotus:not(.suljettu):hover .alavalikko{display:block}
+  #piiriValikko:not(.suljettu):hover .alavalikko{display:block}
 }
 
 .alavalikko a,.alavalikko button{display:block;width:100%;padding:13px 18px;color:#fff;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.18);font-family:inherit;font-size:.88rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:left;text-decoration:none;cursor:pointer}
@@ -163,17 +163,26 @@ textarea{min-height:95px;resize:vertical}
 
 
 <main class="sisalto">
-    <div id="etusivuNakyma">
+     <div id="etusivuNakyma">
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+      <a id="forecaLinkki" href="#" target="_blank" rel="noopener" class="saa" title="Seinäjoen sää Forecassa">
+        <span>Seinäjoki</span>
+        <span id="saaIkoni">🌦️</span>
+        <span id="saaLampo">--°</span>
+      </a>
+      <span class="paiva" id="paivaNaytto" style="background:rgba(15,20,28,.6);padding:6px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.12)"></span>
+    </div>
+
     <h1>Seinäjoen Piiri</h1>
     <p class="alaotsikko-hero">Valokuvia ja karttoja historialliselta Piirin alueelta</p>
-    <p class="esittely">Piiri (entinen Törnävän sairaala-alue) on vehreä ja historiallinen kaupunginosa Seinäjoella. Tältä sivustolta löydät alueen interaktiivisen kartan sekä valokuvia niin vanhoista suojelluista rakennuksista kuin uudesta Piirintie 11 -kotikorttelista.</p>
-    <div class="etusivu-napit">
-      <button type="button" class="nappi" onclick="avaaSivu('kartat')">🗺️ Avaa alueen kartta</button>
-      <button type="button" class="nappi nappi-toinen" onclick="avaaSivu('piirintie11')">📷 Piirintie 11 -kuvat</button>
+    <p class="esittely" style="margin-bottom:20px">Vehreä Piirin kaupunginosa (ent. Törnävän sairaala-alue) Seinäjoella. Tutustu alueen interaktiiviseen karttaan sekä kuviin historiallisista rakennuksista ja Piirintie 11 -kotikorttelista.</p>
+    <div class="etusivu-napit" style="gap:10px;margin-bottom:10px">
+      <button type="button" class="nappi" style="padding:10px 14px;font-size:.82rem" onclick="avaaSivu('kartat')">🗺️ Alueen kartta</button>
+      <button type="button" class="nappi nappi-toinen" style="padding:10px 14px;font-size:.82rem" onclick="avaaSivu('piirintie11')">📷 Piirintie 11 -kuvat</button>
     </div>
-    <p class="kamera-info">Kuvat on tallennettu pääosin Canon EOS 1100D (2011) -järjestelmäkameralla sekä kännykällä alueella kierrellessä.</p>
   </div>
 
+   
   <section id="sivu-kartat" class="alasivu">
     <div class="alasivu-sisalto">
       <h2>Kartat – Seinäjoen Piirin alue</h2>
@@ -349,8 +358,10 @@ textarea{min-height:95px;resize:vertical}
 <script>
 
 const p = 'https' + '://';
-document.getElementById('forecaLinkki').href = p + 'www' + '.' + 'foreca' + '.' + 'fi/finland/seinajoki';
-document.getElementById('sevasLinkki').href = p + 'sevas' + '.' + 'fi/';
+const fLinkki = document.getElementById('forecaLinkki');
+if (fLinkki) fLinkki.href = p + 'www' + '.' + 'foreca' + '.' + 'fi/finland/seinajoki';
+const sLinkki = document.getElementById('sevasLinkki');
+if (sLinkki) sLinkki.href = p + 'sevas' + '.' + 'fi/';
 
 let edellinenScroll = window.scrollY;
 const ylaPalkki = document.getElementById('ylaPalkki');
