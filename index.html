@@ -100,9 +100,11 @@ textarea{min-height:95px;resize:vertical}
   .alasivu{padding-top:76px}
   .ylapalkki{flex-wrap:nowrap;padding:8px 10px;gap:6px;min-height:56px}
   .koti-nappi{font-size:.9rem;padding:6px 6px;letter-spacing:1px}
-  .hampurilainen{display:block;padding:5px 10px;font-size:.95rem}
-  .ylapalkki > .nappi{padding:7px 10px;font-size:.76rem}
-  .sisalto{padding:16px 16px 40px}
+    .hampurilainen{display:block;padding:6px 10px;font-size:.95rem;white-space:nowrap}
+  .ylapalkki > .nappi{padding:7px 9px;font-size:.74rem;white-space:nowrap}
+  .etusivu-napit{flex-wrap:wrap;gap:8px}
+  .etusivu-napit .nappi{flex:1 1 130px;padding:10px 8px;font-size:.78rem;white-space:normal}
+
 
   .nav-lista{display:none;position:fixed;top:56px;left:0;right:0;background:#151b24;border-bottom:1px solid rgba(255,255,255,.2);flex-direction:column;align-items:stretch;padding:12px 18px 22px;gap:4px;box-shadow:0 15px 30px rgba(0,0,0,.9)}
   .nav-lista.mobiili-auki{display:flex}
@@ -729,14 +731,14 @@ function alustaPiiriKartta() {
     }
   ];
 
-    const listaEl = document.getElementById('piiri-kohdelista');
+     const listaEl = document.getElementById('piiri-kohdelista');
   if (listaEl) listaEl.innerHTML = '';
 
-      const pieniKuva = k.kuva ? ('pieni_' + k.kuva.replace(/\.JPG$/i, '.jpg')) : '';
+  kohteet.forEach(k => {
+    const pieniKuva = k.kuva ? ('pieni_' + k.kuva.replace(/\.JPG$/i, '.jpg')) : '';
     const kuvaHtml = k.kuva
       ? `<img src="${pieniKuva}" alt="${k.nimi}" onerror="this.onerror=function(){kokeilePaate(this)};this.src='${k.kuva}'" onclick="avaaLightbox('${k.gal}',${k.idx})" style="width:100%;max-width:210px;height:125px;object-fit:cover;border-radius:6px;margin-top:8px;cursor:pointer;display:block"><span style="font-size:11px;color:#64748b">Klikkaa kuvaa suurentaaksesi</span>`
       : '';
-
     const nasta = L.marker([k.lat, k.lon]).addTo(piiriKartta)
       .bindPopup(`<div style="max-width:215px"><b>${k.nimi}</b><br><span style="font-size:13px">${k.teksti}</span>${kuvaHtml}</div>`);
 
@@ -748,10 +750,9 @@ function alustaPiiriKartta() {
       btn.onclick = () => avaaKavelyreitti(k.nimi, `${k.lat},${k.lon}`);
       listaEl.appendChild(btn);
     }
-
   });
-
 }
+
 
 function vaihdaKarttaTab(tab) {
   const kSis = document.getElementById('tabSisaltoKohteet');
