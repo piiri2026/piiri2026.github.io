@@ -131,27 +131,22 @@ textarea{min-height:95px;resize:vertical}
 <body>
 
 <header class="ylapalkki" id="ylaPalkki">
-  <div class="yla-vasen">
-    <a id="forecaLinkki" href="#" target="_blank" rel="noopener" class="saa" title="Seinäjoen sää Forecassa">
-      <span>Seinäjoki</span>
-      <span id="saaIkoni">🌦️</span>
-      <span id="saaLampo">--°</span>
-    </a>
-    <span class="paiva" id="paivaNaytto"></span>
-  </div>
+  <button type="button" class="nav-nappi" style="font-size:1rem;font-weight:800;letter-spacing:1.5px;padding:8px 10px;display:flex;align-items:center;gap:6px" onclick="palaaEtusivulle()" title="Palaa etusivulle">
+    <span>🏠</span><span>PIIRI</span>
+  </button>
 
-  <button type="button" class="hampurilainen" onclick="document.getElementById('navLista').classList.toggle('mobiili-auki')" aria-label="Valikko">☰</button>
+  <button type="button" class="hampurilainen" onclick="document.getElementById('navLista').classList.toggle('mobiili-auki')" aria-label="Valikko">☰ Valikko</button>
 
   <nav class="nav-lista" id="navLista">
     <button type="button" class="nav-nappi" onclick="palaaEtusivulle()">ETUSIVU</button>
     <div class="pudotus" id="piiriValikko">
       <button type="button" class="nav-nappi" onclick="document.getElementById('piiriValikko').classList.toggle('auki')">PIIRIN ALUE ▾</button>
       <div class="alavalikko">
-                <button type="button" onclick="avaaSivu('kartat')">KARTAT</button>
+        <button type="button" onclick="avaaSivu('kartat')">KARTAT</button>
         <button type="button" onclick="avaaSivu('piirintie11')">PIIRINTIE 11</button>
       </div>
     </div>
-        <div class="pudotus" id="henkValikko">
+    <div class="pudotus" id="henkValikko">
       <button type="button" class="nav-nappi" onclick="avaaHenkValikko()">HENK.KOHT. KUVAT ▾</button>
       <div class="alavalikko">
         <button type="button" onclick="avaaSivu('vili')">🔒 VILI-KISSA</button>
@@ -159,13 +154,13 @@ textarea{min-height:95px;resize:vertical}
         <button type="button" onclick="avaaSivu('vieraat')">🔒 VIERAAT</button>
         <button type="button" onclick="avaaSivu('muksut')">🔒 MUKSUT</button>
         <button type="button" onclick="avaaSivu('musa')">🎵 OMA MUSA</button>
-
       </div>
     </div>
   </nav>
 
   <button type="button" class="nappi" onclick="document.getElementById('yhteysModal').classList.add('avoin')">Ota yhteyttä</button>
 </header>
+
 
 <main class="sisalto">
     <div id="etusivuNakyma">
@@ -386,7 +381,7 @@ function avaaHenkValikko() {
 async function tarkistaSalasana() {
   const syote = document.getElementById('salasanaSyote').value;
   try {
-        const osa1 = JSON.parse(await puraAES(SALATTU_1, syote));
+    const osa1 = JSON.parse(await puraAES(SALATTU_1, syote));
     const osa2 = JSON.parse(await puraAES(SALATTU_2, syote));
     const m1 = SALATTU_MUSA1 ? JSON.parse(await puraAES(SALATTU_MUSA1, syote)) : null;
     const m2 = SALATTU_MUSA2 ? JSON.parse(await puraAES(SALATTU_MUSA2, syote)) : null;
@@ -400,9 +395,15 @@ async function tarkistaSalasana() {
     paivitaMusa();
     henkAvattu = true;
     document.getElementById('salasanaModal').classList.remove('avoin');
-    document.getElementById('henkValikko').classList.add('auki');
+
+    if (window.innerWidth <= 900) {
+      document.getElementById('navLista').classList.add('mobiili-auki');
+    }
+    const henk = document.getElementById('henkValikko');
+    henk.classList.remove('suljettu');
+    henk.classList.add('auki');
   } catch (e) {
-console.error('Salauksen purku epäonnistui:', e);
+    console.error('Salauksen purku epäonnistui:', e);
     document.getElementById('salasanaVirhe').style.display = 'block';
   }
 }
