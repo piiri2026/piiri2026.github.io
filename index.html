@@ -96,26 +96,28 @@ textarea{min-height:95px;resize:vertical}
 .alatunniste{position:relative;z-index:1;text-align:center;padding:16px 20px;font-size:.82rem;color:#94a3b8;background:rgba(15,20,28,.65);border-top:1px solid rgba(255,255,255,.08)}
 
 @media(max-width:900px){
-  body{background-size:cover;background-position:35% top;background-attachment:scroll;padding-top:118px}
-  .alasivu{padding-top:122px}
-  .ylapalkki{flex-wrap:wrap;padding:8px 12px;gap:8px;min-height:auto}
-  .yla-vasen{display:contents}
-  .saa{order:1;padding:6px 10px;font-size:.88rem}
-  .hampurilainen{display:block;order:2}
-  .ylapalkki > .nappi{order:3;padding:7px 12px;font-size:.8rem}
-  .paiva{display:block !important;order:4;width:100%;text-align:center;font-size:.82rem;padding-top:6px;border-top:1px solid rgba(255,255,255,.12)}
+  body{background-size:cover;background-position:35% top;background-attachment:scroll;padding-top:68px}
+  .alasivu{padding-top:76px}
+  .ylapalkki{flex-wrap:nowrap;padding:8px 10px;gap:6px;min-height:56px}
+  .koti-nappi{font-size:.9rem;padding:6px 6px;letter-spacing:1px}
+  .hampurilainen{display:block;padding:5px 10px;font-size:.95rem}
+  .ylapalkki > .nappi{padding:7px 10px;font-size:.76rem}
+  .sisalto{padding:16px 16px 40px}
 
-  .nav-lista{display:none;position:fixed;top:98px;left:0;right:0;background:#151b24;border-bottom:1px solid rgba(255,255,255,.2);flex-direction:column;align-items:stretch;padding:12px 18px 22px;gap:4px;box-shadow:0 15px 30px rgba(0,0,0,.9)}
+  .nav-lista{display:none;position:fixed;top:56px;left:0;right:0;background:#151b24;border-bottom:1px solid rgba(255,255,255,.2);flex-direction:column;align-items:stretch;padding:12px 18px 22px;gap:4px;box-shadow:0 15px 30px rgba(0,0,0,.9)}
   .nav-lista.mobiili-auki{display:flex}
   .nav-nappi{text-align:left;width:100%;padding:14px 12px;font-size:1rem;border-bottom:1px solid rgba(255,255,255,.08)}
   .alavalikko{position:static;box-shadow:none;background:rgba(180,155,130,.22);margin-top:4px}
-  h1{font-size:2.4rem;margin-top:8px}
-  .alaotsikko-hero{font-size:1.08rem}
-  .esittely{font-size:.98rem;line-height:1.6}
+  h1{font-size:2rem;margin-top:4px;margin-bottom:8px}
+  .alaotsikko-hero{font-size:1rem;margin-bottom:10px}
+  .esittely{font-size:.92rem;line-height:1.5;margin-bottom:16px}
+  .etusivu-napit{flex-wrap:nowrap;gap:8px}
+  .etusivu-napit .nappi{flex:1;padding:10px 8px;font-size:.8rem}
   .kuva-ruudukko{grid-template-columns:1fr}
   .lb-nuoli{padding:10px 13px;font-size:1.5rem}
   .rivi{flex-direction:column;gap:0}
 }
+
 @media(max-width:380px){
   body,.alasivu{padding-top:138px}
   .saa{padding:5px 8px;font-size:.8rem}
@@ -730,10 +732,11 @@ function alustaPiiriKartta() {
     const listaEl = document.getElementById('piiri-kohdelista');
   if (listaEl) listaEl.innerHTML = '';
 
-  kohteet.forEach(k => {
+      const pieniKuva = k.kuva ? ('pieni_' + k.kuva.replace(/\.JPG$/i, '.jpg')) : '';
     const kuvaHtml = k.kuva
-      ? `<img src="${k.kuva}" alt="${k.nimi}" onerror="kokeilePaate(this)" onclick="avaaLightbox('${k.gal}',${k.idx})" style="width:100%;max-width:210px;height:125px;object-fit:cover;border-radius:6px;margin-top:8px;cursor:pointer;display:block"><span style="font-size:11px;color:#64748b">Klikkaa kuvaa suurentaaksesi</span>`
+      ? `<img src="${pieniKuva}" alt="${k.nimi}" onerror="this.onerror=function(){kokeilePaate(this)};this.src='${k.kuva}'" onclick="avaaLightbox('${k.gal}',${k.idx})" style="width:100%;max-width:210px;height:125px;object-fit:cover;border-radius:6px;margin-top:8px;cursor:pointer;display:block"><span style="font-size:11px;color:#64748b">Klikkaa kuvaa suurentaaksesi</span>`
       : '';
+
     const nasta = L.marker([k.lat, k.lon]).addTo(piiriKartta)
       .bindPopup(`<div style="max-width:215px"><b>${k.nimi}</b><br><span style="font-size:13px">${k.teksti}</span>${kuvaHtml}</div>`);
 
