@@ -650,15 +650,15 @@ function avaaSivu(id, ohitaHistoria) {
 
     nollaaTekemistaNakyma();
   }
-  if (id === 'vili' || id === 'omatupa' || id === 'vieraat' || id === 'muksut' || id === 'tekoaly') {
+    if (id === 'vili' || id === 'omatupa' || id === 'vieraat' || id === 'muksut' || id === 'tekoaly') {
     paivitaRuudukot(id);
   }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function palaaEtusivulle(ohitaHistoria) {
-if (typeof nollaaTekemistaNakyma === 'function') nollaaTekemistaNakyma();
-document.querySelectorAll('#lista-musa audio').forEach(a => a.pause());
+  if (typeof nollaaTekemistaNakyma === 'function') nollaaTekemistaNakyma();
+  document.querySelectorAll('#lista-musa audio').forEach(a => a.pause());
   suljeValikot();
   document.querySelectorAll('.alasivu').forEach(s => s.classList.remove('aktiivinen'));
   document.getElementById('etusivuNakyma').style.display = '';
@@ -669,6 +669,7 @@ document.querySelectorAll('#lista-musa audio').forEach(a => a.pause());
 }
 
 window.addEventListener('popstate', () => {
+
   const h = window.location.hash.replace('#', '');
   if (h && document.getElementById('sivu-' + h)) avaaSivu(h, true);
   else palaaEtusivulle(true);
