@@ -947,13 +947,14 @@ function alustaPiiriKartta() {
   window.piiriKohteetLayer = L.layerGroup().addTo(piiriKartta);
   window.lahipalvelutLayer = L.layerGroup();
 
-  const keltainenIkoni = L.divIcon({
+    const keltainenIkoni = L.divIcon({
     className: '',
     html: `<svg width="26" height="40" viewBox="0 0 26 40" xmlns="http://w3.org"><path d="M13 0C5.8 0 0 5.8 0 13c0 9.8 13 27 13 27s13-17.2 13-27C26 5.8 20.2 0 13 0z" fill="#eab308" stroke="#713f12" stroke-width="1.5"/><circle cx="13" cy="13" r="5" fill="#fef08a"/></svg>`,
     iconSize:,
     iconAnchor:,
     popupAnchor: [0, -36]
   });
+
 
   const listaEl = document.getElementById('piiri-kohdelista');
   if (listaEl) listaEl.innerHTML = '';
