@@ -533,6 +533,19 @@ function kokeilePaate(img) {
 
 let nykyinenGalleria = 'vili', nykyinenIndeksi = 0;
 
+function avaaYksittainenKuva(tiedosto, teksti) {
+  nykyinenGalleria = '';
+  nykyinenIndeksi = 0;
+  const lbImg = document.getElementById('lbKuva');
+  delete lbImg.dataset.kokeiltu;
+  lbImg.onerror = () => kokeilePaate(lbImg);
+  lbImg.src = tiedosto;
+  lbImg.alt = teksti || 'Valokuva Seinäjoen alueelta';
+  document.getElementById('lbTeksti').textContent = teksti || '';
+  document.getElementById('lbLaskuri').textContent = '';
+  document.getElementById('lightboxModal').classList.add('avoin');
+}
+
 function avaaLightbox(gal, idx) {
   nykyinenGalleria = gal; nykyinenIndeksi = idx;
   const lista = galleriat[gal];
@@ -641,9 +654,11 @@ function avaaSivu(id, ohitaHistoria) {
     document.getElementById('ruudukko-piirintie11').style.display = 'none';
     document.getElementById('ruudukko-piirintieIlta').style.display = 'none';
   }
-    if (id === 'kartat') {
+      if (id === 'kartat') {
+    vaihdaKarttaTab('kohteet');
     setTimeout(alustaPiiriKartta, 100);
   }
+
   if (id === 'tekemista' && typeof nollaaTekemistaNakyma === 'function') {
     nollaaTekemistaNakyma();
   }
@@ -838,7 +853,7 @@ function alustaPiiriKartta() {
     attribution: '&copy; OpenStreetMap'
   }).addTo(piiriKartta);
 
-  const kohteet = [
+    const kohteet = [
     {
       nimi: 'Piirintie 11',
       lat: 62.771398, lon: 22.826077,
@@ -896,7 +911,51 @@ function alustaPiiriKartta() {
     }
   ];
 
-     const listaEl = document.getElementById('piiri-kohdelista');
+  const lahipalvelut = [
+    {
+      nimi: 'K-Supermarket Koskenala',
+      lat: 62.780580, lon: 22.821150,
+      teksti: 'Lähin ruokakauppa (etäisyys n. 1,4 km).',
+      kuva: 'kauppa_koskenala.jpg'
+    },
+    {
+      nimi: 'S-market Törnävä',
+      lat: 62.758950, lon: 22.842100,
+      teksti: 'Ruokakauppa Törnävällä (etäisyys n. 1,6 km).',
+      kuva: 'kauppa_tornava.jpg'
+    },
+    {
+      nimi: 'Kivistön apteekki & S-market Kivistö',
+      lat: 62.774650, lon: 22.849800,
+      teksti: 'Apteekki ja ruokakauppa Kivistössä (etäisyys n. 1,9 km).',
+      kuva: 'apteekki_kivisto.jpg'
+    },
+    {
+      nimi: 'Keskussairaala & Y-talo',
+      lat: 62.771529, lon: 22.822291,
+      teksti: 'Terveyspalvelut ja apteekkipiste (etäisyys n. 0,5–0,8 km).',
+      kuva: 'sairaala_ytalo.jpg'
+    },
+    {
+      nimi: 'Kyrkösjärven uimaranta',
+      lat: 62.769280, lon: 22.813517,
+      teksti: 'Uimaranta, leikkipaikka ja ulkoilureitit (etäisyys n. 1,1 km).',
+      kuva: 'kyrkos_ranta.jpg'
+    }
+  ];
+
+  window.piiriKohteetLayer = L.layerGroup().addTo(piiriKartta);
+  window.lahipalvelutLayer = L.layerGroup();
+
+  const keltainenIkoni = L.divIcon({
+    className: '',
+    html: `<svg width="26" height="40" viewBox="0 0 26 40" xmlns="http://w3.org"><path d="M13 0C5.8 0 0 5.8 0 13c0 9.8 13 27 13 27s13-17.2 13-27C26 5.8 20.2 0 13 0z" fill="#eab308" stroke="#713f12" stroke-width="1.5"/><circle cx="13" cy="13" r="5" fill="#fef08a"/></svg>`,
+    iconSize:,
+    iconAnchor:,
+    popupAnchor: [0, -36]
+  });
+
+  const listaEl = document.getElementById('piiri-kohdelista');
   if (listaEl) listaEl.innerHTML = '';
 
   kohteet.forEach(k => {
@@ -904,7 +963,7 @@ function alustaPiiriKartta() {
     const kuvaHtml = k.kuva
       ? `<img src="${pieniKuva}" alt="${k.nimi}" onerror="this.onerror=function(){kokeilePaate(this)};this.src='${k.kuva}'" onclick="avaaLightbox('${k.gal}',${k.idx})" style="width:100%;max-width:210px;height:125px;object-fit:cover;border-radius:6px;margin-top:8px;cursor:pointer;display:block"><span style="font-size:11px;color:#64748b">Klikkaa kuvaa suurentaaksesi</span>`
       : '';
-    const nasta = L.marker([k.lat, k.lon]).addTo(piiriKartta)
+    L.marker([k.lat, k.lon]).addTo(window.piiriKohteetLayer)
       .bindPopup(`<div style="max-width:215px"><b>${k.nimi}</b><br><span style="font-size:13px">${k.teksti}</span>${kuvaHtml}</div>`);
 
     if (listaEl) {
@@ -916,8 +975,15 @@ function alustaPiiriKartta() {
       listaEl.appendChild(btn);
     }
   });
-}
 
+  lahipalvelut.forEach(p => {
+    const kuvaHtml = p.kuva
+      ? `<div class="lp-kuva-wrap"><img src="${p.kuva}" alt="${p.nimi}" onerror="this.parentElement.style.display='none'" onclick="avaaYksittainenKuva('${p.kuva}','${p.nimi}')" style="width:100%;max-width:210px;height:125px;object-fit:cover;border-radius:6px;margin-top:8px;cursor:pointer;display:block"><span style="font-size:11px;color:#64748b">Klikkaa kuvaa suurentaaksesi</span></div>`
+      : '';
+    L.marker([p.lat, p.lon], { icon: keltainenIkoni }).addTo(window.lahipalvelutLayer)
+      .bindPopup(`<div style="max-width:215px"><b>${p.nimi}</b><br><span style="font-size:13px">${p.teksti}</span>${kuvaHtml}</div>`);
+  });
+}
 
 function vaihdaKarttaTab(tab) {
   const kSis = document.getElementById('tabSisaltoKohteet');
@@ -929,13 +995,24 @@ function vaihdaKarttaTab(tab) {
     pSis.style.display = 'none';
     kBtn.style.background = '#b49b82'; kBtn.style.color = '#fff';
     pBtn.style.background = 'rgba(255,255,255,0.06)'; pBtn.style.color = '#e2e8f0';
+    if (piiriKartta && window.piiriKohteetLayer && window.lahipalvelutLayer) {
+      piiriKartta.removeLayer(window.lahipalvelutLayer);
+      piiriKartta.addLayer(window.piiriKohteetLayer);
+      piiriKartta.setView([62.7704, 22.8255], 15);
+    }
   } else {
     kSis.style.display = 'none';
     pSis.style.display = 'block';
     pBtn.style.background = '#b49b82'; pBtn.style.color = '#fff';
     kBtn.style.background = 'rgba(255,255,255,0.06)'; kBtn.style.color = '#e2e8f0';
+    if (piiriKartta && window.piiriKohteetLayer && window.lahipalvelutLayer) {
+      piiriKartta.removeLayer(window.piiriKohteetLayer);
+      piiriKartta.addLayer(window.lahipalvelutLayer);
+      piiriKartta.setView([62.7705, 22.8315], 13);
+    }
   }
 }
+
 
 function avaaKavelyreitti(kohdeNimi, kohdeKoord) {
   if (confirm('Haluatko että opastan lyhimmän kävelyreitin nykyisestä sijainnistasi kohteeseen "' + kohdeNimi + '"?')) {
