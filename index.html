@@ -539,10 +539,9 @@ function paivitaRuudukot(vainKansio) {
     const el = document.getElementById('ruudukko-' + k);
     if (el && !el.dataset.ladattu) {
       el.dataset.ladattu = '1';
-                  const onJulkinen = (k === 'piirintie11' || k === 'piirintieIlta');
       el.innerHTML = galleriat[k].map((x, i) => {
-        const kuvaSrc = onJulkinen ? ('pieni_' + x.tiedosto.replace(/\.JPG$/i, '.jpg')) : x.tiedosto;
-        const varalla = onJulkinen ? `this.onerror=function(){kokeilePaate(this)};this.src='${x.tiedosto}'` : `kokeilePaate(this)`;
+        const kuvaSrc = 'pieni_' + x.tiedosto.replace(/\.(jpg|jpeg|png)$/i, '.jpg');
+        const varalla = `this.onerror=function(){kokeilePaate(this)};this.src='${x.tiedosto}'`;
         const kuvaus = x.teksti || 'Valokuva galleriasta';
         return `<div class="kuva-kortti" role="button" tabindex="0" aria-label="Avaa kuva: ${kuvaus}" onclick="avaaLightbox('${k}',${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();avaaLightbox('${k}',${i})}"><img src="${kuvaSrc}" alt="${kuvaus}" loading="lazy" onerror="${varalla}"><p>${x.teksti||''}</p></div>`;
       }).join('');
