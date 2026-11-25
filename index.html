@@ -911,23 +911,23 @@ function alustaPiiriKartta() {
     }
   ];
 
-  const lahipalvelut = [
+    const lahipalvelut = [
     {
       nimi: 'K-Supermarket Koskenala',
-      lat: 62.780580, lon: 22.821150,
-      teksti: 'Lähin ruokakauppa (etäisyys n. 1,4 km).',
+      lat: 62.777600, lon: 22.833600,
+      teksti: 'Lähin ruokakauppa, Vuoromyllynkatu 2 (etäisyys n. 1,4 km).',
       kuva: 'kauppa_koskenala.jpg'
     },
     {
       nimi: 'S-market Törnävä',
-      lat: 62.758950, lon: 22.842100,
-      teksti: 'Ruokakauppa Törnävällä (etäisyys n. 1,6 km).',
+      lat: 62.763954, lon: 22.840000,
+      teksti: 'Ruokakauppa, Törnäväntie 20 (etäisyys n. 1,6 km).',
       kuva: 'kauppa_tornava.jpg'
     },
     {
       nimi: 'Kivistön apteekki & S-market Kivistö',
-      lat: 62.774650, lon: 22.849800,
-      teksti: 'Apteekki ja ruokakauppa Kivistössä (etäisyys n. 1,9 km).',
+      lat: 62.776450, lon: 22.853990,
+      teksti: 'Apteekki ja ruokakauppa, Ruukintie 81 (etäisyys n. 1,9 km).',
       kuva: 'apteekki_kivisto.jpg'
     },
     {
@@ -943,6 +943,7 @@ function alustaPiiriKartta() {
       kuva: 'kyrkos_ranta.jpg'
     }
   ];
+
 
   window.piiriKohteetLayer = L.layerGroup().addTo(piiriKartta);
   window.lahipalvelutLayer = L.layerGroup();
