@@ -476,8 +476,15 @@ const galleriat = {
     { tiedosto: 'ilta7.jpg', teksti: 'Seurala' },
     { tiedosto: 'ilta8.jpg', teksti: 'Piirin kirkko vuodelta 1950' }
   ],
-  tekoaly: [
-   ]
+    tekoaly: [
+    { tiedosto: 'paras1.jpg', teksti: 'Vanha vesitorni sodan keskellä' },
+    { tiedosto: 'paras2.jpg', teksti: 'Uudenvuoden juhlintaa Piirintie 11 -taloyhtiössä' },
+    { tiedosto: 'paras3.jpg', teksti: 'Piirin joulunavaus ja parhaimmat joululaulut' },
+    { tiedosto: 'paras4.jpg', teksti: 'Piirintie 11 -taloyhtiössä lemmikit ovat sallittuja ja huomioitu' },
+    { tiedosto: 'paras5.jpg', teksti: 'Kunnon talvipakkanen – lämpökeskus tuottaa kaukolämpöä' },
+    { tiedosto: 'paras6.jpg', teksti: 'Piirillä voit nauttia Verstaan antimista ja Teatteri Hysterian näytelmistä' }
+  ]
+
 };
 
 
@@ -530,7 +537,7 @@ function paivitaRuudukot(vainKansio) {
     const el = document.getElementById('ruudukko-' + k);
     if (el && !el.dataset.ladattu) {
       el.dataset.ladattu = '1';
-            const onJulkinen = (k === 'piirintie11' || k === 'piirintieIlta' || k === 'tekoaly');
+                  const onJulkinen = (k === 'piirintie11' || k === 'piirintieIlta');
       el.innerHTML = galleriat[k].map((x, i) => {
         const kuvaSrc = onJulkinen ? ('pieni_' + x.tiedosto.replace(/\.JPG$/i, '.jpg')) : x.tiedosto;
         const varalla = onJulkinen ? `this.onerror=function(){kokeilePaate(this)};this.src='${x.tiedosto}'` : `kokeilePaate(this)`;
