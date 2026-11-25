@@ -295,17 +295,18 @@ textarea{min-height:95px;resize:vertical}
       <h2>Tekemisen puutetta?</h2>
       <p class="alasivu-kuvaus">Onko tekemisen puutetta? Täältä löydät tekemistä sekä Piirin alueelta että sen lähistöltä. Valitse alta kohde tutustuaksesi tarkemmin!</p>
 
-      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:20px 0 12px">
-        <button type="button" class="nappi" onclick="naytaTekemistaValikko('kyrkosjarvi')">🏖️ Kyrkösjärvi ▾</button>
-        <button type="button" class="nappi nappi-toinen" onclick="naytaTekemistaKohde('sairaalamuseo')">🏛️ Sairaalamuseo</button>
+            <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:20px 0 12px">
+        <button type="button" id="btn-tek-kyrkosjarvi" class="nappi nappi-toinen" onclick="naytaTekemistaValikko('kyrkosjarvi')">🏖️ Kyrkösjärvi ▾</button>
+        <button type="button" id="btn-tek-sairaalamuseo" class="nappi nappi-toinen" onclick="naytaTekemistaKohde('sairaalamuseo')">🏛️ Sairaalamuseo</button>
       </div>
 
       <div id="kyrkosjarvi-alavalikko" style="display:none;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0 20px;padding:12px;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid rgba(180,155,130,0.3)">
-        <button type="button" class="nappi nappi-toinen" style="padding:8px 12px;font-size:.8rem" onclick="naytaTekemistaKohde('kalastus')">🎣 Kalastus</button>
-        <button type="button" class="nappi nappi-toinen" style="padding:8px 12px;font-size:.8rem" onclick="naytaTekemistaKohde('patikointi')">🥾 Patikointi- ja ulkoilureitit</button>
-        <button type="button" class="nappi nappi-toinen" style="padding:8px 12px;font-size:.8rem" onclick="naytaTekemistaKohde('uimaranta')">🏊 Uimaranta</button>
-        <button type="button" class="nappi nappi-toinen" style="padding:8px 12px;font-size:.8rem" onclick="naytaTekemistaKohde('frisbeegolf')">🥏 Frisbeegolf</button>
+        <button type="button" id="btn-tek-kalastus" class="nappi nappi-toinen" style="padding:8px 12px;font-size:.8rem" onclick="naytaTekemistaKohde('kalastus')">🎣 Kalastus</button>
+        <button type="button" id="btn-tek-patikointi" class="nappi nappi-toinen" style="padding:8px 12px;font-size:.8rem" onclick="naytaTekemistaKohde('patikointi')">🥾 Patikointi- ja ulkoilureitit</button>
+        <button type="button" id="btn-tek-uimaranta" class="nappi nappi-toinen" style="padding:8px 12px;font-size:.8rem" onclick="naytaTekemistaKohde('uimaranta')">🏊 Uimaranta</button>
+        <button type="button" id="btn-tek-frisbeegolf" class="nappi nappi-toinen" style="padding:8px 12px;font-size:.8rem" onclick="naytaTekemistaKohde('frisbeegolf')">🥏 Frisbeegolf</button>
       </div>
+
 
       <div id="tekemista-kortti" style="display:none;text-align:left;background:rgba(15,20,28,0.85);border:1px solid rgba(180,155,130,0.45);border-radius:14px;padding:20px;margin:16px 0 24px"></div>
 
@@ -643,7 +644,10 @@ function avaaSivu(id, ohitaHistoria) {
   if (id === 'kartat') {
     setTimeout(alustaPiiriKartta, 100);
   }
-    if (id === 'vili' || id === 'omatupa' || id === 'vieraat' || id === 'muksut' || id === 'tekoaly') {
+  if (id === 'tekemista') {
+    nollaaTekemistaNakyma();
+  }
+  if (id === 'vili' || id === 'omatupa' || id === 'vieraat' || id === 'muksut' || id === 'tekoaly') {
     paivitaRuudukot(id);
   }
   window.scrollTo({ top: 0, behavior: 'smooth' });
