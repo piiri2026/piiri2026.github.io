@@ -644,7 +644,10 @@ function avaaSivu(id, ohitaHistoria) {
   if (id === 'kartat') {
     setTimeout(alustaPiiriKartta, 100);
   }
-  if (id === 'tekemista') {
+  if (id === 'tekemista' && typeof nollaaTekemistaNakyma === 'function') {
+  nollaaTekemistaNakyma();
+}
+
     nollaaTekemistaNakyma();
   }
   if (id === 'vili' || id === 'omatupa' || id === 'vieraat' || id === 'muksut' || id === 'tekoaly') {
@@ -654,8 +657,8 @@ function avaaSivu(id, ohitaHistoria) {
 }
 
 function palaaEtusivulle(ohitaHistoria) {
-nollaaTekemistaNakyma();
-  document.querySelectorAll('#lista-musa audio').forEach(a => a.pause());
+if (typeof nollaaTekemistaNakyma === 'function') nollaaTekemistaNakyma();
+document.querySelectorAll('#lista-musa audio').forEach(a => a.pause());
   suljeValikot();
   document.querySelectorAll('.alasivu').forEach(s => s.classList.remove('aktiivinen'));
   document.getElementById('etusivuNakyma').style.display = '';
@@ -707,7 +710,7 @@ const tekemistaKohteet = {
     kuva: '', // Lisää tähän kesällä oman kuvan nimi, esim. 'kyrkos_frisbee.jpg'
     kuvateksti: 'Frisbeegolfia lähimaastossa'
   },
-  sairaalamuseo: {
+    sairaalamuseo: {
     otsikko: '🏛️ Sairaalamuseo (Piirin alueella)',
     teksti: 'Aivan Piirin historiallisen puistoalueen sydämessä sijaitseva Sairaalamuseo esittelee eteläpohjalaisen terveydenhuollon ja psykiatrisen sairaanhoidon historiaa. Museon kokoelmissa on tuhansia esineitä, valokuvia ja tarinoita entisen Törnävän sairaalan vuosikymmeniltä. Kesäkaudella museo on avoinna yleisölle ja alueella järjestetään myös opastettuja kierroksia.',
     koordinaatit: '62.763400,22.828200',
@@ -717,22 +720,49 @@ const tekemistaKohteet = {
   }
 };
 
-function naytaTekemistaValikko(ryhma) {
+function nollaaTekemistaNakyma() {
   const alavalikko = document.getElementById('kyrkosjarvi-alavalikko');
   const kortti = document.getElementById('tekemista-kortti');
-  if (ryhma === 'kyrkosjarvi') {
-    const auki = alavalikko.style.display === 'flex';
-    alavalikko.style.display = auki ? 'none' : 'flex';
-    if (auki) kortti.style.display = 'none';
+  if (alavalikko) alavalikko.style.display = 'none';
+  if (kortti) kortti.style.display = 'none';
+  ['kyrkosjarvi', 'sairaalamuseo', 'kalastus', 'patikointi', 'uimaranta', 'frisbeegolf'].forEach(id => {
+    const b = document.getElementById('btn-tek-' + id);
+    if (b) b.classList.add('nappi-toinen');
+  });
+}
+
+function naytaTekemistaValikko(ryhma) {
+  const alavalikko = document.getElementById('kyrkosjarvi-alavalikko');
+  if (ryhma === 'kyrkosjarvi' && alavalikko) {
+    const oliAuki = alavalikko.style.display === 'flex';
+    nollaaTekemistaNakyma();
+    if (!oliAuki) {
+      alavalikko.style.display = 'flex';
+      const btn = document.getElementById('btn-tek-kyrkosjarvi');
+      if (btn) btn.classList.remove('nappi-toinen');
+    }
   }
 }
 
 function naytaTekemistaKohde(avain) {
   const k = tekemistaKohteet[avain];
   if (!k) return;
+
+  ['kyrkosjarvi', 'sairaalamuseo', 'kalastus', 'patikointi', 'uimaranta', 'frisbeegolf'].forEach(id => {
+    const b = document.getElementById('btn-tek-' + id);
+    if (b) b.classList.add('nappi-toinen');
+  });
+
   if (avain === 'sairaalamuseo') {
     document.getElementById('kyrkosjarvi-alavalikko').style.display = 'none';
+    document.getElementById('btn-tek-sairaalamuseo').classList.remove('nappi-toinen');
+  } else {
+    document.getElementById('kyrkosjarvi-alavalikko').style.display = 'flex';
+    document.getElementById('btn-tek-kyrkosjarvi').classList.remove('nappi-toinen');
+    const alaNappi = document.getElementById('btn-tek-' + avain);
+    if (alaNappi) alaNappi.classList.remove('nappi-toinen');
   }
+
   const kortti = document.getElementById('tekemista-kortti');
   const kuvaHtml = k.kuva
     ? `<img src="${k.kuva}" alt="${k.otsikko}" style="width:100%;max-height:320px;object-fit:cover;border-radius:10px;margin:14px 0 6px"><p style="font-size:.82rem;color:#94a3b8;margin:0 0 14px">${k.kuvateksti || ''}</p>`
@@ -753,6 +783,7 @@ function naytaTekemistaKohde(avain) {
   kortti.style.display = 'block';
   kortti.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
+
 
 
 function vaihdaPiirintieKansio(id) {
