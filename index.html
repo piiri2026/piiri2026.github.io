@@ -641,20 +641,18 @@ function avaaSivu(id, ohitaHistoria) {
     document.getElementById('ruudukko-piirintie11').style.display = 'none';
     document.getElementById('ruudukko-piirintieIlta').style.display = 'none';
   }
-  if (id === 'kartat') {
+    if (id === 'kartat') {
     setTimeout(alustaPiiriKartta, 100);
   }
   if (id === 'tekemista' && typeof nollaaTekemistaNakyma === 'function') {
-  nollaaTekemistaNakyma();
-}
-
     nollaaTekemistaNakyma();
   }
-    if (id === 'vili' || id === 'omatupa' || id === 'vieraat' || id === 'muksut' || id === 'tekoaly') {
+  if (id === 'vili' || id === 'omatupa' || id === 'vieraat' || id === 'muksut' || id === 'tekoaly') {
     paivitaRuudukot(id);
   }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 
 function palaaEtusivulle(ohitaHistoria) {
   if (typeof nollaaTekemistaNakyma === 'function') nollaaTekemistaNakyma();
