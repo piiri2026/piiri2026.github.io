@@ -654,6 +654,7 @@ function avaaSivu(id, ohitaHistoria) {
 }
 
 function palaaEtusivulle(ohitaHistoria) {
+nollaaTekemistaNakyma();
   document.querySelectorAll('#lista-musa audio').forEach(a => a.pause());
   suljeValikot();
   document.querySelectorAll('.alasivu').forEach(s => s.classList.remove('aktiivinen'));
