@@ -318,11 +318,12 @@ textarea{min-height:95px;resize:vertical}
 
       <div id="tekemista-kortti" style="display:none;text-align:left;background:rgba(15,20,28,0.85);border:1px solid rgba(180,155,130,0.45);border-radius:14px;padding:20px;margin:16px 0 24px"></div>
 
-      <div style="text-align:left;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px;margin:18px 0 22px;font-size:0.88rem;line-height:1.6;color:#cbd5e1">
+            <div id="tekemista-yhteenveto" style="text-align:left;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:16px;margin:18px 0 22px;font-size:0.88rem;line-height:1.6;color:#cbd5e1">
         <h3 style="margin:0 0 8px;color:#b49b82;font-size:1rem">📍 Alueen kohteet ja reitit yhdellä silmäyksellä</h3>
-        <p style="margin:0 0 8px"><strong>Kyrkösjärvi (Seinäjoki):</strong> Suosittu ulkoilu- ja virkistysalue aivan Piirin ja Piirintie 11:n kupeessa. Alueelta löytyvät <strong style="color:#e2e8f0">Kyrkösjärven luontopolku (3,8 km ja 6 km)</strong>, <strong style="color:#e2e8f0">Kyrkösjärven esteetön luontopolku Järvilaavulle (2,2 km)</strong> sekä <strong style="color:#e2e8f0">Talvireitti Järvilaavulle</strong> (lähtöpaikka Kyrkösvuorentie 26). Lisäksi järvellä voi harrastaa kalastusta, frisbeegolfia ja vierailla Kyrkösjärven uimarannalla.</p>
+        <p style="margin:0 0 8px"><strong>Kyrkösjärvi (Seinäjoki):</strong> Suosittu ulkoilu- ja virkistysalue aivan Piirin ja Piirintie 11:n kupeessa. Alueelta löytyvät <strong style="color:#e2e8f0">Kyrkösjärven luontopolku (3,8 km ja 6 km)</strong>, <strong style="color:#e2e8f0">Kyrkösjärven esteetön luontopolku (2,2 km)</strong> sekä <strong style="color:#e2e8f0">Talvireitti Järvilaavulle</strong> (lähtöpaikka Kyrkösvuorentie 26). Lisäksi järvellä voi harrastaa kalastusta, frisbeegolfia ja vierailla Kyrkösjärven uimarannalla.</p>
         <p style="margin:0"><strong>Piirin alue:</strong> Historiallisella Törnävän sairaala-alueella sijaitseva <strong style="color:#e2e8f0">Sairaalamuseo</strong> esittelee eteläpohjalaisen terveydenhuollon historiaa vehreän puistoalueen keskellä.</p>
       </div>
+
 
       <button type="button" class="nappi" onclick="palaaEtusivulle()">← Takaisin etusivulle</button>
     </div>
@@ -730,7 +731,7 @@ const tekemistaKohteet = {
   },
       patikointi: {
     otsikko: '🥾 Patikointi- ja ulkoilureitit',
-    teksti: 'Kyrkösjärven ja Jouppilanvuoren maastossa kulkee monipuolisia metsäpolkuja ja pitkospuita, joiden varrella on laavuja sekä näkötorni. Tutustu reitteihin tarkemmin: <button type="button" onclick="avaaReittiInfo(\'luontopolku\')" style="background:none;border:none;padding:0;color:#d6bfa8;text-decoration:underline;font:inherit;font-weight:600;cursor:pointer">Kyrkösjärven luontopolku</button>, <button type="button" onclick="avaaReittiInfo(\'esteeton\')" style="background:none;border:none;padding:0;color:#d6bfa8;text-decoration:underline;font:inherit;font-weight:600;cursor:pointer">Esteetön luontopolku Järvilaavulle</button> ja <button type="button" onclick="avaaReittiInfo(\'talvireitti\')" style="background:none;border:none;padding:0;color:#d6bfa8;text-decoration:underline;font:inherit;font-weight:600;cursor:pointer">Talvireitti Järvilaavulle</button>.',
+    teksti: 'Kyrkösjärven ja Jouppilanvuoren maastossa kulkee monipuolisia metsäpolkuja ja pitkospuita, joiden varrella on laavuja sekä näkötorni. Tutustu reitteihin tarkemmin: <button type="button" onclick="avaaReittiInfo(\'luontopolku\')" style="background:none;border:none;padding:0;color:#d6bfa8;text-decoration:underline;font:inherit;font-weight:600;cursor:pointer">Kyrkösjärven luontopolku</button>, <button type="button" onclick="avaaReittiInfo(\'esteeton\')" style="background:none;border:none;padding:0;color:#d6bfa8;text-decoration:underline;font:inherit;font-weight:600;cursor:pointer">Esteetön luontopolku</button> ja <button type="button" onclick="avaaReittiInfo(\'talvireitti\')" style="background:none;border:none;padding:0;color:#d6bfa8;text-decoration:underline;font:inherit;font-weight:600;cursor:pointer">Talvireitti Järvilaavulle</button>.',
     koordinaatit: '62.758795,22.799318',
     piilotaKavelyNappi: true,
     kuva: '',
@@ -845,7 +846,7 @@ const reittiTiedot = {
   },
 
   esteeton: {
-    otsikko: '♿ Esteetön luontopolku Järvilaavulle (2,2 km / suunta)',
+    otsikko: '♿ Esteetön luontopolku (2,2 km / suunta)',
     teksti: 'Leveä ja tasainen kivituhka- ja lankkupolkureitti Kattilavuoren luonnonsuojelualueen tuntumassa. Perillä on esteetön Järvilaavu, nuotiopaikka ja esteetön käymälä. Lähtö: Kyrkösvuorentie 26.',
     nimi: 'Esteettömän luontopolun lähtöpiste (Kyrkösvuorentie 26)',
     koordinaatit: '62.758795,22.799318',
@@ -949,11 +950,19 @@ function nollaaTekemistaNakyma() {
   const kortti = document.getElementById('tekemista-kortti');
   if (alavalikko) alavalikko.style.display = 'none';
   if (kortti) kortti.style.display = 'none';
+  function nollaaTekemistaNakyma() {
+  const alavalikko = document.getElementById('kyrkosjarvi-alavalikko');
+  const kortti = document.getElementById('tekemista-kortti');
+  const yht = document.getElementById('tekemista-yhteenveto');
+  if (alavalikko) alavalikko.style.display = 'none';
+  if (kortti) kortti.style.display = 'none';
+  if (yht) yht.style.display = 'block';
   ['kyrkosjarvi', 'sairaalamuseo', 'kalastus', 'patikointi', 'uimaranta', 'frisbeegolf'].forEach(id => {
     const b = document.getElementById('btn-tek-' + id);
     if (b) b.classList.add('nappi-toinen');
   });
 }
+
 
 function naytaTekemistaValikko(ryhma) {
   const alavalikko = document.getElementById('kyrkosjarvi-alavalikko');
@@ -962,6 +971,9 @@ function naytaTekemistaValikko(ryhma) {
     nollaaTekemistaNakyma();
     if (!oliAuki) {
       alavalikko.style.display = 'flex';
+const yht = document.getElementById('tekemista-yhteenveto');
+if (yht) yht.style.display = 'none';
+
       const btn = document.getElementById('btn-tek-kyrkosjarvi');
       if (btn) btn.classList.remove('nappi-toinen');
     }
@@ -971,6 +983,9 @@ function naytaTekemistaValikko(ryhma) {
 function naytaTekemistaKohde(avain) {
   const k = tekemistaKohteet[avain];
   if (!k) return;
+const yht = document.getElementById('tekemista-yhteenveto');
+if (yht) yht.style.display = 'none';
+
 
   ['kyrkosjarvi', 'sairaalamuseo', 'kalastus', 'patikointi', 'uimaranta', 'frisbeegolf'].forEach(id => {
     const b = document.getElementById('btn-tek-' + id);
