@@ -383,6 +383,15 @@ textarea{min-height:95px;resize:vertical}
   </div>
 </div>
 
+ <div id="reittiModal" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;padding:16px">
+    <div style="background:#131b26;border:1px solid rgba(180,155,130,0.55);border-radius:14px;max-width:420px;width:100%;padding:20px;position:relative;text-align:left;box-shadow:0 12px 32px rgba(0,0,0,0.6)">
+      <button type="button" onclick="document.getElementById('reittiModal').style.display='none'" aria-label="Sulje" style="position:absolute;top:12px;right:14px;background:none;border:none;color:#94a3b8;font-size:1.5rem;cursor:pointer;line-height:1">×</button>
+      <h3 id="reittiModalOtsikko" style="margin:0 24px 10px 0;color:#b49b82;font-size:1.1rem"></h3>
+      <p id="reittiModalTeksti" style="margin:0 0 16px;color:#e2e8f0;font-size:0.92rem;line-height:1.6"></p>
+      <button type="button" id="reittiModalNappi" class="nappi" style="width:100%;padding:10px 14px;font-size:0.88rem">🚶 Kävelyreitti kohteeseen</button>
+    </div>
+  </div>
+
 <div class="modal" id="lightboxModal" onclick="if(event.target===this)this.classList.remove('avoin')">
   <button class="sulje" aria-label="Sulje" onclick="document.getElementById('lightboxModal').classList.remove('avoin')">&times;</button>
   <button class="lb-nuoli" aria-label="Edellinen kuva" style="left:10px" onclick="vaihdaKuva(-1)">❮</button>
@@ -710,13 +719,14 @@ const tekemistaKohteet = {
     kuva: '', // Lisää tähän kesällä oman kuvan nimi, esim. 'kyrkos_kalastus.jpg'
     kuvateksti: 'Kyrkösjärven ranta-alueita'
   },
-  patikointi: {
+    patikointi: {
     otsikko: '🥾 Patikointi- ja ulkoilureitit',
-    teksti: 'Kyrkösjärven ympäristössä ja Jouppilanvuoren maastossa risteilee monipuolinen verkosto helppokulkuisia ulkoilureittejä, pitkospuita ja metsäpolkuja. Reittien varrelta löytyy laavuja, nuotiopaikkoja sekä Kyrkösjärven luontopolun lintu- ja näkötorni, josta avautuu hieno näkymä yli järven ja suomaaston. Piirintie 11:stä pääset reiteille kävellen reilussa kymmenessä minuutissa.',
-    koordinaatit: '62.768500,22.805000',
+    teksti: 'Kyrkösjärven ja Jouppilanvuoren maastossa kulkee monipuolisia metsäpolkuja ja pitkospuita, joiden varrella on laavuja sekä näkötorni. Tutustu reitteihin tarkemmin: <button type="button" onclick="avaaReittiInfo(\'luontopolku\')" style="background:none;border:none;padding:0;color:#d6bfa8;text-decoration:underline;font:inherit;font-weight:600;cursor:pointer">Kyrkösjärven luontopolku</button>, <button type="button" onclick="avaaReittiInfo(\'esteeton\')" style="background:none;border:none;padding:0;color:#d6bfa8;text-decoration:underline;font:inherit;font-weight:600;cursor:pointer">Esteetön luontopolku Järvilaavulle</button> ja <button type="button" onclick="avaaReittiInfo(\'talvireitti\')" style="background:none;border:none;padding:0;color:#d6bfa8;text-decoration:underline;font:inherit;font-weight:600;cursor:pointer">Talvireitti Järvilaavulle</button>.',
+    koordinaatit: '62.769676,22.813467',
     kuva: '', // Lisää tähän kesällä oman kuvan nimi, esim. 'kyrkos_polku.jpg'
     kuvateksti: 'Ulkoilureittejä Kyrkösjärven maastossa'
   },
+
   uimaranta: {
     otsikko: '🏊 Kyrkösjärven uimaranta',
     teksti: 'Kyrkösjärven uimaranta sijaitsee vain noin kilometrin päässä Piirin alueelta. Rannalla on hiekkaranta, laituri, pukukopit, wc-tilat sekä lapsille oma leikkialue keinuineen. Kesäisin ranta on vilkas ja viihtyisä ajanviettopaikka, jossa voi yhdistää uimisen, auringonoton ja eväsretken.',
@@ -740,6 +750,36 @@ const tekemistaKohteet = {
     lisalinkki: 'https://seinajoki.fi'
   }
 };
+
+const reittiTiedot = {
+  luontopolku: {
+    otsikko: '🥾 Kyrkösjärven luontopolku (3,8 / 6 km)',
+    teksti: 'Oranssein merkein merkitty rengasreitti kulkee Kyrkösvuoren ja tekojärven rantametsien halki. Reitin varrella on Kyrkösvuoren näkötorni, pitkospuita, lintutorni sekä laavuja. Lähtöpiste sijaitsee Kyrkösjärven uimarannan tuntumassa.',
+    nimi: 'Kyrkösjärven luontopolun lähtöpiste',
+    koordinaatit: '62.769676,22.813467'
+  },
+  esteeton: {
+    otsikko: '♿ Esteetön luontopolku Järvilaavulle (2,2 km / suunta)',
+    teksti: 'Leveä ja tasainen kivituhka- ja lankkupolkureitti Kattilavuoren luonnonsuojelualueen tuntumassa. Perillä odottaa esteetön Järvilaavu, nuotiopaikka sekä esteetön käymälä. Lähtö Kattilavuorentien pysäköintialueelta.',
+    nimi: 'Esteettömän luontopolun lähtöpiste (Kattilavuorentie)',
+    koordinaatit: '62.757500,22.801800'
+  },
+  talvireitti: {
+    otsikko: '❄️ Talvireitti Järvilaavulle (n. 1 km / suunta)',
+    teksti: 'Lumiseen aikaan tampattu ja talvihuollettu reitti kulkee talvisen metsän halki suoraan Kyrkösjärven rannassa olevalle esteettömälle Järvilaavulle. Lähtö Kattilavuorentien pysäköintialueelta.',
+    nimi: 'Talvireitin lähtöpiste (Kattilavuorentie)',
+    koordinaatit: '62.757500,22.801800'
+  }
+};
+
+function avaaReittiInfo(avain) {
+  const r = reittiTiedot[avain];
+  if (!r) return;
+  document.getElementById('reittiModalOtsikko').textContent = r.otsikko;
+  document.getElementById('reittiModalTeksti').textContent = r.teksti;
+  document.getElementById('reittiModalNappi').onclick = () => avaaKavelyreitti(r.nimi, r.koordinaatit);
+  document.getElementById('reittiModal').style.display = 'flex';
+}
 
 function nollaaTekemistaNakyma() {
   const alavalikko = document.getElementById('kyrkosjarvi-alavalikko');
