@@ -721,13 +721,15 @@ const tekemistaKohteet = {
     kuva: '', // Lisää tähän kesällä oman kuvan nimi, esim. 'kyrkos_kalastus.jpg'
     kuvateksti: 'Kyrkösjärven ranta-alueita'
   },
-    patikointi: {
+      patikointi: {
     otsikko: '🥾 Patikointi- ja ulkoilureitit',
     teksti: 'Kyrkösjärven ja Jouppilanvuoren maastossa kulkee monipuolisia metsäpolkuja ja pitkospuita, joiden varrella on laavuja sekä näkötorni. Tutustu reitteihin tarkemmin: <button type="button" onclick="avaaReittiInfo(\'luontopolku\')" style="background:none;border:none;padding:0;color:#d6bfa8;text-decoration:underline;font:inherit;font-weight:600;cursor:pointer">Kyrkösjärven luontopolku</button>, <button type="button" onclick="avaaReittiInfo(\'esteeton\')" style="background:none;border:none;padding:0;color:#d6bfa8;text-decoration:underline;font:inherit;font-weight:600;cursor:pointer">Esteetön luontopolku Järvilaavulle</button> ja <button type="button" onclick="avaaReittiInfo(\'talvireitti\')" style="background:none;border:none;padding:0;color:#d6bfa8;text-decoration:underline;font:inherit;font-weight:600;cursor:pointer">Talvireitti Järvilaavulle</button>.',
-    koordinaatit: '62.769676,22.813467',
-    kuva: '', // Lisää tähän kesällä oman kuvan nimi, esim. 'kyrkos_polku.jpg'
+    koordinaatit: '62.758795,22.799318',
+    piilotaKavelyNappi: true,
+    kuva: '',
     kuvateksti: 'Ulkoilureittejä Kyrkösjärven maastossa'
   },
+
 
   uimaranta: {
     otsikko: '🏊 Kyrkösjärven uimaranta',
@@ -986,15 +988,20 @@ function naytaTekemistaKohde(avain) {
     ? `<a href="${k.lisalinkki}" target="_blank" rel="noopener" class="nappi nappi-toinen" style="padding:9px 14px;font-size:.82rem">ℹ️ Aukioloajat ja lisätiedot ↗</a>`
     : '';
 
+    const kavelyNappiHtml = k.piilotaKavelyNappi
+    ? ''
+    : `<button type="button" class="nappi" style="padding:9px 14px;font-size:.82rem" onclick="avaaKavelyreitti('${k.otsikko}','${k.koordinaatit}')">🚶 Kävelyreitti kohteeseen</button>`;
+  const napitHtml = (kavelyNappiHtml || lisaNappi)
+    ? `<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">${kavelyNappiHtml}${lisaNappi}</div>`
+    : '';
+
   kortti.innerHTML = `
     <h3 style="margin:0 0 10px;color:#b49b82;font-size:1.2rem">${k.otsikko}</h3>
     <p style="margin:0 0 12px;color:#e2e8f0;line-height:1.65;font-size:.96rem">${k.teksti}</p>
     ${kuvaHtml}
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
-      <button type="button" class="nappi" style="padding:9px 14px;font-size:.82rem" onclick="avaaKavelyreitti('${k.otsikko}','${k.koordinaatit}')">🚶 Kävelyreitti kohteeseen</button>
-      ${lisaNappi}
-    </div>
+    ${napitHtml}
   `;
+
   kortti.style.display = 'block';
   kortti.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
