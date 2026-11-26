@@ -948,11 +948,6 @@ function avaaReittiInfo(avain) {
 function nollaaTekemistaNakyma() {
   const alavalikko = document.getElementById('kyrkosjarvi-alavalikko');
   const kortti = document.getElementById('tekemista-kortti');
-  if (alavalikko) alavalikko.style.display = 'none';
-  if (kortti) kortti.style.display = 'none';
-  function nollaaTekemistaNakyma() {
-  const alavalikko = document.getElementById('kyrkosjarvi-alavalikko');
-  const kortti = document.getElementById('tekemista-kortti');
   const yht = document.getElementById('tekemista-yhteenveto');
   if (alavalikko) alavalikko.style.display = 'none';
   if (kortti) kortti.style.display = 'none';
@@ -963,7 +958,6 @@ function nollaaTekemistaNakyma() {
   });
 }
 
-
 function naytaTekemistaValikko(ryhma) {
   const alavalikko = document.getElementById('kyrkosjarvi-alavalikko');
   if (ryhma === 'kyrkosjarvi' && alavalikko) {
@@ -971,9 +965,8 @@ function naytaTekemistaValikko(ryhma) {
     nollaaTekemistaNakyma();
     if (!oliAuki) {
       alavalikko.style.display = 'flex';
-const yht = document.getElementById('tekemista-yhteenveto');
-if (yht) yht.style.display = 'none';
-
+      const yht = document.getElementById('tekemista-yhteenveto');
+      if (yht) yht.style.display = 'none';
       const btn = document.getElementById('btn-tek-kyrkosjarvi');
       if (btn) btn.classList.remove('nappi-toinen');
     }
@@ -983,9 +976,9 @@ if (yht) yht.style.display = 'none';
 function naytaTekemistaKohde(avain) {
   const k = tekemistaKohteet[avain];
   if (!k) return;
-const yht = document.getElementById('tekemista-yhteenveto');
-if (yht) yht.style.display = 'none';
 
+  const yht = document.getElementById('tekemista-yhteenveto');
+  if (yht) yht.style.display = 'none';
 
   ['kyrkosjarvi', 'sairaalamuseo', 'kalastus', 'patikointi', 'uimaranta', 'frisbeegolf'].forEach(id => {
     const b = document.getElementById('btn-tek-' + id);
@@ -1009,8 +1002,7 @@ if (yht) yht.style.display = 'none';
   const lisaNappi = k.lisalinkki
     ? `<a href="${k.lisalinkki}" target="_blank" rel="noopener" class="nappi nappi-toinen" style="padding:9px 14px;font-size:.82rem">ℹ️ Aukioloajat ja lisätiedot ↗</a>`
     : '';
-
-    const kavelyNappiHtml = k.piilotaKavelyNappi
+  const kavelyNappiHtml = k.piilotaKavelyNappi
     ? ''
     : `<button type="button" class="nappi" style="padding:9px 14px;font-size:.82rem" onclick="avaaKavelyreitti('${k.otsikko}','${k.koordinaatit}')">🚶 Kävelyreitti kohteeseen</button>`;
   const napitHtml = (kavelyNappiHtml || lisaNappi)
@@ -1023,10 +1015,11 @@ if (yht) yht.style.display = 'none';
     ${kuvaHtml}
     ${napitHtml}
   `;
-
   kortti.style.display = 'block';
   kortti.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
+</script>
+
 
 
 
