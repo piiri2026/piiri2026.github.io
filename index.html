@@ -383,14 +383,16 @@ textarea{min-height:95px;resize:vertical}
   </div>
 </div>
 
- <div id="reittiModal" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;padding:16px">
-    <div style="background:#131b26;border:1px solid rgba(180,155,130,0.55);border-radius:14px;max-width:420px;width:100%;padding:20px;position:relative;text-align:left;box-shadow:0 12px 32px rgba(0,0,0,0.6)">
+   <div id="reittiModal" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;align-items:center;justify-content:center;padding:16px">
+    <div style="background:#131b26;border:1px solid rgba(180,155,130,0.55);border-radius:14px;max-width:440px;width:100%;padding:20px;position:relative;text-align:left;box-shadow:0 12px 32px rgba(0,0,0,0.6)">
       <button type="button" onclick="document.getElementById('reittiModal').style.display='none'" aria-label="Sulje" style="position:absolute;top:12px;right:14px;background:none;border:none;color:#94a3b8;font-size:1.5rem;cursor:pointer;line-height:1">×</button>
       <h3 id="reittiModalOtsikko" style="margin:0 24px 10px 0;color:#b49b82;font-size:1.1rem"></h3>
-      <p id="reittiModalTeksti" style="margin:0 0 16px;color:#e2e8f0;font-size:0.92rem;line-height:1.6"></p>
-      <button type="button" id="reittiModalNappi" class="nappi" style="width:100%;padding:10px 14px;font-size:0.88rem">🚶 Kävelyreitti kohteeseen</button>
+      <p id="reittiModalTeksti" style="margin:0 0 12px;color:#e2e8f0;font-size:0.9rem;line-height:1.55"></p>
+      <div id="reittiModalKartta" style="width:100%;height:240px;border-radius:10px;margin-bottom:14px;border:1px solid rgba(180,155,130,0.4);overflow:hidden"></div>
+      <button type="button" id="reittiModalNappi" class="nappi" style="width:100%;padding:10px 14px;font-size:0.88rem">🚶 Kävelyreitti lähtöpisteeseen (Kyrkösvuorentie 26)</button>
     </div>
   </div>
+
 
 <div class="modal" id="lightboxModal" onclick="if(event.target===this)this.classList.remove('avoin')">
   <button class="sulje" aria-label="Sulje" onclick="document.getElementById('lightboxModal').classList.remove('avoin')">&times;</button>
@@ -752,25 +754,157 @@ const tekemistaKohteet = {
 };
 
 const reittiTiedot = {
+
   luontopolku: {
     otsikko: '🥾 Kyrkösjärven luontopolku (3,8 / 6 km)',
-    teksti: 'Oranssein merkein merkitty rengasreitti kulkee Kyrkösvuoren ja tekojärven rantametsien halki. Reitin varrella on Kyrkösvuoren näkötorni, pitkospuita, lintutorni sekä laavuja. Lähtöpiste sijaitsee Kyrkösjärven uimarannan tuntumassa.',
-    nimi: 'Kyrkösjärven luontopolun lähtöpiste',
-    koordinaatit: '62.769676,22.813467'
+    teksti: 'Oranssein merkein merkitty rengasreitti Kyrkösvuoren ja tekojärven rantametsien halki (vihreä = 3,8 km, oranssi = 6 km lisälenkki). Varrella on näkötorni, lintutorni, pitkospuita ja laavuja. Lähtö: Kyrkösvuorentie 26.',
+    nimi: 'Kyrkösjärven luontopolun lähtöpiste (Kyrkösvuorentie 26)',
+    koordinaatit: '62.758795,22.799318',
+    osat: [
+      {
+        vari: '#22c55e',
+        pisteet: [
+          [62.759183,22.799257],[62.758577,22.799263],[62.758443,22.799668],[62.758216,22.800150],
+          [62.757849,22.800936],[62.757482,22.801780],[62.757079,22.802855],[62.756817,22.803043],
+          [62.756590,22.802964],[62.756402,22.802845],[62.756167,22.802861],[62.755880,22.802602],
+          [62.755582,22.802507],[62.755307,22.802243],[62.755148,22.802080],[62.754868,22.802703],
+          [62.754675,22.803267],[62.754511,22.803748],[62.754403,22.804236],[62.754275,22.804441],
+          [62.754154,22.804451],[62.753889,22.804034],[62.753560,22.803532],[62.753433,22.803379],
+          [62.753189,22.803966],[62.753037,22.804473],[62.752909,22.804637],[62.752595,22.804399],
+          [62.752309,22.804285],[62.752221,22.804126],[62.752229,22.803859],[62.752332,22.803388],
+          [62.752381,22.803163],[62.752422,22.802562],[62.752620,22.802088],[62.752677,22.801222],
+          [62.752776,22.800204],[62.752889,22.799399],[62.753059,22.798766],[62.753078,22.798206],
+          [62.753173,22.797712],[62.753153,22.797432],[62.753211,22.797205],[62.753320,22.797091],
+          [62.753469,22.796821],[62.753580,22.796719],[62.753597,22.796373],[62.753655,22.796056],
+          [62.753611,22.795668],[62.753447,22.795314],[62.753386,22.795091],[62.753401,22.794669],
+          [62.753445,22.794165],[62.753424,22.793602],[62.753312,22.793163],[62.753384,22.792793],
+          [62.753516,22.791813],[62.753550,22.791388],[62.753516,22.791145],[62.753427,22.790943],
+          [62.753376,22.790290],[62.753340,22.788493],[62.753397,22.788116],[62.753331,22.788029]
+        ]
+      },
+      {
+        vari: '#22c55e',
+        pisteet: [
+          [62.755064,22.789766],[62.755248,22.790021],[62.755472,22.790592],[62.755588,22.791527],
+          [62.755683,22.792214],[62.755809,22.792860],[62.755955,22.792822],[62.756092,22.792749],
+          [62.756306,22.792684],[62.756742,22.792175],[62.756866,22.791883],[62.756947,22.791646],
+          [62.757124,22.791283],[62.757357,22.790857],[62.757441,22.790581],[62.757662,22.790323],
+          [62.757826,22.790256],[62.757956,22.790301],[62.758083,22.790283],[62.758230,22.790385],
+          [62.758317,22.790446],[62.758424,22.790636],[62.758566,22.790930],[62.758728,22.791314],
+          [62.758913,22.791655],[62.759112,22.791833],[62.759227,22.791850],[62.759383,22.791666],
+          [62.759607,22.791330],[62.759845,22.791100],[62.760051,22.790786],[62.760297,22.790820],
+          [62.760552,22.790852],[62.760711,22.790741],[62.760881,22.790496],[62.761032,22.790436],
+          [62.761171,22.791485],[62.761199,22.792020],[62.761118,22.792492],[62.761002,22.792818],
+          [62.760779,22.793012],[62.760633,22.793229],[62.760526,22.793577],[62.760378,22.793868],
+          [62.760215,22.794073],[62.760004,22.794304],[62.759808,22.794724],[62.759647,22.795571],
+          [62.759525,22.795872],[62.759404,22.796248],[62.759330,22.797092],[62.759183,22.799257]
+        ]
+      },
+      {
+        vari: '#f97316',
+        pisteet: [
+          [62.755061,22.789167],[62.754852,22.788875],[62.754455,22.788163],[62.754300,22.787639],
+          [62.754191,22.787113],[62.754052,22.786943],[62.753903,22.786567],[62.753553,22.785953],
+          [62.753301,22.785566],[62.753074,22.785304],[62.752890,22.784911],[62.752566,22.784495],
+          [62.752240,22.783975],[62.752052,22.783515],[62.751788,22.783105],[62.751622,22.782873],
+          [62.751410,22.782526],[62.751251,22.782373],[62.751121,22.782054],[62.749831,22.779941],
+          [62.749484,22.779456],[62.749211,22.778926],[62.748606,22.777936],[62.748380,22.777506],
+          [62.748135,22.777165],[62.747805,22.776625],[62.747653,22.776784],[62.747553,22.777133],
+          [62.747342,22.777543],[62.747073,22.777648],[62.746854,22.777534],[62.746764,22.777684],
+          [62.746730,22.778134],[62.746596,22.778891],[62.746490,22.779309],[62.746282,22.779571],
+          [62.746197,22.779883],[62.746234,22.780323],[62.746255,22.780646],[62.746380,22.780869],
+          [62.746620,22.781134],[62.746866,22.781356],[62.746976,22.781598],[62.747079,22.781635],
+          [62.747247,22.781336],[62.747426,22.780865],[62.747537,22.780369],[62.747743,22.780039],
+          [62.747930,22.779721],[62.748002,22.779359],[62.748063,22.779033],[62.748244,22.779315],
+          [62.748461,22.779602],[62.748632,22.780186],[62.748871,22.780787],[62.749076,22.781083],
+          [62.749327,22.781185],[62.749453,22.781294],[62.749551,22.781443],[62.750107,22.782291],
+          [62.750124,22.782709],[62.750221,22.783715],[62.750392,22.784574],[62.750567,22.784871],
+          [62.750797,22.785237],[62.750954,22.785302],[62.751170,22.785543],[62.751307,22.785696],
+          [62.751432,22.786064],[62.751524,22.786119],[62.751810,22.786079],[62.751958,22.786158],
+          [62.752591,22.787219],[62.753331,22.788029],[62.753285,22.787673],[62.753265,22.787463],
+          [62.753332,22.786937],[62.753410,22.786420],[62.753553,22.785953]
+        ]
+      },
+      {
+        vari: '#22c55e',
+        pisteet: [
+          [62.753331,22.788029],[62.753485,22.788015],[62.753687,22.787910],[62.753909,22.788069],
+          [62.754196,22.788676],[62.755064,22.789766],[62.755086,22.789412],[62.755061,22.789167]
+        ]
+      }
+    ]
   },
+
   esteeton: {
     otsikko: '♿ Esteetön luontopolku Järvilaavulle (2,2 km / suunta)',
-    teksti: 'Leveä ja tasainen kivituhka- ja lankkupolkureitti Kattilavuoren luonnonsuojelualueen tuntumassa. Perillä odottaa esteetön Järvilaavu, nuotiopaikka sekä esteetön käymälä. Lähtö Kattilavuorentien pysäköintialueelta.',
-    nimi: 'Esteettömän luontopolun lähtöpiste (Kattilavuorentie)',
-    koordinaatit: '62.757500,22.801800'
+    teksti: 'Leveä ja tasainen kivituhka- ja lankkupolkureitti Kattilavuoren luonnonsuojelualueen tuntumassa. Perillä on esteetön Järvilaavu, nuotiopaikka ja esteetön käymälä. Lähtö: Kyrkösvuorentie 26.',
+    nimi: 'Esteettömän luontopolun lähtöpiste (Kyrkösvuorentie 26)',
+    koordinaatit: '62.758795,22.799318',
+    osat: [
+      {
+        vari: '#f97316',
+        pisteet: [
+          [62.758795,22.799318],[62.758443,22.799668],[62.758216,22.800150],[62.757849,22.800936],
+          [62.757482,22.801780],[62.757079,22.802855],[62.756817,22.803043],[62.756590,22.802964],
+          [62.756402,22.802845],[62.756167,22.802861],[62.755880,22.802602],[62.755582,22.802507],
+          [62.755307,22.802243],[62.755148,22.802080],[62.754868,22.802703],[62.754675,22.803267],
+          [62.754511,22.803748],[62.754403,22.804236],[62.754275,22.804441],[62.754154,22.804451],
+          [62.753889,22.804034],[62.753560,22.803532],[62.753433,22.803379],[62.753189,22.803966],
+          [62.753037,22.804473],[62.752909,22.804637],[62.752595,22.804399],[62.752309,22.804285],
+          [62.752221,22.804126],[62.752229,22.803859],[62.752332,22.803388],[62.752381,22.803163],
+          [62.752422,22.802562],[62.752620,22.802088],[62.752677,22.801222],[62.752776,22.800204],
+          [62.752889,22.799399],[62.753059,22.798766],[62.753078,22.798206],[62.753173,22.797712],
+          [62.753153,22.797432],[62.753211,22.797205],[62.753320,22.797091],[62.753469,22.796821],
+          [62.753580,22.796719],[62.753597,22.796373],[62.753655,22.796056],[62.753611,22.795668],
+          [62.753447,22.795314],[62.753386,22.795091],[62.753401,22.794669],[62.753445,22.794165],
+          [62.753424,22.793602],[62.753312,22.793163],[62.753384,22.792793],[62.753516,22.791813],
+          [62.753550,22.791388],[62.753516,22.791145],[62.753427,22.790943],[62.753376,22.790290],
+          [62.753340,22.788493],[62.753397,22.788116],[62.753331,22.788029],[62.753276,22.788296],
+          [62.753090,22.788786],[62.752949,22.788935],[62.752671,22.789206],[62.752320,22.789574]
+        ]
+      }
+    ]
   },
+
   talvireitti: {
     otsikko: '❄️ Talvireitti Järvilaavulle (n. 1 km / suunta)',
-    teksti: 'Lumiseen aikaan tampattu ja talvihuollettu reitti kulkee talvisen metsän halki suoraan Kyrkösjärven rannassa olevalle esteettömälle Järvilaavulle. Lähtö Kattilavuorentien pysäköintialueelta.',
-    nimi: 'Talvireitin lähtöpiste (Kattilavuorentie)',
-    koordinaatit: '62.757500,22.801800'
+    teksti: 'Lumiseen aikaan tampattu ja talvihuollettu reitti kulkee talvisen metsän halki suoraan Kyrkösjärven rannassa olevalle esteettömälle Järvilaavulle. Lähtö: Kyrkösvuorentie 26.',
+    nimi: 'Talvireitin lähtöpiste (Kyrkösvuorentie 26)',
+    koordinaatit: '62.758795,22.799318',
+    osat: [
+      {
+        vari: '#38bdf8',
+        pisteet: [
+          [62.758493,22.799189],[62.758403,22.799107],[62.758270,22.798295],
+          [62.758168,22.797788],[62.758066,22.796925],[62.757666,22.796293],
+          [62.757089,22.795545],[62.755808,22.794518],[62.754424,22.791536],
+          [62.753804,22.790462],[62.753753,22.789852],[62.753342,22.789911],
+          [62.752432,22.789685]
+        ]
+      }
+    ]
   }
 };
+
+let reittiKartta = null;
+let reittiViiva = null;
+
+function piirraReittiKartta(r) {
+  if (!reittiKartta) {
+    reittiKartta = L.map('reittiModalKartta');
+    L.tileLayer('https://{s}.tile.openstreetmap.' + 'org/{z}/{x}/{y}.png', { attribution: '&copy; OSM' }).addTo(reittiKartta);
+  }
+  if (reittiViiva) reittiKartta.removeLayer(reittiViiva);
+  reittiViiva = L.layerGroup().addTo(reittiKartta);
+  const ryhma = L.featureGroup();
+  r.osat.forEach(osa => {
+    const viiva = L.polyline(osa.pisteet, { color: osa.vari, weight: 5 }).addTo(reittiViiva);
+    ryhma.addLayer(viiva);
+  });
+  L.marker(L.latLng(62.758795, 22.799318)).addTo(reittiViiva).bindPopup('Lähtöpiste (Kyrkösvuorentie 26)');
+  reittiKartta.invalidateSize();
+  reittiKartta.fitBounds(ryhma.getBounds(), { padding: L.point(20, 20) });
+}
 
 function avaaReittiInfo(avain) {
   const r = reittiTiedot[avain];
@@ -779,6 +913,26 @@ function avaaReittiInfo(avain) {
   document.getElementById('reittiModalTeksti').textContent = r.teksti;
   document.getElementById('reittiModalNappi').onclick = () => avaaKavelyreitti(r.nimi, r.koordinaatit);
   document.getElementById('reittiModal').style.display = 'flex';
+
+  setTimeout(() => {
+    if (typeof L === 'undefined') {
+      if (!document.getElementById('leaflet-css')) {
+        const c = document.createElement('link');
+        c.id = 'leaflet-css'; c.rel = 'stylesheet';
+        c.href = 'https://unpkg.' + 'com/leaflet@1.9.4/dist/leaflet.css';
+        document.head.appendChild(c);
+      }
+      if (!document.getElementById('leaflet-js')) {
+        const s = document.createElement('script');
+        s.id = 'leaflet-js';
+        s.src = 'https://unpkg.' + 'com/leaflet@1.9.4/dist/leaflet.js';
+        s.onload = () => piirraReittiKartta(r);
+        document.head.appendChild(s);
+      }
+    } else {
+      piirraReittiKartta(r);
+    }
+  }, 80);
 }
 
 function nollaaTekemistaNakyma() {
