@@ -535,6 +535,14 @@ const galleriat = {
     { tiedosto: 'ilta11.JPG', teksti: 'Verstaan terassia' }
   ],
 
+  sairaalamuseo: [
+    { tiedosto: 'sairaalamuseo1.JPG', teksti: 'Sairaalamuseo 1' },
+    { tiedosto: 'sairaalamuseo2.JPG', teksti: 'Sairaalamuseo 2' },
+    { tiedosto: 'sairaalamuseo3.JPG', teksti: 'Sairaalamuseo 3' },
+    { tiedosto: 'sairaalamuseo4.JPG', teksti: 'Sairaalamuseo 4' },
+    { tiedosto: 'sairaalamuseo5.JPG', teksti: 'Sairaalamuseo 5' }
+  ],
+
     tekoaly: [
     { tiedosto: 'paras1.jpg', teksti: 'Vanha vesitorni sodan keskellä' },
     { tiedosto: 'paras2.jpg', teksti: 'Uudenvuoden juhlintaa Piirintie 11 -taloyhtiössä' },
@@ -757,15 +765,17 @@ const tekemistaKohteet = {
     kuva: '', // Lisää tähän kesällä oman kuvan nimi, esim. 'kyrkos_frisbee.jpg'
     kuvateksti: 'Frisbeegolfia lähimaastossa'
   },
-    sairaalamuseo: {
+      sairaalamuseo: {
     otsikko: '🏛️ Sairaalamuseo (Piirin alueella)',
     teksti: 'Aivan Piirin historiallisen puistoalueen sydämessä sijaitseva Sairaalamuseo esittelee eteläpohjalaisen terveydenhuollon ja psykiatrisen sairaanhoidon historiaa. Museon kokoelmissa on tuhansia esineitä, valokuvia ja tarinoita entisen Törnävän sairaalan vuosikymmeniltä. Kesäkaudella museo on avoinna yleisölle ja alueella järjestetään myös opastettuja kierroksia.',
-    koordinaatit: '62.763400,22.828200',
-    kuva: '', // Lisää tähän kesällä oman kuvan nimi, esim. 'sairaalamuseo.jpg'
+    koordinaatit: '62.768706,22.831108',
+    galleria: 'sairaalamuseo',
+    kuva: '',
     kuvateksti: 'Sairaalamuseo Piirin alueella',
     lisalinkki: 'https://seinajoki.fi'
   }
 };
+
 
 const reittiTiedot = {
 
@@ -1000,9 +1010,21 @@ function naytaTekemistaKohde(avain) {
   }
 
   const kortti = document.getElementById('tekemista-kortti');
-  const kuvaHtml = k.kuva
-    ? `<img src="${k.kuva}" alt="${k.otsikko}" style="width:100%;max-height:320px;object-fit:cover;border-radius:10px;margin:14px 0 6px"><p style="font-size:.82rem;color:#94a3b8;margin:0 0 14px">${k.kuvateksti || ''}</p>`
-    : `<div style="background:rgba(255,255,255,0.04);border:1px dashed rgba(180,155,130,0.4);border-radius:10px;padding:18px;text-align:center;color:#94a3b8;font-size:.88rem;margin:14px 0">📷 Valokuva tulossa myöhemmin</div>`;
+    let kuvaHtml = '';
+  if (k.galleria && galleriat[k.galleria]) {
+    kuvaHtml = `<div class="kuva-ruudukko" style="margin:14px 0">` +
+      galleriat[k.galleria].map((item, i) => `
+        <figure class="kuva-kortti" onclick="avaaLightbox('${k.galleria}',${i})">
+          <img src="pieni_${item.tiedosto}" alt="${item.teksti}" loading="lazy" onerror="this.onerror=function(){kokeilePaate(this)};this.src='${item.tiedosto}'">
+          <figcaption>${item.teksti}</figcaption>
+        </figure>
+      `).join('') + `</div>`;
+  } else if (k.kuva) {
+    kuvaHtml = `<img src="${k.kuva}" alt="${k.otsikko}" style="width:100%;max-height:320px;object-fit:cover;border-radius:10px;margin:14px 0 6px"><p style="font-size:.82rem;color:#94a3b8;margin:0 0 14px">${k.kuvateksti || ''}</p>`;
+  } else {
+    kuvaHtml = `<div style="background:rgba(255,255,255,0.04);border:1px dashed rgba(180,155,130,0.4);border-radius:10px;padding:18px;text-align:center;color:#94a3b8;font-size:.88rem;margin:14px 0">📷 Valokuva tulossa myöhemmin</div>`;
+  }
+
   const lisaNappi = k.lisalinkki
     ? `<a href="${k.lisalinkki}" target="_blank" rel="noopener" class="nappi nappi-toinen" style="padding:9px 14px;font-size:.82rem">ℹ️ Aukioloajat ja lisätiedot ↗</a>`
     : '';
