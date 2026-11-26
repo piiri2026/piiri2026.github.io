@@ -236,11 +236,17 @@ textarea{min-height:95px;resize:vertical}
             S-market Kivistön yhteydessä — n. 1,7 km 🚶‍♂️<br>
             <span style="color:#94a3b8;font-size:0.82rem">Keskussairaalan apteekkipiste — n. 0,6 km</span>
           </button>
-          <button type="button" onclick="avaaKavelyreitti('Seinäjoen keskussairaala', '62.772139,22.820944')" style="text-align:left;padding:12px;background:rgba(0,0,0,0.28);border:1px solid rgba(180,155,130,0.35);border-radius:8px;color:#e2e8f0;cursor:pointer">
-            <strong style="color:#b49b82">🏥 Terveyspalvelut: Keskussairaala & Y-talo</strong><br>
-            Etäisyys n. 0,4–0,6 km 🚶‍♂️<br>
-            <span style="color:#94a3b8;font-size:0.82rem">Kävelymatka puistotietä pitkin n. 5–8 min</span>
+                    <button type="button" onclick="avaaKavelyreitti('Seinäjoen keskussairaala (pääsisäänkäynti)', '62.772139,22.820944')" style="text-align:left;padding:12px;background:rgba(0,0,0,0.28);border:1px solid rgba(180,155,130,0.35);border-radius:8px;color:#e2e8f0;cursor:pointer">
+            <strong style="color:#b49b82">🏥 Seinäjoen keskussairaala</strong><br>
+            Pääsisäänkäynti — n. 0,4 km 🚶‍♂️<br>
+            <span style="color:#94a3b8;font-size:0.82rem">Kävelymatka puistotietä pitkin n. 5 min</span>
           </button>
+          <button type="button" onclick="avaaKavelyreitti('Y-talo (sisäänkäynti)', '62.771338,22.817506')" style="text-align:left;padding:12px;background:rgba(0,0,0,0.28);border:1px solid rgba(180,155,130,0.35);border-radius:8px;color:#e2e8f0;cursor:pointer">
+            <strong style="color:#b49b82">🩺 Y-talo & terveyspalvelut</strong><br>
+            Sisäänkäynti — n. 0,6 km 🚶‍♂️<br>
+            <span style="color:#94a3b8;font-size:0.82rem">Kävelymatka puistotietä pitkin n. 8 min</span>
+          </button>
+
           <button type="button" onclick="avaaKavelyreitti('Kyrkösjärven uimaranta', '62.769676,22.813467')" style="text-align:left;padding:12px;background:rgba(0,0,0,0.28);border:1px solid rgba(180,155,130,0.35);border-radius:8px;color:#e2e8f0;cursor:pointer">
             <strong style="color:#b49b82">🏖️ Ulkoilu & uimaranta: Kyrkösjärvi</strong><br>
             Uimaranta ja leikkipaikka — n. 0,9 km 🚶‍♂️<br>
@@ -931,12 +937,13 @@ function alustaPiiriKartta() {
       teksti: 'Apteekki ja ruokakauppa, Ruukintie 81 (kävelymatka n. 1,7 km).',
       kuva: 'apteekki_kivisto.jpg'
     },
-    {
+        {
       nimi: 'Keskussairaala (pääsisäänkäynti)',
       lat: 62.772139, lon: 22.820944,
       teksti: 'Seinäjoen keskussairaalan sisäänkäynti (kävelymatka n. 0,4 km).',
-      kuva: 'sairaala_ytalo.jpg'
+      kuva: 'keskus_sairaala.jpg'
     },
+
     {
       nimi: 'Y-talo (sisäänkäynti)',
       lat: 62.771338, lon: 22.817506,
@@ -970,13 +977,13 @@ function alustaPiiriKartta() {
   const listaEl = document.getElementById('piiri-kohdelista');
   if (listaEl) listaEl.innerHTML = '';
 
-  kohteet.forEach(k => {
+    kohteet.forEach(k => {
     const pieniKuva = k.kuva ? ('pieni_' + k.kuva.replace(/\.JPG$/i, '.jpg')) : '';
     const kuvaHtml = k.kuva
       ? `<img src="${pieniKuva}" alt="${k.nimi}" onerror="this.onerror=function(){kokeilePaate(this)};this.src='${k.kuva}'" onclick="avaaLightbox('${k.gal}',${k.idx})" style="width:100%;max-width:210px;height:125px;object-fit:cover;border-radius:6px;margin-top:8px;cursor:pointer;display:block"><span style="font-size:11px;color:#64748b">Klikkaa kuvaa suurentaaksesi</span>`
       : '';
     L.marker([k.lat, k.lon]).addTo(window.piiriKohteetLayer)
-      .bindPopup(`<div style="max-width:215px"><b>${k.nimi}</b><br><span style="font-size:13px">${k.teksti}</span>${kuvaHtml}</div>`);
+      .bindPopup(`<div style="max-width:215px"><b>${k.nimi}</b><br><span style="font-size:13px">${k.teksti}</span>${kuvaHtml}<button type="button" onclick="avaaKavelyreitti('${k.nimi}','${k.lat},${k.lon}')" style="margin-top:8px;width:100%;padding:6px 8px;background:#b49b82;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer">🚶 Kävelyreitti kohteeseen</button></div>`);
 
     if (listaEl) {
       const btn = document.createElement('button');
@@ -987,6 +994,7 @@ function alustaPiiriKartta() {
       listaEl.appendChild(btn);
     }
   });
+
 
     lahipalvelut.forEach(p => {
     const kuvaHtml = p.kuva
