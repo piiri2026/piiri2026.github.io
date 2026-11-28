@@ -2,17 +2,21 @@
 <urlset xmlns="http://sitemaps.org"
         xmlns:image="http://google.com">
   <url>
-   <loc>https://piiri2026.github.io/</loc>
-    <lastmod>2026-11-26</lastmod>
+    <loc>https://piiri2026.github.io/</loc>
+    <lastmod>2026-11-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-        <image:image>
-      <image:loc>https://piiri2026.github.io/piirintie11_paa.jpg.JPG</image:loc>
+    <image:image>
+      <image:loc>https://github.io</image:loc>
       <image:title>Piirintie 11, Seinäjoki</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://piiri2026.github.io/tekemista_paa.jpg</image:loc>
+      <image:loc>https://github.io</image:loc>
       <image:title>Kyrkösjärvi ja Seinäjoen Piiri</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://github.io</image:loc>
+      <image:title>Seinäjoen Piirin rakennuksia</image:title>
     </image:image>
   </url>
 </urlset>
